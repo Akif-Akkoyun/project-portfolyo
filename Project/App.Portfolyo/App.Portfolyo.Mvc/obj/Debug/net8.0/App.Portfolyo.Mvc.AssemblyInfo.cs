@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("App.Portfolyo.Mvc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5b5ed97f696996e1e9f811cbfdd91011f88507a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+227909f67c08297c307b05edc25198481adc70e6")]
 [assembly: System.Reflection.AssemblyProductAttribute("App.Portfolyo.Mvc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("App.Portfolyo.Mvc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

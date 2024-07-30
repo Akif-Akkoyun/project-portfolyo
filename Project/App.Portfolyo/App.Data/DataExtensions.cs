@@ -1,19 +1,19 @@
-﻿using App.Data.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PortfolyoApp.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Data
+namespace PortfolyoApp.Data
 {
     public static class DataExtensions
     {
-        public static void AddDataLayer (this IServiceCollection services, string connectionString)
+        public static void AddDataLayer(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<DbContext,AppDbContext>(options =>
+            services.AddDbContext<DbContext, AppDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });

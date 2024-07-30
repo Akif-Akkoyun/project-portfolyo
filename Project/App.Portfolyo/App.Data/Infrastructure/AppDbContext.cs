@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Data.Infrastructure
+namespace PortfolyoApp.Data.Infrastructure
 {
     internal class AppDbContext : DbContext
     {

@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Data
+namespace PortfolyoApp.Data.Infrastructure
 {
     public interface IDataRepository
     {
         // temel crud işlemleri
-        Task<IEnumerable<T>> GetAll<T>() where T : BaseEntity;
-        Task<T?> GetById<T>(int id) where T : BaseEntity;
-        Task<T> Add<T>(T entity) where T : BaseEntity;
-        Task<T> Update<T>(T entity) where T : BaseEntity;
-        Task<T> Delete<T>(T entity) where T : BaseEntity;
+        Task<IEnumerable<T>> GetAll<T>() where T : EntityBase;
+        Task<T?> GetById<T>(long id) where T : EntityBase;
+        Task<T> Add<T>(T entity) where T : EntityBase;
+        Task<T> Update<T>(T entity) where T : EntityBase;
+        Task<T> Delete<T>(T entity) where T : EntityBase;
     }
     internal class DataRepository : IDataRepository
     {
@@ -24,15 +24,15 @@ namespace App.Data
         {
             _dbContext = dbContext;
         }
-        public async Task<IEnumerable<T>> GetAll<T>() where T : BaseEntity
+        public async Task<IEnumerable<T>> GetAll<T>() where T : EntityBase
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
-        public async Task<T?> GetById<T>(int id) where T : BaseEntity
+        public async Task<T?> GetById<T>(long id) where T : EntityBase
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
-        public async Task<T> Add<T>(T entity) where T : BaseEntity
+        public async Task<T> Add<T>(T entity) where T : EntityBase
         {
             entity.Id = default;
             entity.CreatedAt = DateTime.UtcNow;
@@ -41,7 +41,7 @@ namespace App.Data
             await _dbContext.SaveChangesAsync();
             return entity;
         }
-        public async Task<T> Update<T>(T entity) where T : BaseEntity
+        public async Task<T> Update<T>(T entity) where T : EntityBase
         {
             if (entity.Id == default)
             {
@@ -61,7 +61,7 @@ namespace App.Data
 
             return entity;
         }
-        public async Task<T> Delete<T>(T entity) where T : BaseEntity
+        public async Task<T> Delete<T>(T entity) where T : EntityBase
         {
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();

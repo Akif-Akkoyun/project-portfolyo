@@ -1,5 +1,5 @@
-using App.Data;
 using Microsoft.EntityFrameworkCore;
+using PortfolyoApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
