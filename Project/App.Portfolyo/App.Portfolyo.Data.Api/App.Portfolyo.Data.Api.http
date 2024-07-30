@@ -1,0 +1,6 @@
+@App.Portfolyo.Data.Api_HostAddress = http://localhost:5107
+
+GET {{App.Portfolyo.Data.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

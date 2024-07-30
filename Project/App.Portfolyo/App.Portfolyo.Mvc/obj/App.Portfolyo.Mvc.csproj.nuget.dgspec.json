@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\akifa\\Desktop\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj": {}
+    "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\akifa\\Desktop\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj": {
+    "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akifa\\Desktop\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj",
+        "projectUniqueName": "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj",
         "projectName": "App.Portfolyo.Mvc",
-        "projectPath": "C:\\Users\\akifa\\Desktop\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj",
+        "projectPath": "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\App.Portfolyo.Mvc.csproj",
         "packagesPath": "C:\\Users\\akifa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akifa\\Desktop\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\obj\\",
+        "outputPath": "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\akifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
