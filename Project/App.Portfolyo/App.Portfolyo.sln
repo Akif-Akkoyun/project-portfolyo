@@ -5,13 +5,17 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Portfolyo.Mvc", "App.Portfolyo.Mvc\App.Portfolyo.Mvc.csproj", "{ABA23154-F434-4C9C-9A61-3D25883186D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Portfolyo.File.Api", "App.Portfolyo.File.Api\App.Portfolyo.File.Api.csproj", "{B3E99A43-D1BE-4B8E-8986-670C5CB92A15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Portfolyo.File.Api", "App.Portfolyo.File.Api\App.Portfolyo.File.Api.csproj", "{B3E99A43-D1BE-4B8E-8986-670C5CB92A15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Portfolyo.Data.Api", "App.Portfolyo.Data.Api\App.Portfolyo.Data.Api.csproj", "{D2EC12A1-466B-4C04-83B8-A8C42E2EFA29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Portfolyo.Data.Api", "App.Portfolyo.Data.Api\App.Portfolyo.Data.Api.csproj", "{D2EC12A1-466B-4C04-83B8-A8C42E2EFA29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Portfolyo.Auth.Api", "App.Portfolyo.Auth.Api\App.Portfolyo.Auth.Api.csproj", "{20712E55-5E1E-43F2-9A1C-92F26BBAFFB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Portfolyo.Auth.Api", "App.Portfolyo.Auth.Api\App.Portfolyo.Auth.Api.csproj", "{20712E55-5E1E-43F2-9A1C-92F26BBAFFB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Admin.Mvc", "App.Admin.Mvc\App.Admin.Mvc.csproj", "{FE06971A-E218-4A8B-A31F-732C13759EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Admin.Mvc", "App.Admin.Mvc\App.Admin.Mvc.csproj", "{FE06971A-E218-4A8B-A31F-732C13759EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Business", "App.Business\App.Business.csproj", "{BC1EBE77-C8AD-42A9-86D7-62867AE71BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Data", "App.Data\App.Data.csproj", "{62C067FB-3F01-46A4-8BB8-808120EE2FC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{FE06971A-E218-4A8B-A31F-732C13759EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE06971A-E218-4A8B-A31F-732C13759EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE06971A-E218-4A8B-A31F-732C13759EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1EBE77-C8AD-42A9-86D7-62867AE71BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1EBE77-C8AD-42A9-86D7-62867AE71BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1EBE77-C8AD-42A9-86D7-62867AE71BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1EBE77-C8AD-42A9-86D7-62867AE71BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C067FB-3F01-46A4-8BB8-808120EE2FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C067FB-3F01-46A4-8BB8-808120EE2FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C067FB-3F01-46A4-8BB8-808120EE2FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C067FB-3F01-46A4-8BB8-808120EE2FC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
