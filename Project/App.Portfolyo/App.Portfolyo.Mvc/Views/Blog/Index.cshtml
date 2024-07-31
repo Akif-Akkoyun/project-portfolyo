@@ -1,0 +1,21 @@
+﻿@using PortfolyoApp.Mvc.Models
+
+@model List<UserViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1>Users</h1>
+    <ul>
+
+        @foreach (var user in Model)
+        {
+            <li>@user.Name</li>
+            <li>@user.Surname</li>
+            <li>@user.Email</li>
+        }
+    </ul>
+
+</div>

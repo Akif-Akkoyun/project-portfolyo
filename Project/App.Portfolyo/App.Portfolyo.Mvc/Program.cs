@@ -1,7 +1,16 @@
+using PortfolyoApp.Business.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<UserService>();
+
+builder.Services.AddHttpClient("DataApi", c =>
+{
+    c.BaseAddress = new Uri("https://localhost:7215");
+});
 
 var app = builder.Build();
 
