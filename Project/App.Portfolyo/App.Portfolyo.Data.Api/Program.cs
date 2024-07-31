@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder
     .Configuration
-    .GetConnectionString("Default") 
+    .GetConnectionString("DefaultConnection") 
     ?? throw new InvalidOperationException("Connection string is not found");
 
 builder.Services.AddDataLayer(connectionString);
