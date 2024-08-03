@@ -26,6 +26,7 @@ namespace PortfolyoApp.Auth.Api.Data
             entity.CreatedAt = DateTime.UtcNow;
             entity.RoleId = 2;
 
+
             await context.Set<T>().AddAsync(entity);
             await context.SaveChangesAsync();
 
