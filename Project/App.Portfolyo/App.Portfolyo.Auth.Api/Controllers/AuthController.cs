@@ -42,15 +42,10 @@ namespace PortfolyoApp.Auth.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginDTO loginDTO)
         {
-            var validatorDto = await ValidateModelAsync(loginDTO);
-            if (!validatorDto.IsSuccess)
-            {
-                return BadRequest(validatorDto.Errors);
-            }
             var user = await _authRepository.GetAll<UserEntity>()
                 .Include(u => u.Role)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
+                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
             if (user is null)
             {
                 return NotFound("Kullanıcı Bulunamadı !!");
@@ -61,7 +56,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             {
                 Token = token
             };
-            
+
             return Ok(tokenDto);
         }
         [HttpPost("register")]
@@ -78,7 +73,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 Email = registerDTO.Email,
                 PasswordHash = Hasher.HashPassword(registerDTO.PasswordHash),
                 CreatedAt = registerDTO.CreatedAt,
-                RoleId = 2,
+                RoleId = 2
             };
 
             await _authRepository.Add(user);
@@ -117,21 +112,5 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        protected virtual async Task<Result> ValidateModelAsync<T>(T model)
-        {
-            var validator = _serviceProvider.GetService<IValidator<T>>();
-            if (validator is not null)
-            {
-                var validationResult = await validator.ValidateAsync(model);
-                if (!validationResult.IsValid)
-                {
-                    return Result.Invalid(validationResult.Errors.Select(x => new ValidationError(x.ErrorMessage)));
-                }
-            }
-
-            return Result.Success();
-        }
-
-
     }
 }

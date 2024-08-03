@@ -1,19 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data
+namespace PortfolyoApp.Data.Api.Entities
 {
-    public abstract class EntityBase
+    public class EntityBase
     {
-        public long Id { get; set; } = default!;
-        public DateTime? CreatedAt { get; set; }
+        public int Id { get; set; }
     }
     internal class EntityBaseConfiguration : IEntityTypeConfiguration<EntityBase>
     {
         public void Configure(EntityTypeBuilder<EntityBase> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.CreatedAt).IsRequired();
         }
     }
 }
