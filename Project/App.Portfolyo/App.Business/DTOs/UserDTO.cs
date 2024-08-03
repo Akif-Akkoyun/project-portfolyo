@@ -9,10 +9,11 @@ namespace PortfolyoApp.Business.DTOs
     public class UserDTO
     {
         public long Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Surname { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public string UserName { get; set; } = default!;
+        public string UserSurName { get; set; } = default!;
+        public string Email { get; set; } = default!;
+        public string PasswordHash { get; set; } = default!;
+        public string RoleId { get; set; } = default!;
         public DateTime CreatedAt { get; set; }
     }
 }

@@ -2,22 +2,19 @@
 using Microsoft.Extensions.DependencyInjection;
 using PortfolyoApp.Data.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PortfolyoApp.Data
+namespace PortfolyoApp.Auth.Api.Data
 {
-    public static class DataExtensions
+    public static class AuthExtensions
     {
         public static void AddDataLayer(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<DbContext, AppDbContext>(options =>
+            services.AddDbContext<DbContext, AuthDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
-            services.AddScoped<IFileRepository, FileRepository>();
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
     }
 }
