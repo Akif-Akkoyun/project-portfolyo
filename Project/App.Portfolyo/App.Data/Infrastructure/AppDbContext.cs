@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PortfolyoApp.Data.Entities.FileEntity;
 
 namespace PortfolyoApp.Data.Infrastructure
 {
@@ -13,40 +14,13 @@ namespace PortfolyoApp.Data.Infrastructure
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<UserEntity> Users { get; set; } = null!;
-
+        //public DbSet<UserEntity> Users { get; set; } = null!;
+        public DbSet<FileEntity> Files { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            List<UserEntity> users = new ()
-            {
-                new UserEntity
-                {
-                    Id = 1,
-                    Name = "John",
-                    Surname = "Doe",
-                    Email = "john@gmail.com",
-                    Password = "123456"
-                },
-                new UserEntity
-                {
-                    Id = 2,
-                    Name = "Jane",
-                    Surname = "Doe",
-                    Email = "jane@gmail.com",
-                    Password = "123456"
-                },
-                new UserEntity
-                {
-                    Id = 3,
-                    Name = "Alice",
-                    Surname = "Doe",
-                    Email = "alice@gmail.com",
-                    Password = "123456"
-                }
-            };
-
-            modelBuilder.Entity<UserEntity>().HasData(users);
-            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new FileEntityConfiguration());
+            //modelBuilder.Entity<UserEntity>().HasData(users);
+            //modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
         }
     }
 }
