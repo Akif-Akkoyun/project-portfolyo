@@ -17,7 +17,8 @@ namespace PortfolyoApp.Data
             {
                 options.UseSqlServer(connectionString);
             });
-            services.AddScoped<IFileRepository, FileRepository>();
+
+            services.AddScoped<IDataRepository, DataRepository>();
         }
     }
 }
