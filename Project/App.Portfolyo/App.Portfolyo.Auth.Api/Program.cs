@@ -1,5 +1,8 @@
+using Azure.Core;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using PortfolyoApp.Auth.Api.Data;
 using System.Text;
@@ -20,21 +23,27 @@ var connectionString = builder
 
 builder.Services.AddDataLayer(connectionString);
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    options.MapInboundClaims = false;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-           ValidateIssuer = true,
-           ValidIssuer = "App.Portfolyo",
-           ValidateAudience = true,
-           ValidAudiences = new[] { "MVC" },
-           ValidateLifetime = true,
-           ValidateIssuerSigningKey = true,
-
-           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
-        };
-    });
+        NameClaimType = JwtClaimTypes.Name,
+        RoleClaimType = JwtClaimTypes.Role,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
+        ValidateAudience = false,
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidateIssuerSigningKey = false,
+        ValidateTokenReplay = false,
+        SignatureValidator = (token, _) => new JsonWebToken(token),
+    };
+});
 
 var app = builder.Build();
 
@@ -46,7 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -55,6 +64,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<DbContext>();
+
     
     if (await context.Database.EnsureCreatedAsync())
     {

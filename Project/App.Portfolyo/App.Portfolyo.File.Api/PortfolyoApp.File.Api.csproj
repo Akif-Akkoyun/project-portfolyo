@@ -15,4 +15,8 @@
     <ProjectReference Include="..\App.Data\PortfolyoApp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

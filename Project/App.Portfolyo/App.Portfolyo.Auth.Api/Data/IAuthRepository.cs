@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ImTools;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using PortfolyoApp.Auth.Api.Data.Entites;
 using PortfolyoApp.Data;
 
@@ -21,7 +23,8 @@ namespace PortfolyoApp.Auth.Api.Data
         public async Task<T> Add<T>(T entity) where T : UserEntity
         {
             entity.Id = default;
-            entity.CreatedAt = DateTime.Now;
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.RoleId = 2;
 
             await context.Set<T>().AddAsync(entity);
             await context.SaveChangesAsync();

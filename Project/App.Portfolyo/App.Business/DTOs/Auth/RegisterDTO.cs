@@ -5,28 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolyoApp.Business.DTOs
+namespace PortfolyoApp.Business.DTOs.Auth
 {
-    public class UserDTO
+    public class RegisterDTO
     {
-        public long Id { get; set; }
         public string UserName { get; set; } = default!;
         public string UserSurName { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string PasswordHash { get; set; } = default!;
-        public int RoleId { get; set; } = default!;
+        public int RoleId { get; set; }
         public DateTime CreatedAt { get; set; }
     }
-    public class UserDTOValidator : AbstractValidator<UserDTO>
+    public class RegisterDTOValidator : AbstractValidator<RegisterDTO>
     {
-        public UserDTOValidator()
+        public RegisterDTOValidator()
         {
             RuleFor(x => x.UserName).NotEmpty().MaximumLength(50);
             RuleFor(x => x.UserSurName).NotEmpty().MaximumLength(50);
             RuleFor(x => x.Email).NotEmpty().MaximumLength(50);
             RuleFor(x => x.PasswordHash).NotEmpty().MaximumLength(255);
             RuleFor(x => x.CreatedAt).NotEmpty();
-            RuleFor(x => x.RoleId).NotEmpty();
         }
     }
 }
