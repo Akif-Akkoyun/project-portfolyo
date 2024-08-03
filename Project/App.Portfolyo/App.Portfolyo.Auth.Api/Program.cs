@@ -43,6 +43,21 @@ builder.Services.AddAuthentication(options =>
         ValidateTokenReplay = false,
         SignatureValidator = (token, _) => new JsonWebToken(token),
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Cookies["access_token"];
+
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
+
+    options.MapInboundClaims = false;
 });
 
 var app = builder.Build();

@@ -107,6 +107,13 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
             );
+            Response.Cookies.Append("access_token", new JwtSecurityTokenHandler().WriteToken(token), new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(30)
+            });
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
