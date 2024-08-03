@@ -7,37 +7,131 @@ using PortfolyoApp.Auth.Api.Data;
 using PortfolyoApp.Auth.Api.Data.Entites;
 using PortfolyoApp.Business.DTOs;
 using System.Security.Claims;
+using PortfolyoApp.Business.DTOs.Auth;
+using System.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity.Data;
+using Ardalis.Result;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using IdentityModel;
+using ImTools;
+using Hasher = BCrypt.Net.BCrypt;
+using FluentValidation;
 
 namespace PortfolyoApp.Auth.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthRepository _dataRepository;
+        private readonly IAuthRepository _authRepository;
+        private readonly IConfiguration _config;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AuthController(IAuthRepository dataRepository)
+        public AuthController(IAuthRepository auhtRepository,IConfiguration config,IServiceProvider serviceProvider)
         {
-            _dataRepository = dataRepository;
+            _authRepository = auhtRepository;
+            _config = config;
+            _serviceProvider = serviceProvider;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetUserList()
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync(LoginDTO loginDTO)
         {
-            var users = await _dataRepository.GetAll<UserEntity>().ToListAsync();
-
-            var userDtos = users.Select(u => new UserDTO
+            var validatorDto = await ValidateModelAsync(loginDTO);
+            if (!validatorDto.IsSuccess)
             {
-                Id = u.Id,
-                UserName = u.UserName,
-                UserSurName = u.UserSurName,
-                Email = u.Email,
-                RoleId = u.RoleId,
-                CreatedAt = u.CreatedAt,
-                PasswordHash = u.PasswordHash
-            }).ToList();
+                return BadRequest(validatorDto.Errors);
+            }
+            var user = await _authRepository.GetAll<UserEntity>()
+                .Include(u => u.Role)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
+            if (user is null)
+            {
+                return NotFound("Kullanıcı Bulunamadı !!");
+            }
+            var token = GenerateToken(user);
 
-            return Ok(userDtos);
+            var tokenDto = new TokenDTO
+            {
+                Token = token
+            };
+            
+            return Ok(tokenDto);
         }
-        
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDTO registerDTO)
+        {
+            if (registerDTO is null)
+            {
+                throw new ArgumentNullException(nameof(registerDTO));
+            }
+            var user = new UserEntity
+            {
+                UserName = registerDTO.UserName,
+                UserSurName = registerDTO.UserSurName,
+                Email = registerDTO.Email,
+                PasswordHash = Hasher.HashPassword(registerDTO.PasswordHash),
+                CreatedAt = registerDTO.CreatedAt,
+                RoleId = 2,
+            };
+
+            await _authRepository.Add(user);
+
+            return Ok(user);
+        }
+        private string GenerateToken(UserEntity user)
+        {
+            var claims = new List<Claim>
+            {
+                new(JwtClaimTypes.Subject, user.Id.ToString()),
+                new(JwtClaimTypes.Name, user.UserSurName),
+                new(JwtClaimTypes.FamilyName, user.UserSurName),
+                new(JwtClaimTypes.Email, user.Email),
+                new(JwtClaimTypes.Role, user.Role.Name),
+            };
+
+            string secret = _config.GetRequiredSection("JWT:Secret").Get<string>()!;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            string issuer = _config.GetRequiredSection("Jwt:Issuer").Get<string>()!;
+
+            var token = new JwtSecurityToken(
+                issuer,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials
+            );
+            Response.Cookies.Append("access_token", new JwtSecurityTokenHandler().WriteToken(token), new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(30)
+            });
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        protected virtual async Task<Result> ValidateModelAsync<T>(T model)
+        {
+            var validator = _serviceProvider.GetService<IValidator<T>>();
+            if (validator is not null)
+            {
+                var validationResult = await validator.ValidateAsync(model);
+                if (!validationResult.IsValid)
+                {
+                    return Result.Invalid(validationResult.Errors.Select(x => new ValidationError(x.ErrorMessage)));
+                }
+            }
+
+            return Result.Success();
+        }
+
+
     }
 }

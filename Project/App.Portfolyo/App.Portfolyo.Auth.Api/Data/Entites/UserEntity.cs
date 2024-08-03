@@ -10,7 +10,7 @@ namespace PortfolyoApp.Auth.Api.Data.Entites
         public string UserSurName { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string PasswordHash { get; set; } = default!;
-        public string RoleId { get; set; } = default!;
+        public int RoleId { get; set; }
         public DateTime CreatedAt { get; set; }
 
         //nav prop

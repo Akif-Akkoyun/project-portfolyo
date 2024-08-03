@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Business.Services;
-using PortfolyoApp.Data.Entities;
 
 namespace PortfolyoApp.File.Api.Controllers
 {
@@ -9,63 +8,87 @@ namespace PortfolyoApp.File.Api.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private readonly FileService _fileService;
-        private readonly string _fileStoragePath;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly string _filePath = null!;
 
-        public FileController(FileService fileService, IConfiguration configuration)
+        public FileController(IWebHostEnvironment webHostEnvironment)
         {
-            _fileService = fileService;
-            _fileStoragePath = configuration["FileStoragePath"] ?? throw new InvalidOperationException();
-        }
-        [HttpGet]
-        public async Task<IEnumerable<FileEntity>> Get()
-        {
-            return await _fileService.GetAllFilesAsync();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var file = await _fileService.GetFileByIdAsync(id);
-            if (file == null)
-            {
-                return NotFound();
-            }
-
-            var fileStream = System.IO.File.OpenRead(file.FilePath);
-            return File(fileStream, "application/octet-stream", file.FileName);
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
                 return BadRequest("Dosya yüklenmemiş");
             }
 
-            var filePath = Path.Combine(_fileStoragePath, file.FileName);
+            var rootPath = _webHostEnvironment.WebRootPath;
+            var filePath = Path.Combine(rootPath, file.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            var newFile = new FileEntity
-            {
-                FileName = file.FileName,
-                FilePath = filePath
-            };
-
-            await _fileService.AddFileAsync(newFile);
-
             return Ok(new { filePath });
+
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("delete/{fileName}")]
+        public IActionResult DeleteFile(string fileName)
         {
-            await _fileService.DeleteFileAsync(id);
-            return Ok();
+            var rootPath = _webHostEnvironment.WebRootPath;
+            var filePath = Path.Combine(rootPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("Dosya bulunamadı");
+            }
+
+            System.IO.File.Delete(filePath);
+            return Ok("Dosya silindi");
+        }
+
+        [HttpGet("download/{fileName}")]
+        public async Task<IActionResult> DownloadFile(string fileName)
+        {
+            var rootPath = _webHostEnvironment.WebRootPath;
+            var filePath = Path.Combine(rootPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("Dosya bulunamadı");
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(filePath), Path.GetFileName(filePath));
+        }
+
+        private string GetContentType(string path)
+        {
+            var types = new Dictionary<string, string>
+        {
+            { ".txt", "text/plain" },
+            { ".pdf", "application/pdf" },
+            { ".doc", "application/vnd.ms-word" },
+            { ".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+            { ".xls", "application/vnd.ms-excel" },
+            { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+            { ".png", "image/png" },
+            { ".jpg", "image/jpeg" },
+            { ".jpeg", "image/jpeg" },
+            { ".gif", "image/gif" },
+            { ".csv", "text/csv" }
+        };
+
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types.ContainsKey(ext) ? types[ext] : "application/octet-stream";
         }
     }
 }

@@ -21,13 +21,12 @@ namespace PortfolyoApp.Auth.Api.Data
             {
                 new UserEntity
                 {
-                    UserName = "John",
-                    UserSurName = "Doe",
-                    Email = "john@gmail.com",
-                    PasswordHash = "123456",
+                    UserName = "Akif",
+                    UserSurName = "Akkoyun",
+                    Email = "akifakkoyun09@gmail.com",
+                    PasswordHash = "1234",
                     CreatedAt = DateTime.Now,
                     RoleId = adminRole.Id,
-
                 },
                 new UserEntity
                 {

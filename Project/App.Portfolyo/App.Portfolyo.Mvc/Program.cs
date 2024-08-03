@@ -7,9 +7,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<UserService>();
 
-builder.Services.AddHttpClient("DataApi", c =>
+builder.Services.AddHttpClient("AuthApi", c =>
 {
-    c.BaseAddress = new Uri("https://localhost:7215");
+    c.BaseAddress = new Uri("https://localhost:7117");
 });
 
 var app = builder.Build();

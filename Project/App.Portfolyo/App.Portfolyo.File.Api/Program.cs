@@ -11,13 +11,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder
-    .Configuration
-    .GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string is not found");
-
-builder.Services.AddDataLayer(connectionString);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
