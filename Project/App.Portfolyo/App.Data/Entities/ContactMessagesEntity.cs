@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class ContactMessages : EntityBase
+    public class ContactMessagesEntity : EntityBase
     {
         public string Name { get; set; } = string.Empty!;
         public string Email { get; set; } = string.Empty!;
@@ -14,9 +14,9 @@ namespace PortfolyoApp.Data.Api.Entities
         public string Reply { get; set; } = string.Empty!;
         public DateTime ReplyDate { get; set; }
     }
-    internal class ContactMessagesConfiguration : IEntityTypeConfiguration<ContactMessages>
+    internal class ContactMessagesConfiguration : IEntityTypeConfiguration<ContactMessagesEntity>
     {
-        public void Configure(EntityTypeBuilder<ContactMessages> builder)
+        public void Configure(EntityTypeBuilder<ContactMessagesEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);

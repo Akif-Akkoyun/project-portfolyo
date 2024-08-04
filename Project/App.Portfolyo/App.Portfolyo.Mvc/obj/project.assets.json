@@ -79,7 +79,7 @@
           }
         }
       },
-      "Microsoft.CSharp/4.5.0": {
+      "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
           "ref/netcoreapp2.0/_._": {}
@@ -712,6 +712,91 @@
           }
         }
       },
+      "ServiceStack/8.3.0": {
+        "type": "package",
+        "dependencies": {
+          "ServiceStack.Client": "8.3.0",
+          "ServiceStack.Common": "8.3.0",
+          "ServiceStack.Interfaces": "8.3.0",
+          "ServiceStack.Text": "8.3.0"
+        },
+        "compile": {
+          "lib/net8.0/ServiceStack.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ServiceStack.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "ServiceStack.Client/8.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Http": "8.0.0",
+          "ServiceStack.Interfaces": "8.3.0",
+          "ServiceStack.Text": "8.3.0"
+        },
+        "compile": {
+          "lib/net8.0/ServiceStack.Client.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ServiceStack.Client.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "ServiceStack.Common/8.3.0": {
+        "type": "package",
+        "dependencies": {
+          "ServiceStack.Interfaces": "8.3.0",
+          "ServiceStack.Text": "8.3.0",
+          "System.Memory": "4.5.5"
+        },
+        "compile": {
+          "lib/net8.0/ServiceStack.Common.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ServiceStack.Common.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "ServiceStack.Interfaces/8.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/ServiceStack.Interfaces.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/ServiceStack.Interfaces.dll": {}
+        }
+      },
+      "ServiceStack.Text/8.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.Diagnostics.DiagnosticSource": "8.0.0",
+          "System.Memory": "4.5.5"
+        },
+        "compile": {
+          "lib/net8.0/ServiceStack.Text.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ServiceStack.Text.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Configuration.ConfigurationManager/6.0.1": {
         "type": "package",
         "dependencies": {
@@ -830,7 +915,7 @@
           }
         }
       },
-      "System.Memory/4.5.4": {
+      "System.Memory/4.5.5": {
         "type": "package",
         "compile": {
           "ref/netcoreapp2.1/_._": {}
@@ -1141,7 +1226,8 @@
           "Ardalis.Result": "9.1.0",
           "FluentValidation": "11.9.2",
           "Microsoft.Extensions.Http": "8.0.0",
-          "PortfolyoApp.Data": "1.0.0"
+          "PortfolyoApp.Data": "1.0.0",
+          "ServiceStack": "8.3.0"
         },
         "compile": {
           "bin/placeholder/PortfolyoApp.Business.dll": {}
@@ -1275,10 +1361,10 @@
         "version.txt"
       ]
     },
-    "Microsoft.CSharp/4.5.0": {
-      "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "type": "package",
-      "path": "microsoft.csharp/4.5.0",
+      "path": "microsoft.csharp/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1291,6 +1377,7 @@
         "lib/netcoreapp2.0/_._",
         "lib/netstandard1.3/Microsoft.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
         "lib/portable-net45+win8+wp8+wpa81/_._",
         "lib/uap10.0.16299/_._",
         "lib/win8/_._",
@@ -1300,7 +1387,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "microsoft.csharp.4.5.0.nupkg.sha512",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
         "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
@@ -2285,6 +2372,97 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "ServiceStack/8.3.0": {
+      "sha512": "YIQ/83bBI84XmN5pnrRjp/7HaRrv925/ghTq4JXPLUGxPG2GpGZAujs7hcXPWNLBb3QwnNrpF20idq8NMJvZog==",
+      "type": "package",
+      "path": "servicestack/8.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/ServiceStack.dll",
+        "lib/net472/ServiceStack.xml",
+        "lib/net6.0/ServiceStack.dll",
+        "lib/net6.0/ServiceStack.xml",
+        "lib/net8.0/ServiceStack.dll",
+        "lib/net8.0/ServiceStack.xml",
+        "lib/netstandard2.0/ServiceStack.dll",
+        "lib/netstandard2.0/ServiceStack.xml",
+        "servicestack.8.3.0.nupkg.sha512",
+        "servicestack.nuspec"
+      ]
+    },
+    "ServiceStack.Client/8.3.0": {
+      "sha512": "NYjRaJ9bi4H+LGsvgU1LUSX9cR2sBw8owdUEj/1sgGN8f8ZGYhzAPmie5oQUw4g46DX8pPdAaevxcctYcbUadA==",
+      "type": "package",
+      "path": "servicestack.client/8.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/ServiceStack.Client.dll",
+        "lib/net472/ServiceStack.Client.xml",
+        "lib/net6.0/ServiceStack.Client.dll",
+        "lib/net6.0/ServiceStack.Client.xml",
+        "lib/net8.0/ServiceStack.Client.dll",
+        "lib/net8.0/ServiceStack.Client.xml",
+        "lib/netstandard2.0/ServiceStack.Client.dll",
+        "lib/netstandard2.0/ServiceStack.Client.xml",
+        "servicestack.client.8.3.0.nupkg.sha512",
+        "servicestack.client.nuspec"
+      ]
+    },
+    "ServiceStack.Common/8.3.0": {
+      "sha512": "1WolU83gYdw6A47XIzzwEvDun/1c1s7nD1QZyK3u8h22INIA3PeWHAud7h+LZ57alxikjcVUY5nZYiUISDpIOg==",
+      "type": "package",
+      "path": "servicestack.common/8.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/ServiceStack.Common.dll",
+        "lib/net472/ServiceStack.Common.xml",
+        "lib/net6.0/ServiceStack.Common.dll",
+        "lib/net6.0/ServiceStack.Common.xml",
+        "lib/net8.0/ServiceStack.Common.dll",
+        "lib/net8.0/ServiceStack.Common.xml",
+        "lib/netstandard2.0/ServiceStack.Common.dll",
+        "lib/netstandard2.0/ServiceStack.Common.xml",
+        "servicestack.common.8.3.0.nupkg.sha512",
+        "servicestack.common.nuspec"
+      ]
+    },
+    "ServiceStack.Interfaces/8.3.0": {
+      "sha512": "prWUNgtvkr/JSDOlOd4+uA8WimTGByJxZUY2l1OSVcmKflGqCyRqrZMXa5HqA+wMzYJnm696Vv8cap3oIBT7AQ==",
+      "type": "package",
+      "path": "servicestack.interfaces/8.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/ServiceStack.Interfaces.dll",
+        "lib/net6.0/ServiceStack.Interfaces.dll",
+        "lib/net8.0/ServiceStack.Interfaces.dll",
+        "lib/netstandard2.0/ServiceStack.Interfaces.dll",
+        "servicestack.interfaces.8.3.0.nupkg.sha512",
+        "servicestack.interfaces.nuspec"
+      ]
+    },
+    "ServiceStack.Text/8.3.0": {
+      "sha512": "n7o3PfhnyNq+zUQARtcI0BWx0eiIWvxMmQMCU9pvgQpkfiFN9/mrPVsolNQuX4uZ7w2AMXIv3FTdKaZUzBeRLQ==",
+      "type": "package",
+      "path": "servicestack.text/8.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/ServiceStack.Text.dll",
+        "lib/net472/ServiceStack.Text.xml",
+        "lib/net6.0/ServiceStack.Text.dll",
+        "lib/net6.0/ServiceStack.Text.xml",
+        "lib/net8.0/ServiceStack.Text.dll",
+        "lib/net8.0/ServiceStack.Text.xml",
+        "lib/netstandard2.0/ServiceStack.Text.dll",
+        "lib/netstandard2.0/ServiceStack.Text.xml",
+        "servicestack.text.8.3.0.nupkg.sha512",
+        "servicestack.text.nuspec"
+      ]
+    },
     "System.Configuration.ConfigurationManager/6.0.1": {
       "sha512": "jXw9MlUu/kRfEU0WyTptAVueupqIeE3/rl0EZDMlf8pcvJnitQ8HeVEp69rZdaStXwTV72boi/Bhw8lOeO+U2w==",
       "type": "package",
@@ -2465,10 +2643,10 @@
         "version.txt"
       ]
     },
-    "System.Memory/4.5.4": {
-      "sha512": "1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
+    "System.Memory/4.5.5": {
+      "sha512": "XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
       "type": "package",
-      "path": "system.memory/4.5.4",
+      "path": "system.memory/4.5.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2482,7 +2660,7 @@
         "lib/netstandard2.0/System.Memory.dll",
         "lib/netstandard2.0/System.Memory.xml",
         "ref/netcoreapp2.1/_._",
-        "system.memory.4.5.4.nupkg.sha512",
+        "system.memory.4.5.5.nupkg.sha512",
         "system.memory.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"

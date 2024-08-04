@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
     public class EntityBase
     {

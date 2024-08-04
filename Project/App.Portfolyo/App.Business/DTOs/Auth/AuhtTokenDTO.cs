@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PortfolyoApp.Business.DTOs.Auth
 {
-    public class TokenDTO
+    public class AuhtTokenDTO
     {
         public string Token { get; set; } = default!;
     }

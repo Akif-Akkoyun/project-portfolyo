@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class Projects : EntityBase
+    public class ProjectsEntity : EntityBase
     {
         public string Title { get; set; } = string.Empty!;
         public string Description { get; set; } = string.Empty!;
@@ -12,9 +12,9 @@ namespace PortfolyoApp.Data.Api.Entities
         public string GithubUrl { get; set; } = string.Empty!;
         public string Tags { get; set; } = string.Empty!;
     }
-    internal class ProjectsConfiguration : IEntityTypeConfiguration<Projects>
+    internal class ProjectsConfiguration : IEntityTypeConfiguration<ProjectsEntity>
     {
-        public void Configure(EntityTypeBuilder<Projects> builder)
+        public void Configure(EntityTypeBuilder<ProjectsEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).IsRequired().HasMaxLength(100);
