@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class Experiences : EntityBase
+    public class ExperiencesEntity : EntityBase
     {
         public string Title { get; set; } = default!;
         public string Company { get; set; } = default!;
@@ -11,9 +11,9 @@ namespace PortfolyoApp.Data.Api.Entities
         public DateTime EndtDate { get; set; }
         public string Description { get; set; } = default!;
     }
-    internal class ExperiencesConfiguration : IEntityTypeConfiguration<Experiences>
+    internal class ExperiencesConfiguration : IEntityTypeConfiguration<ExperiencesEntity>
     {
-        public void Configure(EntityTypeBuilder<Experiences> builder)
+        public void Configure(EntityTypeBuilder<ExperiencesEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).IsRequired().HasMaxLength(100);

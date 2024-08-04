@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class PersonalInfo : EntityBase
+    public class PersonalInfoEntity : EntityBase
     {
         public string About { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string Surname { get; set; } = default!;
         public DateTime BirtDday { get; set; } = default!;
     }
-    internal class PersonalInfoConfiguration : IEntityTypeConfiguration<PersonalInfo>
+    internal class PersonalInfoConfiguration : IEntityTypeConfiguration<PersonalInfoEntity>
     {
-        public void Configure(EntityTypeBuilder<PersonalInfo> builder)
+        public void Configure(EntityTypeBuilder<PersonalInfoEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.About).IsRequired().HasMaxLength(300);

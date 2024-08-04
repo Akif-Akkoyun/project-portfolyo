@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using PortfolyoApp.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,19 @@ namespace PortfolyoApp.Data.Infrastructure
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+        public DbSet<AppUserEntity> Users { get; set; } = null!;
+        public DbSet<AboutMeEntity> Abouts { get; set; } = null!;
+        public DbSet<ExperiencesEntity> Experiences { get; set; } = null!;
+        public DbSet<ProjectsEntity> Projects { get; set; } = null!;
+        public DbSet<ContactMessagesEntity> ContactMassages { get; set; } = null!;
+        public DbSet<EducationsEntity> Educations { get; set; } = null!;
+        public DbSet<PersonalInfoEntity> PersonalInfos { get; set; } = null!;
+
+
         //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //modelBuilder.Entity<UserEntity>().HasData(users);
             //modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
         }

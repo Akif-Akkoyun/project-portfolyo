@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class Educations : EntityBase
+    public class EducationsEntity : EntityBase
     {
         public string Degree { get; set; } = string.Empty!;
         public string School { get; set; } = string.Empty!;
@@ -11,9 +11,9 @@ namespace PortfolyoApp.Data.Api.Entities
         public DateTime EndDate { get; set; }
         public string Description { get; set; } = string.Empty!;
     }
-    internal class EducationsConfiguration : IEntityTypeConfiguration<Educations>
+    internal class EducationsConfiguration : IEntityTypeConfiguration<EducationsEntity>
     {
-        public void Configure(EntityTypeBuilder<Educations> builder)
+        public void Configure(EntityTypeBuilder<EducationsEntity> builder)
         {
             builder.Property(e => e.Degree)
                 .IsRequired()

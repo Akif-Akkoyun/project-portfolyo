@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Data.Api.Entities
+namespace PortfolyoApp.Data.Entities
 {
-    public class UserEntity : EntityBase
+    public class AppUserEntity : EntityBase
     {
         public string UserName { get; set; } = default!;
         public string UserSurName { get; set; } = default!;
@@ -11,9 +11,9 @@ namespace PortfolyoApp.Data.Api.Entities
         public string PasswordHash { get; set; } = default!;
         public int RoleId { get; set; }
     }
-    internal class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
+    internal class UserEntityConfiguration : IEntityTypeConfiguration<AppUserEntity>
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
+        public void Configure(EntityTypeBuilder<AppUserEntity> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.UserName).IsRequired().HasMaxLength(50);

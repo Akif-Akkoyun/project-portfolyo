@@ -7,6 +7,7 @@ namespace PortfolyoApp.Auth.Api.Data
     {
         public static async Task SeedAsync(DbContext context)
         {
+            string password = BCrypt.Net.BCrypt.HashPassword("1234");
             var adminRole = new RoleEntity
             {
                 Name = "Admin",
@@ -24,7 +25,7 @@ namespace PortfolyoApp.Auth.Api.Data
                     UserName = "Akif",
                     UserSurName = "Akkoyun",
                     Email = "akifakkoyun09@gmail.com",
-                    PasswordHash = "1234",
+                    PasswordHash = password,
                     CreatedAt = DateTime.Now,
                     RoleId = adminRole.Id,
                 },
@@ -33,7 +34,7 @@ namespace PortfolyoApp.Auth.Api.Data
                     UserName = "Jane",
                     UserSurName = "Doe",
                     Email = "jane@gmail.com",
-                    PasswordHash = "123456",
+                    PasswordHash = password,
                     RoleId = commenterRole.Id,
                     CreatedAt = DateTime.Now
                 },
@@ -42,7 +43,7 @@ namespace PortfolyoApp.Auth.Api.Data
                     UserName = "Alice",
                     UserSurName = "Doe",
                     Email = "alice@gmail.com",
-                    PasswordHash = "123456",
+                    PasswordHash = password,
                     RoleId = commenterRole.Id,
                     CreatedAt = DateTime.Now
                 }
