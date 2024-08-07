@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.DTOs.Auth;
+using PortfolyoApp.Business.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PortfolyoApp.Business.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -19,7 +20,7 @@ namespace PortfolyoApp.Business.Services
         {
             _httpClientFactory = httpClientFactory;
         }
-        private HttpClient Client => _httpClientFactory.CreateClient("AuthApi");
+        private HttpClient Client => _httpClientFactory.CreateClient("auth-api");
 
         public async Task<Result<AuhtTokenDTO>> LoginAsync(LoginDTO loginDTO)
         {
@@ -35,9 +36,9 @@ namespace PortfolyoApp.Business.Services
                 return Result<AuhtTokenDTO>.Unavailable();
             }
 
-            return Result<AuhtTokenDTO>.Success(tokenDto);
+            return Result.Success(tokenDto);
         }
-        public async Task<List<RegisterDTO>> RegistersAsync(RegisterDTO registerDTO)
+        public async Task<Result> RegistersAsync(RegisterDTO registerDTO)
         {
             var response = await Client.PostAsJsonAsync("api/v1/auth/register",registerDTO);
             if (!response.IsSuccessStatusCode)
@@ -46,16 +47,16 @@ namespace PortfolyoApp.Business.Services
             }
             var users = await response
                     .Content
-                    .ReadFromJsonAsync<List<RegisterDTO>>()
+                    .ReadFromJsonAsync<Result<RegisterDTO>>()
                     ?? throw new InvalidOperationException("Fail ");
-            return users;
+            return Result.Success();
         }
-        public async Task<Result<ForgotPasswordDTO>> ResetPasswordAsync(ForgotPasswordDTO forgotPasswordDTO)
+        public async Task<Result<ForgotPasswordDTO>> ForgotPasswordAsync(ForgotPasswordDTO forgotPasswordDTO)
         {
-            var response = await Client.PutAsJsonAsync("api/v1/auth/forgot-password", forgotPasswordDTO);
+            var response = await Client.PostAsJsonAsync("api/v1/auth/forgot-password", forgotPasswordDTO);
             if (!response.IsSuccessStatusCode)
             {
-                throw new InvalidOperationException("Register request was not successful");
+                throw new InvalidOperationException("Mail don't send");
             }
 
             var repass = await response.Content.ReadFromJsonAsync<ForgotPasswordDTO>();
@@ -66,9 +67,9 @@ namespace PortfolyoApp.Business.Services
 
             return Result<ForgotPasswordDTO>.Success(repass);
         }
-        public async Task<Result<ResetPasswordDTO>> ResetPasswordAsync(ResetPasswordDTO resetPasswordDTO)
+        public async Task<Result<ResetPasswordDTO>> RenewPasswordAsync(ResetPasswordDTO resetPasswordDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/v1/auth/reset-password", resetPasswordDTO);
+            var response = await Client.PostAsJsonAsync("api/v1/auth/renew-password", resetPasswordDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("Register request was not successful");

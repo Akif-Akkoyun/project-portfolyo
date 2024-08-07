@@ -9,13 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using PortfolyoApp.Business.DTOs.Mail;
+using PortfolyoApp.Business.Services.Abstract;
 
 namespace PortfolyoApp.Business.Services
 {
-    public interface IMailService
-    {
-        Task<Result> SendMailAsync(MailSendDTO mailSendDto);
-    }
     public class MailService : IMailService
     {
         private readonly IConfiguration _config;

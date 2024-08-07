@@ -2,7 +2,10 @@
  	duration: 800,
  	easing: 'slide'
  });
-
+document.getElementById("login-register-button").addEventListener("click", function () {
+	var homeSection = document.getElementById("home-section");
+	homeSection.style.display = "none";
+});
 (function($) {
 
 	"use strict";

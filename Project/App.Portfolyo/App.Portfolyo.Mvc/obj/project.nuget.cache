@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "F50SYHNipD4=",
+  "dgSpecHash": "qhzG31gGlGQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\PortfolyoApp.Mvc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\akifa\\.nuget\\packages\\ardalis.result\\9.1.0\\ardalis.result.9.1.0.nupkg.sha512",
+    "C:\\Users\\akifa\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\akifa\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\akifa\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\akifa\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",

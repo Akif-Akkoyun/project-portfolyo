@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PortfolyoApp.Business.Services;
+using PortfolyoApp.Business.Services.Abstract;
 using PortfolyoApp.Data.Infrastructure;
 using System;
 
@@ -16,7 +17,7 @@ namespace PortfolyoApp.Auth.Api.Data
             });
 
             services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddTransient<IMailService, MailService>();
+            services.AddScoped<IMailService, MailService>();
         }
     }
 }
