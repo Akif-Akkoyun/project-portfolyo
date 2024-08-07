@@ -25,8 +25,9 @@ using FluentValidation;
 using PortfolyoApp.Business.DTOs.Mail;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using PortfolyoApp.Business.Services;
 using Microsoft.VisualBasic;
+using PortfolyoApp.Data.Infrastructure;
+using PortfolyoApp.Business.Services.Abstract;
 
 namespace PortfolyoApp.Auth.Api.Controllers
 {
@@ -104,7 +105,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             {
                 To = [user.Email],
                 Subject = "Şifre Sıfırlama",
-                Body = $"Merhaba {user.UserName.ToUpper()}, <br> Şifrenizi sıfırlamak için <a href='https://localhost:5001/reset-password/{user.RefreshPasswordToken}'>tıklayınız</a>",
+                Body = $"Merhaba {user.UserName.ToUpper()},<br>Your reset password code: <strong>{user.RefreshPasswordToken}</strong>.</br>",
                 IsHtml = true
             };
 
@@ -120,71 +121,34 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return Result.Success();
         }
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        [HttpPost("renew-password")]
+        public async Task<Result> RenewPassword(ResetPasswordDTO resetPasswordDto)
         {
+            var validationResult = await ValidateModelAsync(resetPasswordDto);
+            if (!validationResult.IsSuccess)
+            {
+                return validationResult;
+            }
+
             var user = await _authRepository.GetAll<UserEntity>()
-                .Include(u => u.Role)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(u =>
-                u.RefreshPasswordToken == resetPasswordDTO.Token
-                && u.Email == resetPasswordDTO.Email);
+                .SingleOrDefaultAsync(x =>
+                    x.RefreshPasswordToken == resetPasswordDto.Token
+                    && x.Email == resetPasswordDto.Email);
 
             if (user is null)
             {
-                return NotFound("Kullanıcı Bulunamadı !!");
+                return Result.NotFound();
             }
 
-            user.PasswordHash = Hasher.HashPassword(resetPasswordDTO.PasswordHash);
+            user.PasswordHash = Hasher.HashPassword(resetPasswordDto.PasswordHash);
             user.RefreshPasswordToken = null;
 
             await _authRepository.Update(user);
 
-            return Ok(user);
+            return Result.Success();
         }
-        public async Task<Result<RefreshTokenResulttDTO>> RefreshToken(RefreshTokenRequestDTO refreshTokenRequestDto)
-        {
-            var validate = await ValidateModelAsync(refreshTokenRequestDto);
-            if (!validate.IsSuccess)
-            {
-                return validate;
-            }
-            JwtSecurityToken jwt;
 
-            try
-            {
-                jwt = new JwtSecurityTokenHandler().ReadJwtToken(refreshTokenRequestDto.Token);
-            }
-            catch (Exception)
-            {
-                return Result.Invalid(new ValidationError("Token is not valid"));
-            }
 
-            var userId = jwt.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value;
-
-            if (!int.TryParse(userId ?? string.Empty, out var id))
-            {
-                return Result.Invalid(new ValidationError("Token is not valid"));
-            }
-
-            var user = await _authRepository.GetAll<UserEntity>()
-                .Include(u => u.Role)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user is null)
-            {
-                return Result.Invalid(new ValidationError("User not found"));
-            }
-
-            var refreshToken = new RefreshTokenResulttDTO
-            {
-                Token = GenerateToken(user)
-            };
-
-            return Result.Success(refreshToken);
-
-        }
         [HttpPost("logout")]
         public Task<IActionResult> Logout()
         {
