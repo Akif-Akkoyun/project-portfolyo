@@ -1,8 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model List<UserViewModel>
+
+@{
+    ViewData["Title"] = "Admin Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <br />
+    <h2>User List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <label>ID</label>
+                </th>
+                <th>
+                    <label>Name</label>
+                </th>
+                <th>
+                    <label>Surname</label>
+                </th>
+                <th>
+                    <label>Email</label>
+                </th>
+                <th>
+                    <label>Role</label>
+                </th>
+                <th>
+                    <label>Created At</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.UserSurName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    <td>@user.CreatedAt</td>
+                    <td>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

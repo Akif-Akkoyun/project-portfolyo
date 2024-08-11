@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ardalis.Result;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using PortfolyoApp.Business.Services.Abstract;
 using PortfolyoApp.Data.Infrastructure;
 using PortfolyoApp.Mvc.Models;
 using ServiceStack.Auth;
+using ServiceStack.Script;
 
 namespace PortfolyoApp.Mvc.Controllers
 {
@@ -26,15 +28,12 @@ namespace PortfolyoApp.Mvc.Controllers
             {
                 return View(loginViewModel);
             }
-            ViewBag.ShowSlider = "Login";
-            var source = mapper.Map<LoginViewModel, LoginDTO>(loginViewModel);
+            var dto = mapper.Map<LoginDTO>(loginViewModel);
 
-            var loginDTO = new LoginDTO
-            {
-                Email = loginViewModel.Email,
-                PasswordHash = loginViewModel.Password
-            };
-            var result = await service.LoginAsync(loginDTO);
+            
+            var result = await service.LoginAsync(dto);
+
+            Response.Cookies.Append("auth-token", result.Value.Token);
 
             return RedirectToAction("Index", "Home");
         }

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortfolyoApp.Auth.Api.Data;
 using PortfolyoApp.Auth.Api.Data.Entites;
@@ -9,12 +6,7 @@ using PortfolyoApp.Business.DTOs;
 using System.Security.Claims;
 using PortfolyoApp.Business.DTOs.Auth;
 using System.Data;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity.Data;
 using Ardalis.Result;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -23,10 +15,6 @@ using ImTools;
 using Hasher = BCrypt.Net.BCrypt;
 using FluentValidation;
 using PortfolyoApp.Business.DTOs.Mail;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using Microsoft.VisualBasic;
-using PortfolyoApp.Data.Infrastructure;
 using PortfolyoApp.Business.Services.Abstract;
 
 namespace PortfolyoApp.Auth.Api.Controllers
@@ -202,6 +190,24 @@ namespace PortfolyoApp.Auth.Api.Controllers
             }
 
             return Result.Success();
+        }
+        [HttpGet("UserList")]
+        public async Task<IActionResult> UserList()
+        {
+            var users = await _authRepository.GetAll<UserEntity>().Include(u => u.Role).ToListAsync();
+
+            var userDtos = users.Select(u => new UserDTO
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                UserSurName = u.UserSurName,
+                Email = u.Email,
+                PasswordHash = u.PasswordHash,
+                Role = u.Role.Name,
+                CreatedAt = DateTime.UtcNow
+            }).ToList();
+
+            return Ok(userDtos);
         }
     }
 }

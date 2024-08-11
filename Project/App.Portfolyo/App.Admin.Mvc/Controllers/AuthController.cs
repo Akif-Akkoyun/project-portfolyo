@@ -2,45 +2,44 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using AutoMapper;
+using PortfolyoApp.Business.DTOs.Auth;
+using ServiceStack;
+using PortfolyoApp.Admin.Mvc.Models;
+using PortfolyoApp.Business.Services.Abstract;
+using PortfolyoApp.Auth.Api.Data.Entites;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(IMapper mapper,IAuthService service) : Controller
     {
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult Login()
         {
             return View();
         }
-        private async Task DoLoginAsync(UserEntity user)
+        [HttpGet]
+        public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return;
+                return View(loginViewModel);
             }
+            var source = mapper.Map<LoginViewModel, LoginDTO>(loginViewModel);
 
-            var claims = new List<Claim>
+            var loginDTO = new LoginDTO
             {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Name, user.UserSurName),
-                new(ClaimTypes.Surname, user.UserSurName),
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.Role.Name),
-                new("RoleId", user.RoleId.ToString()),
+                Email = loginViewModel.Email,
+                PasswordHash = loginViewModel.Password
             };
+            var result = await service.LoginAsync(loginDTO);
 
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-            };
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
+            return RedirectToAction("Index", "Home");
         }
-        private async Task DoLogoutAsync()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Logout();
+            return RedirectToAction("Login", "Auth");
         }
-    }
+    }        
 }

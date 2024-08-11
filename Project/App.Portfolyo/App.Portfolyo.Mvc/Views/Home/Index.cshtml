@@ -1,4 +1,7 @@
-﻿@{
+﻿@using PortfolyoApp.Mvc.Models
+@model List<AboutMeViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -17,15 +20,18 @@
                     <div class="col-md-12 heading-section ftco-animate">
                         <h1 class="big">About</h1>
                         <h2 class="mb-4">About Me</h2>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                        <ul class="about-info mt-4 px-md-0 px-2">
-                            <li class="d-flex"><span>Name:</span> <span>Akif Akkoyun</span></li>
-                            <li class="d-flex"><span>Date of birth:</span> <span>January 01, 1997</span></li>
-                            <li class="d-flex"><span>Address:</span> <span>Istanbul Kadıköy Turkey</span></li>
-                            <li class="d-flex"><span>Zip code:</span> <span>34744</span></li>
-                            <li class="d-flex"><span>Email:</span> <span>akifakkoyun09@gmail.com</span></li>
-                            <li class="d-flex"><span>Phone: </span> <span>0 (531) 407 74 75</span></li>
-                        </ul>
+                        @foreach (var item in Model)
+                        {
+                            <p>@item.Introduction</p>
+                            <ul class="about-info mt-4 px-md-0 px-2">
+                                <li class="d-flex"><span>Name:</span> <span>@item.Name</span></li>
+                                <li class="d-flex"><span>Date of birth:</span> <span>@item.DateOfbirth</span></li>
+                                <li class="d-flex"><span>Address:</span> <span>@item.Address</span></li>
+                                <li class="d-flex"><span>Zip code:</span> <span>@item.ZipCode</span></li>
+                                <li class="d-flex"><span>Email:</span> <span>@item.Email</span></li>
+                                <li class="d-flex"><span>Phone: </span> <span>@item.PhoneNumber</span></li>
+                            </ul>
+                        }
                     </div>
                 </div>
                 <div class="counter-wrap ftco-animate d-flex mt-md-3">

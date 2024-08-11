@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.DTOs.Auth;
 
 namespace PortfolyoApp.Business.Services.Abstract
@@ -9,5 +10,6 @@ namespace PortfolyoApp.Business.Services.Abstract
         Task<Result> RegistersAsync(RegisterDTO registerDTO);
         Task<Result<ForgotPasswordDTO>> ForgotPasswordAsync(ForgotPasswordDTO forgotPasswordDTO);
         Task<Result<ResetPasswordDTO>> RenewPasswordAsync(ResetPasswordDTO resetPasswordDTO);
+        Task<Result> Logut();
     }
 }
