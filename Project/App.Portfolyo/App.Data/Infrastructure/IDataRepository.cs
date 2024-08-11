@@ -15,7 +15,7 @@ namespace PortfolyoApp.Data.Infrastructure
         Task<T> Update<T>(T entity) where T : EntityBase;
         Task<T> Delete<T>(T entity) where T : EntityBase;
     }
-    internal class DataRepository (DbContext context) : IDataRepository
+    public class DataRepository (DbContext context) : IDataRepository
     {
         public IQueryable<T> GetAll<T>() where T : EntityBase
         {
@@ -44,18 +44,7 @@ namespace PortfolyoApp.Data.Infrastructure
         }
         public async Task<T> Update<T>(T entity) where T : EntityBase
         {
-            if (entity.Id == default)
-            {
-                throw new ArgumentException("Entity ID cannot be the default value.", nameof(entity));
-            }
-
-            var dbEntity = await GetById<T>(entity.Id);
-            if (dbEntity is null)
-            {
-                throw new KeyNotFoundException($"Entity with ID {entity.Id} not found.");
-            }
-
-            context.Set<T>().Update(entity);
+            context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return entity;
         }

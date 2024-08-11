@@ -83,5 +83,30 @@ namespace PortfolyoApp.Business.Services
 
             return Result<ResetPasswordDTO>.Success(repass);
         }
+        public async Task<Result> LogoutAsync()
+        {
+            var response = await Client.PostAsync("api/v1/auth/logout", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("Logout request was not successful");
+            }
+
+            return Result.Success();
+        }
+        public async Task<List<UserDTO>> UserListAsync()
+        {
+            var response = await Client.GetAsync("api/v1/auth/UserList");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<List<UserDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success(responsObj);
+        }
+        public Task<Result> Logut()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace PortfolyoApp.Business.DTOs
         public string UserSurName { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string PasswordHash { get; set; } = default!;
+        public string Role { get; set; } = default!;
         public int RoleId { get; set; } = default!;
         public DateTime CreatedAt { get; set; }
     }

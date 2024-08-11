@@ -8,14 +8,11 @@ namespace PortfolyoApp.Data.Entities
         public string Introduction { get; set; } = default!;
         public string ImageUrl1 { get; set; } = default!;
         public string Name { get; set; } = default!;
-        public DateTime DateOfbirth { get; set; }
+        public string DateOfbirth { get; set; }= default!;
         public string Address { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;
-
-
-        //Navigation Property
-        public AppUserEntity User { get; set; } = default!;
+        public int ZipCode { get; set; }
     }
     internal class AboutMeConfiguration : IEntityTypeConfiguration<AboutMeEntity>
     {
@@ -25,10 +22,11 @@ namespace PortfolyoApp.Data.Entities
             builder.Property(x => x.Introduction).IsRequired().HasMaxLength(255);
             builder.Property(x => x.ImageUrl1).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.DateOfbirth).IsRequired();
+            builder.Property(x => x.DateOfbirth).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Address).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(255);
             builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ZipCode).IsRequired();
         }
     }
 }

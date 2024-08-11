@@ -26,9 +26,14 @@ namespace PortfolyoApp.Data.Infrastructure
         //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.Entity<UserEntity>().HasData(users);
-            //modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
+            modelBuilder.ApplyConfiguration(new ExperiencesConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectsConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactMessagesConfiguration());
+            modelBuilder.ApplyConfiguration(new EducationsConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonalInfoConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
         }
     }
 }
