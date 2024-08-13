@@ -7,14 +7,15 @@ namespace PortfolyoApp.Data.Entities
     {
         public string Degree { get; set; } = string.Empty!;
         public string School { get; set; } = string.Empty!;
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int StartDate { get; set; } 
+        public int EndDate { get; set; }
         public string Description { get; set; } = string.Empty!;
     }
     internal class EducationsConfiguration : IEntityTypeConfiguration<EducationsEntity>
     {
         public void Configure(EntityTypeBuilder<EducationsEntity> builder)
         {
+            builder.HasKey(x => x.Id);
             builder.Property(e => e.Degree)
                 .IsRequired()
                 .HasMaxLength(50);

@@ -125,6 +125,20 @@ namespace PortfolyoApp.Data
             };
             db.Set<ServiceEntity>().AddRange(services);
             await db.SaveChangesAsync();
+            List<EducationsEntity> educations = new()
+            {
+                new EducationsEntity
+                {
+                    Degree = "High School",
+                    School = "Ege College Anatolian High School",
+                    StartDate = 2012,
+                    EndDate = 2016,
+                    Description = "I graduated from Kadıköy Anatolian High School in 2015",
+                    CreatedAt = DateTime.Now
+                }
+            };
+            db.Set<EducationsEntity>().AddRange(educations);
+            await db.SaveChangesAsync();
         }        
     }
 }

@@ -1,0 +1,76 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model List<EducationViewModel>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Education</h2>
+            <a id="addbutton" class="btn btn-info" asp-action="AddEducation" asp-controller="Education">Add</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            School Name
+                        </th>
+                        <th>
+                            Department
+                        </th>
+                        <th>
+                            Start Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Degree
+                            </td>
+                            <td>
+                                @item.School
+                            </td>
+                            <td>
+                                @item.StartDate
+                            </td>
+                            <td>
+                                @item.EndDate
+                            </td>
+                            <td>
+                                @item.Description
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="Education" asp-action="EditEducation" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-danger" asp-controller="Education" asp-action="DeleteEducation" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #addbutton {
+        position: relative;
+        bottom: 10px;
+        left: 990px;
+    }
+</style>
