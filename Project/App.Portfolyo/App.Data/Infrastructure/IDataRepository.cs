@@ -12,7 +12,7 @@ namespace PortfolyoApp.Data.Infrastructure
         IQueryable<T> GetAll<T>() where T : EntityBase;
         Task<T?> GetById<T>(long id) where T : EntityBase;
         Task<T> Add<T>(T entity) where T : EntityBase;
-        Task<T> Update<T>(T entity) where T : EntityBase;
+        Task<T?> Update<T>(T entity) where T : EntityBase;
         Task<T> Delete<T>(T entity) where T : EntityBase;
     }
     public class DataRepository (DbContext context) : IDataRepository
@@ -42,10 +42,24 @@ namespace PortfolyoApp.Data.Infrastructure
         {
             return await context.Set<T>().FindAsync(id);
         }
-        public async Task<T> Update<T>(T entity) where T : EntityBase
+        public async Task<T?> Update<T>(T entity) where T : EntityBase
         {
-            context.Entry(entity).State = EntityState.Modified;
+            if (entity.Id == default)
+            {
+                return null;
+            }
+
+            var dbEntity = await GetById<T>(entity.Id);
+            if (dbEntity == null)
+            {
+                return null;
+            }
+
+            entity.CreatedAt = dbEntity.CreatedAt;
+
+            context.Set<T>().Update(entity);
             await context.SaveChangesAsync();
+
             return entity;
         }
     }

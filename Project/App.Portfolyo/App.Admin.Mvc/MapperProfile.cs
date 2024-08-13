@@ -16,6 +16,9 @@ namespace PortfolyoApp.Admin.Mvc
                 .ReverseMap();
             CreateMap<LoginViewModel, LoginDTO>()
                 .ReverseMap();
+            CreateMap<ExperienceViewModel, ExperienceDTO>().
+                ReverseMap();
+
         }
     }
 }

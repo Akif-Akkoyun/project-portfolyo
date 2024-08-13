@@ -1,6 +1,4 @@
-﻿@using PortfolyoApp.Mvc.Models
-@model List<AboutMeViewModel>
-
+﻿
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -15,39 +13,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
-                <div class="row justify-content-start pb-3">
-                    <div class="col-md-12 heading-section ftco-animate">
-                        <h1 class="big">About</h1>
-                        <h2 class="mb-4">About Me</h2>
-                        @foreach (var item in Model)
-                        {
-                            <p>@item.Introduction</p>
-                            <ul class="about-info mt-4 px-md-0 px-2">
-                                <li class="d-flex"><span>Name:</span> <span>@item.Name</span></li>
-                                <li class="d-flex"><span>Date of birth:</span> <span>@item.DateOfbirth</span></li>
-                                <li class="d-flex"><span>Address:</span> <span>@item.Address</span></li>
-                                <li class="d-flex"><span>Zip code:</span> <span>@item.ZipCode</span></li>
-                                <li class="d-flex"><span>Email:</span> <span>@item.Email</span></li>
-                                <li class="d-flex"><span>Phone: </span> <span>@item.PhoneNumber</span></li>
-                            </ul>
-                        }
-                    </div>
-                </div>
-                <div class="counter-wrap ftco-animate d-flex mt-md-3">
-                    <div class="text">
-                        <p class="mb-4">
-                            <span class="number" data-number="120">0</span>
-                            <span>Project complete</span>
-                        </p>
-                        <p><a href="#" class="btn btn-primary py-3 px-3">Download CV</a></p>
-                    </div>
-                </div>
-            </div>
+            <vc:about-me/>
         </div>
     </div>
 </section>
-
 
 <section class="ftco-section ftco-no-pb" id="resume-section">
     <div class="container">
@@ -58,49 +27,7 @@
                 <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2014-2015</span>
-                    <h2>Master Degree of Design</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2014-2015</span>
-                    <h2>Bachelor's Degree of C.A</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2014-2015</span>
-                    <h2>Diploma in Computer</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2014-2015</span>
-                    <h2>Art &amp; Creative Director</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2014-2015</span>
-                    <h2>Wordpress Developer</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-                <div class="resume-wrap ftco-animate">
-                    <span class="date">2017-2018</span>
-                    <h2>UI/UX Designer</h2>
-                    <span class="position">Cambridge University</span>
-                    <p class="mt-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                </div>
-            </div>
-        </div>
+        <vc:experiance />
         <div class="row justify-content-center mt-5">
             <div class="col-md-6 text-center ftco-animate">
                 <p><a href="#" class="btn btn-primary py-4 px-5">Download CV</a></p>
