@@ -7,8 +7,8 @@ namespace PortfolyoApp.Data.Entities
     {
         public string Title { get; set; } = default!;
         public string Company { get; set; } = default!;
-        public DateTime StartDate { get; set; }
-        public DateTime EndtDate { get; set; }
+        public string StartDate { get; set; } = default!;
+        public string EndtDate { get; set; } = default!;
         public string Description { get; set; } = default!;
     }
     internal class ExperiencesConfiguration : IEntityTypeConfiguration<ExperiencesEntity>
@@ -18,9 +18,9 @@ namespace PortfolyoApp.Data.Entities
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Company).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.StartDate).IsRequired();
-            builder.Property(x => x.EndtDate).IsRequired();
-            builder.Property(x => x.Description).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.StartDate).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.EndtDate).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Description).IsRequired().HasMaxLength(1000);
         }
     }
 }

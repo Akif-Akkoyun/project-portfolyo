@@ -29,6 +29,47 @@ namespace PortfolyoApp.Data
             };
             db.Set<AboutMeEntity>().AddRange(aboutMeEntities);
             await db.SaveChangesAsync();
+            List<ExperiencesEntity> experiencesEntities = new()
+            {
+                new ExperiencesEntity
+                {
+                    Title = "Software Intern",
+                    Company = "Inpol Technology Services ",
+                    StartDate = "Jun 2019",
+                    EndtDate = "Sep 2019",
+                    Description = "This experience is designed to integrate theoretical knowledge with practical experience. This opportunity allowed me to observe the in real-world settings.",
+                    CreatedAt = DateTime.Now
+                },
+                new ExperiencesEntity
+                {
+                    Title = "IT Support Assistant Specialist",
+                    Company = "Tariş",
+                    StartDate = "Feb 2020",
+                    EndtDate = "Dec 2021",
+                    Description = "Technical Assistance: Offer first-line support to users for IT-related issues, including hardware, software, and network problems. Assist in troubleshooting and resolving basic technical issues.",
+                    CreatedAt = DateTime.Now
+                },
+                new ExperiencesEntity
+                {
+                    Title = "IT Support Specialist",
+                    Company = "PerkinElmer",
+                    StartDate = "Jan 2022",
+                    EndtDate = "Jun 2023",
+                    Description = "Customer Service: Deliver high-quality customer service by effectively communicating with users, managing expectations, and following up to ensure issues are resolved to satisfaction. Provide first-line support to end-users via phone, email, and in-person for technical issues related to hardware, software, and network systems.",
+                    CreatedAt = DateTime.Now
+                },
+                new ExperiencesEntity
+                {
+                    Title = "Career transition",
+                    Company = "Career Break",
+                    StartDate = "Aug 2023",
+                    EndtDate = "Present",
+                    Description = "I decided to evolve my career from IT Support to becoming a Software Developer. That's why I've started my training with Siliconmade Academy",
+                    CreatedAt = DateTime.Now
+                }
+            };
+            db.Set<ExperiencesEntity>().AddRange(experiencesEntities);
+            await db.SaveChangesAsync();
         }        
     }
 }

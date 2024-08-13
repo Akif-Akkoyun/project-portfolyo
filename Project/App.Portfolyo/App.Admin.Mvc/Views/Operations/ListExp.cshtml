@@ -1,0 +1,66 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model List<ExperienceViewModel>
+
+
+<div class="container">
+    <br />
+    <h2>Experience List</h2>
+    <a id="addbutton" class="btn btn-info" asp-action="AddExp" asp-controller="Operations">Add</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <label>ID</label>
+                </th>
+                <th>
+                    <label>StartDate</label>
+                </th>
+                <th>
+                    <label>EndtDate</label>
+                </th>
+                <th>
+                    <label>Title</label>
+                </th>
+                <th>
+                    <label>Company</label>
+                </th>
+                <th>
+                    <label>Description</label>
+                </th>
+                <th>
+                    <label>Create At</label>
+                </th>
+                <th>
+                    <label>Operations</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.StartDate</td>
+                    <td>@user.EndtDate</td>
+                    <td>@user.Title</td>
+                    <td>@user.Company</td>
+                    <td>@user.Description</td>
+                    <td>@user.CreatedAt</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Operations" asp-action="EditExp" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Operations" asp-action="DeleteExp" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    #addbutton{
+        position: relative;
+        bottom : 10px;
+        left : 990px;
+    }
+</style>
