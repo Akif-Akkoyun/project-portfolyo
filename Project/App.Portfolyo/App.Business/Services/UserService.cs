@@ -23,6 +23,10 @@ namespace PortfolyoApp.Business.Services
         Task<Result<ServiceDTO>> AddServiceAsync(ServiceDTO serviceDTO);
         Task<Result<ServiceDTO>> EditServiceAsync(ServiceDTO serviceDTO,long id);
         Task<Result> DeleteServiceAsync(long id);
+        Task<List<EducationsDTO>> ListAsyncEducation();
+        Task<Result<EducationsDTO>> AddAsyncEducation(EducationsDTO educationsDTO);
+        Task<Result<EducationsDTO>> EditAsyncEducation(EducationsDTO educationsDTO, long id);
+        Task<Result> DeleteAsyncEducation(long id);
     }
     public class UserService(IHttpClientFactory httpClientFactory) : IUserService
     {
@@ -130,6 +134,51 @@ namespace PortfolyoApp.Business.Services
         public async Task<Result> DeleteServiceAsync(long id)
         {
             var response = await Client.DeleteAsync($"api/Services/delete/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            return Result.Success();
+        }
+
+        public async Task<List<EducationsDTO>> ListAsyncEducation()
+        {
+            var response = await Client.GetAsync("api/Educations/List");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<List<EducationsDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success(responsObj);
+        }
+        public async Task<Result<EducationsDTO>> AddAsyncEducation(EducationsDTO educationsDTO)
+        {
+            var response = await Client.PostAsJsonAsync("api/Educations/add", educationsDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<EducationsDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<Result<EducationsDTO>> EditAsyncEducation(EducationsDTO educationsDTO, long id)
+        {
+            var response = await Client.PostAsJsonAsync($"api/Educations/edit/{id}", educationsDTO);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<EducationsDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<Result> DeleteAsyncEducation(long id)
+        {
+            var response = await Client.DeleteAsync($"api/Educations/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {

@@ -20,6 +20,8 @@ namespace PortfolyoApp.Admin.Mvc
                 ReverseMap();
             CreateMap<ServiceViewModel, ServiceDTO>()
                 .ReverseMap();
+            CreateMap<EducationViewModel, EducationsDTO>()
+                .ReverseMap();
 
         }
     }

@@ -1,0 +1,31 @@
+﻿@using PortfolyoApp.Mvc.Models
+
+@model List<EducationViewModel>
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i += 2)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="resume-wrap ftco-animate">
+                    <span class="date">@Model[i].StartDate - @Model[i].EndDate</span>
+                    <h2>@Model[i].School</h2>
+                    <span class="position">@Model[i].Degree</span>
+                    <p class="mt-4">@Model[i].Description</p>
+                </div>
+            </div>
+
+            @if (i + 1 < Model.Count)
+            {
+                <div class="col-md-6">
+                    <div class="resume-wrap ftco-animate">
+                        <span class="date">@Model[i + 1].StartDate - @Model[i + 1].EndDate</span>
+                        <h2>@Model[i + 1].School</h2>
+                        <span class="position">@Model[i + 1].Degree</span>
+                        <p class="mt-4">@Model[i + 1].Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
