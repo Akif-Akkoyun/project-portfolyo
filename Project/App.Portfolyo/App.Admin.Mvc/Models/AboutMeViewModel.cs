@@ -23,5 +23,6 @@ namespace PortfolyoApp.Admin.Mvc.Models
         public string PhoneNumber { get; set; } = default!;
         [Required]
         public int ZipCode { get; set; }
+        public DateTime CreatedAt { get; set; } = default!;
     }
 }

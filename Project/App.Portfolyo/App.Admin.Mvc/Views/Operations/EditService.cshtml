@@ -1,0 +1,40 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+@model ServiceViewModel
+
+<div id="size">
+    <h2 class="text-center">Update Experience </h2>
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Success
+        </div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+    <form asp-action="EditService" asp-controller="Operations" asp-route-id="@Context.GetRouteValue("id")" method="post">
+
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <textarea asp-for="Name" class="form-control" id="a"></textarea>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-forw="Id" />
+        <br />
+        <div>
+            <button type="submit" class="btn btn-primary">Update Experience</button>
+        </div>
+    </form>
+</div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

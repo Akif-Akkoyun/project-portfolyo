@@ -70,6 +70,61 @@ namespace PortfolyoApp.Data
             };
             db.Set<ExperiencesEntity>().AddRange(experiencesEntities);
             await db.SaveChangesAsync();
+            List<ServiceEntity> services = new()
+            {
+                new ServiceEntity
+                {
+                    Name = "C#",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "HTML",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "JavaScript",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "MsOffice",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = ".Net Mvc",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = ".Net Api",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "Entity Framework Core",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "Automapper",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "Fluent Validation",
+                    CreatedAt = DateTime.Now
+                },
+                new ServiceEntity
+                {
+                    Name = "MsSS Management Studio",
+                    CreatedAt = DateTime.Now
+                },
+            };
+            db.Set<ServiceEntity>().AddRange(services);
+            await db.SaveChangesAsync();
         }        
     }
 }

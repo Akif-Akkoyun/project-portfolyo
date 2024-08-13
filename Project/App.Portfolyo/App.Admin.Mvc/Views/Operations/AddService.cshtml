@@ -1,0 +1,45 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model ServiceViewModel
+
+
+
+<div id="size">
+    <div class="container">
+        <div>
+            <h2 class="text-center">Add Experience</h2>
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.Success
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+            <form asp-action="AddService" asp-controller="Operations" method="post">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <br />
+                <div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

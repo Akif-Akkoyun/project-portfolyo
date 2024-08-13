@@ -1,8 +1,8 @@
 ﻿@using PortfolyoApp.Admin.Mvc.Models
 @model ExperienceViewModel
 
-<div>
-    <h2>Update Experience </h2>
+<div id="size">
+    <h2 class="text-center">Update Experience </h2>
     @if (ViewBag.Success != null)
     {
         <div class="alert alert-success">
@@ -49,3 +49,12 @@
         </div>
     </form>
 </div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

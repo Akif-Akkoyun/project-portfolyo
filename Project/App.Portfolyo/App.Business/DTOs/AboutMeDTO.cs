@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PortfolyoApp.Business.DTOs
 {
-    public class AboutMeDTO : EntityBase
+    public class AboutMeDTO
     {
+        public long Id { get; set; }
         public string Introduction { get; set; } = default!;
         public string ImageUrl1 { get; set; } = default!;
         public string Name { get; set; } = default!;
@@ -17,5 +18,6 @@ namespace PortfolyoApp.Business.DTOs
         public int ZipCode { get; set; }
         public string Email { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;
+        public DateTime CreatedAt { get; set; } = default!;
     }
 }
