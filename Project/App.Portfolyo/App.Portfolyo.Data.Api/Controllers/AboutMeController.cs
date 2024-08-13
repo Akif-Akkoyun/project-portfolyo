@@ -34,7 +34,7 @@ namespace PortfolyoApp.Data.Api.Controllers
 
             return Ok(abouts);
         }
-        [HttpGet("get-about")]
+        [HttpGet("list")]
         public async Task<IActionResult> GetAbout()
         {
             var abouts = await repo.GetAll<AboutMeEntity>().ToListAsync();
@@ -54,7 +54,7 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Email = u.Email,
                 Address = u.Address,
                 DateOfbirth = u.DateOfbirth,
-                CreatedAt = u.CreatedAt,
+                CreatedAt = DateTime.Now,
                 ZipCode = u.ZipCode
             }).ToList();
 

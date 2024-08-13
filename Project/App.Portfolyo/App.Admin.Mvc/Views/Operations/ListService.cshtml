@@ -1,0 +1,50 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model List<ServiceViewModel>
+
+
+<div class="container">
+    <br />
+    <h2 class="text-center">Service List</h2>
+    <a id="addbutton" class="btn btn-info" asp-action="AddService" asp-controller="Operations">Add</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <label>ID</label>
+                </th>
+                <th>
+                    <label>Name</label>
+                </th>
+                <th>
+                    <label>Create At</label>
+                </th>
+                <th>
+                    <label>Operations</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.CreatedAt</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Operations" asp-action="EditService" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Operations" asp-action="DeleteService" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    #addbutton {
+        position: relative;
+        bottom: 10px;
+        left: 990px;
+    }
+</style>

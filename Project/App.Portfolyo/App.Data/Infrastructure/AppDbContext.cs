@@ -20,7 +20,7 @@ namespace PortfolyoApp.Data.Infrastructure
         public DbSet<ProjectsEntity> Projects { get; set; } = null!;
         public DbSet<ContactMessagesEntity> ContactMassages { get; set; } = null!;
         public DbSet<EducationsEntity> Educations { get; set; } = null!;
-        public DbSet<PersonalInfoEntity> PersonalInfos { get; set; } = null!;
+        public DbSet<ServiceEntity> PersonalInfos { get; set; } = null!;
 
 
         //public DbSet<UserEntity> Users { get; set; } = null!;
@@ -32,7 +32,7 @@ namespace PortfolyoApp.Data.Infrastructure
             modelBuilder.ApplyConfiguration(new ProjectsConfiguration());
             modelBuilder.ApplyConfiguration(new ContactMessagesConfiguration());
             modelBuilder.ApplyConfiguration(new EducationsConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonalInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceEntityConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
         }
     }

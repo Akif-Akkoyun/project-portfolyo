@@ -4,9 +4,9 @@
 
 
 
-<div class="container">
+<div class="container" id="size">
     <div>
-        <h2>Add Experience</h2>
+        <h2 class="text-center">Add Experience</h2>
         @if (ViewBag.Success != null)
         {
             <div class="alert alert-success">
@@ -52,3 +52,12 @@
         </form>
     </div>
 </div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

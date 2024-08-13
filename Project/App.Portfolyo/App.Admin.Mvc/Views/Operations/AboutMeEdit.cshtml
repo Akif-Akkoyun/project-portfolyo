@@ -15,9 +15,9 @@
     </div>
 }
 
-<div class="container">
+<div class="container" id="size">
     <div>
-        <h2>Update About Me</h2>
+        <h2 class="text-center">Update About Me</h2>
         <form asp-action="AboutMeEdit" asp-controller="Operations" method="post">
             <div class="form-group">
                 <label asp-for="Introduction">Introduction</label>
@@ -61,3 +61,12 @@
         </form>
     </div>
 </div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
