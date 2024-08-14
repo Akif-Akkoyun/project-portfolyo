@@ -10,9 +10,6 @@ namespace PortfolyoApp.Data.Entities
         public string Message { get; set; } = string.Empty!;
         public string Subject { get; set; } = string.Empty!;
         public DateTime SentDate { get; set; }
-        public byte IsRead { get; set; }
-        public string Reply { get; set; } = string.Empty!;
-        public DateTime ReplyDate { get; set; }
     }
     internal class ContactMessagesConfiguration : IEntityTypeConfiguration<ContactMessagesEntity>
     {
@@ -24,9 +21,6 @@ namespace PortfolyoApp.Data.Entities
             builder.Property(x => x.Message).IsRequired().HasMaxLength(500);
             builder.Property(x => x.Subject).IsRequired().HasMaxLength(100);
             builder.Property(x => x.SentDate).IsRequired();
-            builder.Property(x => x.IsRead).IsRequired();
-            builder.Property(x => x.Reply).IsRequired().HasMaxLength(500);
-            builder.Property(x => x.ReplyDate).IsRequired();
         }
     }
 }

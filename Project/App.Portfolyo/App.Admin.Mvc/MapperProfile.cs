@@ -22,6 +22,8 @@ namespace PortfolyoApp.Admin.Mvc
                 .ReverseMap();
             CreateMap<EducationViewModel, EducationsDTO>()
                 .ReverseMap();
+            CreateMap<ContactViewModel, ContactDTO>()
+                .ReverseMap();
 
         }
     }

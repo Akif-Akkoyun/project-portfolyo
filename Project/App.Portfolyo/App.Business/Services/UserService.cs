@@ -31,6 +31,9 @@ namespace PortfolyoApp.Business.Services
         Task<Result<ProjectDTO>> AddAsyncProject(ProjectDTO projectDto);
         Task<Result<ProjectDTO>> EditAsyncProject(ProjectDTO projectDto, long id);
         Task<Result> DeleteAsyncProject(long id);
+        Task<List<ContactDTO>> ListAsyncContact();
+        Task<Result<ContactDTO>> AddAsyncContact(ContactDTO contactDTO);
+        Task<Result> DeleteContact(long id);
     }
     public class UserService(IHttpClientFactory httpClientFactory) : IUserService
     {
@@ -227,6 +230,38 @@ namespace PortfolyoApp.Business.Services
         public async Task<Result> DeleteAsyncProject(long id)
         {
             var response = await Client.DeleteAsync($"api/Project/delete/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            return Result.Success();
+        }
+        public async Task<List<ContactDTO>> ListAsyncContact()
+        {
+            var response = await Client.GetAsync("api/Contact/List");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<List<ContactDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success(responsObj);
+        }
+        public async Task<Result<ContactDTO>> AddAsyncContact(ContactDTO contactDTO)
+        {
+            var response = await Client.PostAsJsonAsync("api/Contact/add", contactDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<ContactDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<Result> DeleteContact(long id)
+        {
+            var response = await Client.DeleteAsync($"api/Contact/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
