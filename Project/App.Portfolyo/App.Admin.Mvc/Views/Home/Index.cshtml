@@ -43,8 +43,8 @@
                     <td>@user.Role</td>
                     <td>@user.CreatedAt</td>
                     <td>
-                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
-                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }

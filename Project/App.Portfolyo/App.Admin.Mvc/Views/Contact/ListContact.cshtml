@@ -1,0 +1,79 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model List<ContactViewModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">Message</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Message
+                        </th>
+                        <th>
+                            Subject
+                        </th>
+                        <th>
+                            SentDate
+                        </th>
+                        <th>
+                             CreatedAt
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.Message
+                            </td>
+                            <td>
+                                @item.Subject
+                            </td>
+                            <td>
+                                @item.SentDate
+                            </td>
+                            <td>
+                                @item.CreatedAt
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" asp-controller="Contact" asp-action="DeleteContact" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #addbutton {
+        position: relative;
+        bottom: 10px;
+        left: 990px;
+    }
+</style>

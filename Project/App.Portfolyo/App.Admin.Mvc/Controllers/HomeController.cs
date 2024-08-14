@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
+    [Authorize]
     public class HomeController(AuthService service) : Controller
     {
 
