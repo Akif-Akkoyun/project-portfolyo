@@ -14,7 +14,11 @@ namespace PortfolyoApp.Admin.Mvc.Models
         [Required]
         public string Name { get; set; } = default!;
         [Required]
-        public string DateOfbirth { get; set; } = default!;
+        public int Year { get; set; }
+        [Required]
+        public int Day { get; set; }
+        [Required]
+        public string Month { get; set; } = default!;
         [Required]
         public string Address { get; set; } = default!;
         [Required,EmailAddress]

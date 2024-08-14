@@ -1,13 +1,11 @@
 ﻿@using PortfolyoApp.Admin.Mvc.Models
-
-@model List<EducationViewModel>
-
+@model List<ProjectViewModel>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center">Education</h2>
-            <a id="addbutton" class="btn btn-primary" asp-controller="Education" asp-action="AddEducation">Add</a>
+            <h2 class="text-center">Projects</h2>
+            <a id="addbutton" class="btn btn-info" asp-action="AddProject" asp-controller="Project">Add</a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -15,19 +13,25 @@
                             ID
                         </th>
                         <th>
-                            School Name
-                        </th>
-                        <th>
-                            Department
-                        </th>
-                        <th>
-                            Start Date
-                        </th>
-                        <th>
-                            End Date
+                            Title
                         </th>
                         <th>
                             Description
+                        </th>
+                        <th>
+                            ImageUrl
+                        </th>
+                        <th>
+                            Url
+                        </th>
+                        <th>
+                            GithubUrl
+                        </th>
+                        <th>
+                            Tags
+                        </th>
+                        <th>
+                            CreatedAt
                         </th>
                         <th>
                             Actions
@@ -42,23 +46,33 @@
                                 @item.Id
                             </td>
                             <td>
-                                @item.Degree
-                            </td>
-                            <td>
-                                @item.School
-                            </td>
-                            <td>
-                                @item.StartDate
-                            </td>
-                            <td>
-                                @item.EndDate
+                                @item.Title
                             </td>
                             <td>
                                 @item.Description
                             </td>
+
                             <td>
-                                <a class="btn btn-primary" asp-controller="Education" asp-action="EditEducation" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-danger" asp-controller="Education" asp-action="DeleteEducation" asp-route-id="@item.Id">Delete</a>
+                                @item.ImageUrl
+                            </td>
+
+                            <td>
+                                @item.Url
+                            </td>
+
+                            <td>
+                                @item.GithubUrl
+                            </td>
+
+                            <td>
+                                @item.Tags
+                            </td>
+                            <td>
+                                @item.CreatedAt
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="Project" asp-action="EditProject" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-danger" asp-controller="Project" asp-action="DeleteProject" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
                     }

@@ -1,0 +1,68 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+@model ProjectViewModel
+
+
+<div id="size">
+    <div class="container">
+        <div>
+            <h2 class="text-center">Add Experience</h2>
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.Success
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+            <form asp-action="AddProject" asp-controller="Project" method="post">
+                <div class="form-group">
+                    <label asp-for="Title">Title</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl">ImageUrl</label>
+                    <input asp-for="ImageUrl" class="form-control"/>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Url">Url</label>
+                    <input asp-for="Url" class="form-control"/>
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GithubUrl">GithubUrl</label>
+                    <input asp-for="GithubUrl" class="form-control" />
+                    <span asp-validation-for="GithubUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags">Tags</label>
+                    <input asp-for="Tags" class="form-control" />
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>
+                <br />
+                <div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    #size {
+        margin-top: 50px;
+        margin-bottom: 300px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

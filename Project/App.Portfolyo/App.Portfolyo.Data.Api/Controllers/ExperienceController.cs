@@ -27,8 +27,10 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Id = u.Id,
                 Title = u.Title,
                 Company = u.Company,
-                StartDate = u.StartDate,
-                EndtDate = u.EndtDate,
+                StartMonth = u.StartMonth,
+                StartYear = u.StartYear,
+                EndMonth = u.EndMonth,
+                EndtYear = u.EndtYear,
                 Description = u.Description,
                 CreatedAt = DateTime.Now
             }).ToList().OrderByDescending(x => x.Id);
@@ -43,8 +45,10 @@ namespace PortfolyoApp.Data.Api.Controllers
             {
                 Title = experienceDTO.Title,
                 Company = experienceDTO.Company,
-                StartDate = experienceDTO.StartDate,
-                EndtDate = experienceDTO.EndtDate,
+                StartMonth = experienceDTO.StartMonth,
+                StartYear = experienceDTO.StartYear,
+                EndMonth = experienceDTO.EndMonth,
+                EndtYear = experienceDTO.EndtYear,
                 Description = experienceDTO.Description,
                 CreatedAt = DateTime.Now
             };
@@ -65,11 +69,12 @@ namespace PortfolyoApp.Data.Api.Controllers
                 return NotFound();
             }
             
-
             experiences.Title = experienceDTO.Title;
             experiences.Company = experienceDTO.Company;
-            experiences.StartDate = experienceDTO.StartDate;
-            experiences.EndtDate = experienceDTO.EndtDate;
+            experiences.StartMonth = experienceDTO.StartMonth;
+            experiences.StartYear = experienceDTO.StartYear;
+            experiences.EndMonth = experienceDTO.EndMonth;
+            experiences.EndtYear = experienceDTO.EndtYear;
             experiences.Description = experienceDTO.Description;
 
             await repo.Update(experiences);

@@ -50,8 +50,10 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
                 Id = u.Id,
                 Title = u.Title,
                 Company = u.Company,
-                StartDate = u.StartDate,
-                EndtDate = u.EndtDate,
+                EndMonth = u.EndMonth,
+                EndtYear = u.EndtYear,
+                StartMonth = u.StartMonth,
+                StartYear = u.StartYear,
                 Description = u.Description,
                 CreatedAt = DateTime.Now,
             }).ToList();
@@ -76,8 +78,10 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
             {
                 Title = experienceViewModel.Title,
                 Company = experienceViewModel.Company,
-                StartDate = experienceViewModel.StartDate,
-                EndtDate = experienceViewModel.EndtDate,
+                StartMonth = experienceViewModel.StartMonth,
+                StartYear = experienceViewModel.StartYear,
+                EndMonth = experienceViewModel.EndMonth,
+                EndtYear = experienceViewModel.EndtYear,
                 Description = experienceViewModel.Description,
                 CreatedAt = DateTime.Now
             };

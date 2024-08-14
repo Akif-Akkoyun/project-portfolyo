@@ -1,6 +1,13 @@
 ﻿@model List<AboutMeViewModel>
 
 
+<div class="col-md-6 col-lg-5 d-flex">
+    <div class="img-about img d-flex align-items-stretch">
+        <div class="overlay"></div>
+        <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(theme/akif.jpg);">
+        </div>
+    </div>
+</div>
 <div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
     <div class="row justify-content-start pb-3">
         <div class="col-md-12 heading-section ftco-animate">
@@ -11,7 +18,7 @@
                 <p>@item.Introduction</p>
                 <ul class="about-info mt-4 px-md-0 px-2">
                     <li class="d-flex"><span>Name:</span> <span>@item.Name</span></li>
-                    <li class="d-flex"><span>Date of birth:</span> <span>@item.DateOfbirth</span></li>
+                    <li class="d-flex"><span>Date of birth:</span> <span>@item.Month @item.Day, @item.Year</span></li>
                     <li class="d-flex"><span>Address:</span> <span>@item.Address</span></li>
                     <li class="d-flex"><span>Zip code:</span> <span>@item.ZipCode</span></li>
                     <li class="d-flex"><span>Email:</span> <span>@item.Email</span></li>
