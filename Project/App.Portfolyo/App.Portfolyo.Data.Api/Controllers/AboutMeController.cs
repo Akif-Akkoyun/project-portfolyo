@@ -26,7 +26,9 @@ namespace PortfolyoApp.Data.Api.Controllers
                 about.PhoneNumber = aboutMeDTO.PhoneNumber;
                 about.Email = aboutMeDTO.Email;
                 about.Address = aboutMeDTO.Address;
-                about.DateOfbirth = aboutMeDTO.DateOfbirth;
+                about.Year = aboutMeDTO.Year;
+                about.Month = aboutMeDTO.Month;
+                about.Day = aboutMeDTO.Day;
                 about.ZipCode = aboutMeDTO.ZipCode;
 
                 await repo.Update(about);
@@ -53,7 +55,9 @@ namespace PortfolyoApp.Data.Api.Controllers
                 PhoneNumber = u.PhoneNumber,
                 Email = u.Email,
                 Address = u.Address,
-                DateOfbirth = u.DateOfbirth,
+                Day = u.Day,
+                Month = u.Month,
+                Year = u.Year,
                 CreatedAt = DateTime.Now,
                 ZipCode = u.ZipCode
             }).ToList();

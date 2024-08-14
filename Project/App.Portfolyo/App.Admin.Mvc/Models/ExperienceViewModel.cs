@@ -13,9 +13,13 @@ namespace PortfolyoApp.Admin.Mvc.Models
         [Required]
         public string Company { get; set; } = default!;
         [Required]
-        public string StartDate { get; set; } = default!;
+        public int StartYear { get; set; }
         [Required]
-        public string EndtDate { get; set; } = default!;
+        public string StartMonth { get; set; } = default!;
+        [Required]
+        public string EndMonth { get; set; } = default!;
+        [Required]
+        public int EndtYear { get; set; } = default!;
         [Required]
         public string Description { get; set; } = default!;
         public DateTime CreatedAt { get; set; }

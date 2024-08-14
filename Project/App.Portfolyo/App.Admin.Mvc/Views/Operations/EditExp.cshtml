@@ -28,14 +28,50 @@
             <span asp-validation-for="Company" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="StartDate">Start Date</label>
-            <input asp-for="StartDate" class="form-control" type="date"/>
-            <span asp-validation-for="StartDate" class="text-danger"></span>
+            <label asp-for="StartMonth">Select Start Month: </label>
+            <select asp-for="StartMonth" name="StartMonth">
+                <option value="Jan">Jan</option>
+                <option value="Feb">Feb</option>
+                <option value="Mar">Mar</option>
+                <option value="Apr">Apr</option>
+                <option value="May">May</option>
+                <option value="Jun">Jun</option>
+                <option value="Jul">Jul</option>
+                <option value="Aug">Aug</option>
+                <option value="Sep">Sep</option>
+                <option value="Oct">Oct</option>
+                <option value="Nov">Nov</option>
+                <option value="Dec">Dec</option>
+            </select>
+            <span asp-validation-for="StartMonth" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EndtDate">End Date</label>
-            <input asp-for="EndtDate" class="form-control" type="date" />
-            <span asp-validation-for="EndtDate" class="text-danger"></span>
+            <label asp-for="StartYear">Enter Start Year</label>
+            <input asp-for="StartYear" class="form-control" type="number" max="2100" min="2010" step="1" step="1" />
+            <span asp-validation-for="StartYear" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndMonth">Select End Month: </label>
+            <select asp-for="EndMonth" name="StartMonth">
+                <option value="Jan">Jan</option>
+                <option value="Feb">Feb</option>
+                <option value="Mar">Mar</option>
+                <option value="Apr">Apr</option>
+                <option value="May">May</option>
+                <option value="Jun">Jun</option>
+                <option value="Jul">Jul</option>
+                <option value="Aug">Aug</option>
+                <option value="Sep">Sep</option>
+                <option value="Oct">Oct</option>
+                <option value="Nov">Nov</option>
+                <option value="Dec">Dec</option>
+            </select>
+            <span asp-validation-for="EndMonth" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndtYear">Enter End Year</label>
+            <input asp-for="EndtYear" class="form-control" type="number" max="2100" min="2010" step="1" />
+            <span asp-validation-for="EndtYear" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Description">Description</label>

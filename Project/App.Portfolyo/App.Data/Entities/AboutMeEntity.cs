@@ -8,7 +8,9 @@ namespace PortfolyoApp.Data.Entities
         public string Introduction { get; set; } = default!;
         public string ImageUrl1 { get; set; } = default!;
         public string Name { get; set; } = default!;
-        public string DateOfbirth { get; set; }= default!;
+        public int Year { get; set; }
+        public int Day { get; set; }
+        public string Month { get; set; } = default!;
         public string Address { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string PhoneNumber { get; set; } = default!;
@@ -22,7 +24,9 @@ namespace PortfolyoApp.Data.Entities
             builder.Property(x => x.Introduction).IsRequired().HasMaxLength(255);
             builder.Property(x => x.ImageUrl1).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.DateOfbirth).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.Year).IsRequired();
+            builder.Property(x => x.Month).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.Day).IsRequired();
             builder.Property(x => x.Address).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(255);
             builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(255);

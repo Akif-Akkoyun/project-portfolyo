@@ -25,7 +25,9 @@ namespace PortfolyoApp.Mvc.ViewComponents
                 PhoneNumber = u.PhoneNumber,
                 Email = u.Email,
                 Address = u.Address,
-                DateOfbirth = u.DateOfbirth,
+                Day = u.Day,
+                Month = u.Month,
+                Year = u.Year,
                 CreatedAt = u.CreatedAt,
                 ZipCode = u.ZipCode
             }).ToList();

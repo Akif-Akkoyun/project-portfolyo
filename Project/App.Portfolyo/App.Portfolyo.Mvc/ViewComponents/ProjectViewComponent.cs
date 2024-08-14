@@ -4,29 +4,29 @@ using PortfolyoApp.Mvc.Models;
 
 namespace PortfolyoApp.Mvc.ViewComponents
 {
-    public class ExperianceViewComponent(IUserService service) : ViewComponent
+    public class ProjectViewComponent(IUserService service) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var listExp = await service.ListAsyncExp();
+            var projects = await service.ListAsyncProject();
 
-            if (listExp is null)
+            if (projects is null)
             {
                 ViewBag.Message = "There is no data";
                 return View(ViewBag.Message);
             }
-            var result = listExp.Select(u => new ExperienceViewModel
+            var result = projects.Select(u => new ProjectViewModel
             {
                 Id = u.Id,
                 Title = u.Title,
-                Company = u.Company,
-                StartMonth = u.StartMonth,
-                StartYear = u.StartYear,
-                EndMonth = u.EndMonth,
-                EndtYear = u.EndtYear,
                 Description = u.Description,
+                ImageUrl = u.ImageUrl,
+                Url = u.Url,
+                GithubUrl = u.GithubUrl,
+                Tags = u.Tags,
                 CreatedAt = u.CreatedAt
             }).ToList();
+
             return View(result);
         }
     }

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="resume-wrap ftco-animate">
-                    <span class="date">@Model[i].StartDate - @Model[i].EndtDate</span>
+                    <span class="date">@Model[i].StartMonth @Model[i].StartYear - @Model[i].EndMonth @Model[i].EndtYear</span>
                     <h2>@Model[i].Title</h2>
                     <span class="position">@Model[i].Company</span>
                     <p class="mt-4">@Model[i].Description</p>
@@ -19,7 +19,7 @@
             {
                 <div class="col-md-6">
                     <div class="resume-wrap ftco-animate">
-                        <span class="date">@Model[i + 1].StartDate - @Model[i + 1].EndtDate</span>
+                        <span class="date">@Model[i + 1].StartMonth @Model[i].StartYear - @Model[i + 1].EndMonth @Model[i].EndtYear</span>
                         <h2>@Model[i + 1].Title</h2>
                         <span class="position">@Model[i + 1].Company</span>
                         <p class="mt-4">@Model[i + 1].Description</p>

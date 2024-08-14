@@ -54,7 +54,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
             };
             var result = await service.AddAsyncEducation(dto);
 
-            if (result != null) // Assuming 'result' is null if the update fails
+            if (result != null) 
             {
                 ViewBag.Success = "Başarı ile eklendi";
             }
