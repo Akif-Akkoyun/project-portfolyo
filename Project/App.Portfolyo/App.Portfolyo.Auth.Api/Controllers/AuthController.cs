@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PortfolyoApp.Auth.Api.Data;
-using PortfolyoApp.Auth.Api.Data.Entites;
 using PortfolyoApp.Business.DTOs;
 using System.Security.Claims;
 using PortfolyoApp.Business.DTOs.Auth;
@@ -11,11 +9,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using IdentityModel;
-using ImTools;
 using Hasher = BCrypt.Net.BCrypt;
 using FluentValidation;
 using PortfolyoApp.Business.DTOs.Mail;
 using PortfolyoApp.Business.Services.Abstract;
+using PortfolyoApp.Data.Entities;
+using ServiceStack.Auth;
+using PortfolyoApp.Data.Infrastructure;
 
 namespace PortfolyoApp.Auth.Api.Controllers
 {
@@ -23,33 +23,36 @@ namespace PortfolyoApp.Auth.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthRepository _authRepository;
+        private readonly IDataRepository _repo;
         private readonly IConfiguration _config;
         private readonly IServiceProvider _serviceProvider;
 
-        public AuthController(IAuthRepository auhtRepository,IConfiguration config,IServiceProvider serviceProvider)
+        public AuthController(IDataRepository repo, IConfiguration config, IServiceProvider serviceProvider)
         {
-            _authRepository = auhtRepository;
+            _repo = repo;
             _config = config;
             _serviceProvider = serviceProvider;
         }
-
+        //Admin Login
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            var user = await _authRepository.GetAll<UserEntity>()
+            var user = await _repo.GetAll<UserEntity>()
                 .Include(u => u.Role)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
+                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
             if (user is null)
             {
                 return NotFound("Kullanıcı Bulunamadı !!");
             }
-            var token = GenerateToken(user);
-
+            if (user.RoleId != 1)//RoleId 1 = "Admin"
+            {
+                return Unauthorized("Yetkisiz Giriş !!");
+            }
+            
             var tokenDto = new AuhtTokenDTO
             {
-                Token = token
+                Token = GenerateToken(user)
             };
 
             return Ok(tokenDto);
@@ -71,14 +74,14 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 RoleId = 2
             };
 
-            await _authRepository.Add(user);
+            await _repo.Add(user);
 
             return Ok(user);
         }
         [HttpPost("forgot-password")]
         public async Task<Result> ForgotPassword(ForgotPasswordDTO forgotPasswordDTO)
         {
-            var user = await _authRepository.GetAll<UserEntity>()
+            var user = await _repo.GetAll<UserEntity>()
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == forgotPasswordDTO.Email);
 
@@ -88,7 +91,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             }
 
             user.RefreshPasswordToken = Guid.NewGuid().ToString("n");
-            
+
             var mailSend = new MailSendDTO
             {
                 To = [user.Email],
@@ -105,7 +108,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             {
                 return Result.Invalid(new ValidationError("Mail could not be sent"));
             }
-            await _authRepository.Update(user);
+            await _repo.Update(user);
 
             return Result.Success();
         }
@@ -118,7 +121,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 return validationResult;
             }
 
-            var user = await _authRepository.GetAll<UserEntity>()
+            var user = await _repo.GetAll<UserEntity>()
                 .SingleOrDefaultAsync(x =>
                     x.RefreshPasswordToken == resetPasswordDto.Token
                     && x.Email == resetPasswordDto.Email);
@@ -131,7 +134,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             user.PasswordHash = Hasher.HashPassword(resetPasswordDto.PasswordHash);
             user.RefreshPasswordToken = null;
 
-            await _authRepository.Update(user);
+            await _repo.Update(user);
 
             return Result.Success();
         }
@@ -175,7 +178,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        
+
         protected T? GetService<T>() => _serviceProvider.GetService<T>();
         protected virtual async Task<Result> ValidateModelAsync<T>(T model)
         {
@@ -194,7 +197,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
         [HttpGet("UserList")]
         public async Task<IActionResult> UserList()
         {
-            var users = await _authRepository.GetAll<UserEntity>().Include(u => u.Role).ToListAsync();
+            var users = await _repo.GetAll<UserEntity>().Include(u => u.Role).ToListAsync();
 
             var userDtos = users.Select(u => new UserDTO
             {

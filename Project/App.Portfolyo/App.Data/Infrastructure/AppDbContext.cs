@@ -14,7 +14,6 @@ namespace PortfolyoApp.Data.Infrastructure
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<AppUserEntity> Users { get; set; } = null!;
         public DbSet<AboutMeEntity> Abouts { get; set; } = null!;
         public DbSet<ExperiencesEntity> Experiences { get; set; } = null!;
         public DbSet<ProjectsEntity> Projects { get; set; } = null!;
@@ -26,7 +25,6 @@ namespace PortfolyoApp.Data.Infrastructure
         //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
             modelBuilder.ApplyConfiguration(new ExperiencesConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectsConfiguration());

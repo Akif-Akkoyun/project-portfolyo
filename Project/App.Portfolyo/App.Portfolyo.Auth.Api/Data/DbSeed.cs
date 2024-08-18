@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PortfolyoApp.Auth.Api.Data.Entites;
+using PortfolyoApp.Data.Entities;
 
 namespace PortfolyoApp.Auth.Api.Data
 {
@@ -7,7 +7,7 @@ namespace PortfolyoApp.Auth.Api.Data
     {
         public static async Task SeedAsync(DbContext context)
         {
-            string password = BCrypt.Net.BCrypt.HashPassword("1234");
+            //string password = BCrypt.Net.BCrypt.HashPassword("1234");
             var adminRole = new RoleEntity
             {
                 Name = "Admin",
@@ -25,27 +25,28 @@ namespace PortfolyoApp.Auth.Api.Data
                     UserName = "Akif",
                     UserSurName = "Akkoyun",
                     Email = "akifakkoyun09@gmail.com",
-                    PasswordHash = password,
-                    CreatedAt = DateTime.Now,
-                    RoleId = adminRole.Id,
+                    PasswordHash = "1234",
+                    CreatedAt = DateTime.UtcNow,
+                    RoleId = 1,
+
                 },
                 new UserEntity
                 {
                     UserName = "Jane",
                     UserSurName = "Doe",
                     Email = "jane@gmail.com",
-                    PasswordHash = password,
-                    RoleId = commenterRole.Id,
-                    CreatedAt = DateTime.Now
+                    PasswordHash = "1234",
+                    RoleId = 2,
+                    CreatedAt = DateTime.UtcNow
                 },
                 new UserEntity
                 {
                     UserName = "Alice",
                     UserSurName = "Doe",
                     Email = "alice@gmail.com",
-                    PasswordHash = password,
-                    RoleId = commenterRole.Id,
-                    CreatedAt = DateTime.Now
+                    PasswordHash = "1234",
+                    RoleId = 2,
+                    CreatedAt = DateTime.UtcNow
                 }
             };
             context.Set<UserEntity>().AddRange(users);

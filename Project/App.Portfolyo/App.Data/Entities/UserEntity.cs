@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PortfolyoApp.Data;
 
-namespace PortfolyoApp.Auth.Api.Data.Entites
+namespace PortfolyoApp.Data.Entities
 {
     public class UserEntity : EntityBase
     {
@@ -16,7 +16,7 @@ namespace PortfolyoApp.Auth.Api.Data.Entites
         //nav prop
         public RoleEntity Role { get; set; } = default!;
     }
-    internal class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
+    public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
@@ -25,10 +25,12 @@ namespace PortfolyoApp.Auth.Api.Data.Entites
             builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(255);
 
-            
+
             builder.HasIndex(x => x.Email).IsUnique();
-            builder.HasOne(x => x.Role).WithMany().HasForeignKey(x => x.RoleId).IsRequired();
+            builder.HasOne(d => d.Role)
+           .WithMany()
+           .HasForeignKey(d => d.RoleId)
+           .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
- 

@@ -15,8 +15,7 @@ namespace PortfolyoApp.Auth.Api.Data
             {
                 options.UseSqlServer(connectionString);
             });
-
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IMailService, MailService>();
         }
     }

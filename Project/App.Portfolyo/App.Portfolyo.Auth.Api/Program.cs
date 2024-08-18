@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using PortfolyoApp.Auth.Api.Data;
+using PortfolyoApp.Business.Services.Abstract;
+using PortfolyoApp.Business.Services;
 using System.Text;
+using PortfolyoApp.Data.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +34,8 @@ var connectionString = builder
     ?? throw new InvalidOperationException("Connection string is not found");
 
 builder.Services.AddDataLayer(connectionString);
-
+builder.Services.AddScoped<IDataRepository, DataRepository>();
+builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,21 +56,6 @@ builder.Services.AddAuthentication(options =>
         ValidateTokenReplay = false,
         SignatureValidator = (token, _) => new JsonWebToken(token),
     };
-    options.Events = new JwtBearerEvents
-    {
-        OnMessageReceived = context =>
-        {
-            var accessToken = context.Request.Cookies["access_token"];
-
-            if (!string.IsNullOrWhiteSpace(accessToken))
-            {
-                context.Token = accessToken;
-            }
-            return Task.CompletedTask;
-        }
-    };
-
-    options.MapInboundClaims = false;
 });
 
 var app = builder.Build();

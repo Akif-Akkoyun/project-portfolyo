@@ -7,40 +7,25 @@ using PortfolyoApp.Business.Services;
 using AutoMapper;
 using PortfolyoApp.Business.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using PortfolyoApp.Data.Infrastructure;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
     [Authorize]
-    public class HomeController(AuthService service) : Controller
+    public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
+        private readonly IUserService _service;
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public HomeController(ILogger<HomeController> logger, IUserService service)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userList = await service.UserListAsync();
-
-            if (userList is null)
-            {
-                return NotFound();
-            }
-
-            var model = userList.Select(u => new UserViewModel
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                UserSurName = u.UserSurName,
-                Email = u.Email,
-                Role = u.Role,
-                CreatedAt = u.CreatedAt
-            }).ToList();
-
-
-            return View(model);
+            _logger = logger;
+            _service = service;
+        }
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }

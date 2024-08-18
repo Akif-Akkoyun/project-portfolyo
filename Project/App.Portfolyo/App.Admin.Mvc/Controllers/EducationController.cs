@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Admin.Mvc.Models;
 using PortfolyoApp.Business.DTOs;
@@ -6,6 +7,7 @@ using PortfolyoApp.Business.Services;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
+    [Authorize]
     public class EducationController(IUserService service, IMapper mapper) : Controller
     {
         [HttpGet]
