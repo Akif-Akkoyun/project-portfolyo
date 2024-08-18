@@ -27,7 +27,7 @@ namespace PortfolyoApp.Data.Api.Controllers
                 StartDate = u.StartDate,
                 EndDate = u.EndDate,
                 Description = u.Description
-            }).ToList();
+            }).ToList().OrderByDescending(u=>u.Id);
 
             return Ok(dto);
         }

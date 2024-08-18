@@ -2,6 +2,7 @@
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.DTOs.Auth;
 using PortfolyoApp.Business.Services.Abstract;
+using PortfolyoApp.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,9 +39,25 @@ namespace PortfolyoApp.Business.Services
 
             return Result.Success(tokenDto);
         }
+        public async Task<Result<AuhtTokenDTO>> Login(LoginDTO loginDTO)
+        {
+            var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("Login request was not successful");
+            }
+
+            var tokenDto = await response.Content.ReadFromJsonAsync<AuhtTokenDTO>();
+            if (tokenDto is null)
+            {
+                return Result<AuhtTokenDTO>.Unavailable();
+            }
+
+            return Result.Success(tokenDto);
+        }
         public async Task<Result> RegistersAsync(RegisterDTO registerDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/v1/auth/register",registerDTO);
+            var response = await Client.PostAsJsonAsync("api/v1/auth/register", registerDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("Is not succes ");

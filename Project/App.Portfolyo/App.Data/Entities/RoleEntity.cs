@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PortfolyoApp.Auth.Api.Data.Entites
+
+namespace PortfolyoApp.Data.Entities
 {
     public class RoleEntity
     {
         public int Id { get; set; } = default!;
         public string Name { get; set; } = default!;
-        internal class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity>
+        public class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity>
         {
             public void Configure(EntityTypeBuilder<RoleEntity> builder)
             {

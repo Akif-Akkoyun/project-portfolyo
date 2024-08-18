@@ -1,13 +1,13 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Admin.Mvc.Models;
-using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
 using ServiceStack;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
-    public class ContactController(IUserService service,IMapper mapper) : Controller
+    [Authorize]
+    public class ContactController(IUserService service) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> ListContact()

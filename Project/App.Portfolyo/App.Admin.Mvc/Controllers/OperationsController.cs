@@ -5,9 +5,11 @@ using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
 using System.Linq;
 using ServiceStack;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
+    [Authorize]
     public class OperationsController(IMapper mapper, IUserService service) : Controller
     {
         [HttpGet]

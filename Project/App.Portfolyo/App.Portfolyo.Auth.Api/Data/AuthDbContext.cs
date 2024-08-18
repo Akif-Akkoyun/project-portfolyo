@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PortfolyoApp.Auth.Api.Data.Entites;
-using static PortfolyoApp.Auth.Api.Data.Entites.RoleEntity;
+using PortfolyoApp.Data.Entities;
+using static PortfolyoApp.Data.Entities.RoleEntity;
 
 namespace PortfolyoApp.Auth.Api.Data
 {
@@ -13,8 +13,8 @@ namespace PortfolyoApp.Auth.Api.Data
         public DbSet<RoleEntity> Roles { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AuthDbContext).Assembly);
         }
     }

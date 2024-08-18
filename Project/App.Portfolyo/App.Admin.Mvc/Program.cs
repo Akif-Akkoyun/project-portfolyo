@@ -1,16 +1,20 @@
 using PortfolyoApp.Business.Services.Abstract;
 using PortfolyoApp.Business.Services;
 using PortfolyoApp.Admin.Mvc;
+using PortfolyoApp.Data.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using IdentityModel;
+using ServiceStack;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
-builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("auth-api", c =>
 {
@@ -21,10 +25,19 @@ builder.Services.AddHttpClient("data-api", c =>
 {
     c.BaseAddress = new Uri("https://localhost:7215");
 });
-builder.Services.AddScoped<IAuthService,AuthService>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<IUserService ,UserService>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+// add jwt bearer authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,17 +62,16 @@ builder.Services.AddAuthentication(options =>
     {
         OnMessageReceived = context =>
         {
-            var accessToken = context.Request.Cookies["access_token"];
-
-            if (!string.IsNullOrWhiteSpace(accessToken))
-            {
-                context.Token = accessToken;
-            }
+            context.Token = context.Request.Cookies["auth-token"];
+            return Task.CompletedTask;
+        },
+        OnChallenge = context =>
+        {
+            context.HandleResponse();
+            context.Response.Redirect("/Auth/Login");
             return Task.CompletedTask;
         }
     };
-
-    options.MapInboundClaims = false;
 });
 
 var app = builder.Build();

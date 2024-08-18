@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\App.Business\PortfolyoApp.Business.csproj" />
     <ProjectReference Include="..\App.Data\PortfolyoApp.Data.csproj" />
-    <ProjectReference Include="..\App.Portfolyo.Auth.Api\PortfolyoApp.Auth.Api.csproj" />
   </ItemGroup>
 
 </Project>
