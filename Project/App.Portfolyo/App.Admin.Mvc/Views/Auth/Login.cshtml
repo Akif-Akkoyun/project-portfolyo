@@ -5,43 +5,58 @@
 @{
     Layout = null;
 }
-
-
-<partial name="Partials/_PageStyles" />
-<div class="container-fluid" id="login">
-    <div class="row">
-        <h2 class="col-12 text-center">Login</h2>
-        @if (ViewBag.Info != null)
-        {
-            <div class="alert alert-danger">
-                @ViewBag.Info
-            </div>
-        }
-        @if (ViewBag.Error != null)
-        {
-            <div class="alert alert-danger">
-                @ViewBag.Error
-            </div>
-        }
-        <div class="col-12 col-md-6 offset-md-3">
-            <div class="container">
-                <form asp-controller="Auth" asp-action="Login" method="post">
-                    <div class="form-group">
-                        <label asp-for="Email" class="form-label">Email</label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid" id="login">
+        <div class="row">
+            <h2 class="col-12 text-center">Admin Login Page</h2>
+            <div class="col-12">
+                @if (ViewBag.Info != null)
+                {
+                    <div class="alert alert-danger  text-center" id="errorDiv">
+                        @ViewBag.Info
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="form-label">Password</label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                }
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger  text-center" id="errorDiv">
+                        @ViewBag.Error
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
+                }
+            </div>
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="container">
+                    <form asp-controller="Auth" asp-action="Login" method="post">
+                        <div class="form-group">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
+
+<partial name="Partials/_PageStyles" />
+
 <partial name="Partials/_Scripts" />
 <style>
     #login {
@@ -50,5 +65,10 @@
         width: 70%;
         margin-left: auto;
         margin-right: auto;
+    }
+    #errorDiv{
+        width: 550px;
+        position:relative;
+        left: 28%;
     }
 </style>

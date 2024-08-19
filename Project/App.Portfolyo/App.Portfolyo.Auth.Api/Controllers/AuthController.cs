@@ -38,18 +38,22 @@ namespace PortfolyoApp.Auth.Api.Controllers
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
             var user = await _repo.GetAll<UserEntity>()
-                .Include(u => u.Role)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
+                    .Include(u => u.Role)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
+
             if (user is null)
             {
-                return NotFound("Kullanıcı Bulunamadı !!");
+                ModelState.AddModelError("Email", "Email or password is incorrect");
+                return BadRequest(ModelState);
             }
-            if (user.RoleId != 1)//RoleId 1 = "Admin"
+
+            if (user.RoleId != 1) // RoleId 1 = "Admin"
             {
-                return Unauthorized("Yetkisiz Giriş !!");
+                ModelState.AddModelError("Role", "Unauthorized Access !!");
+                return Unauthorized(ModelState);
             }
-            
+
             var tokenDto = new AuhtTokenDTO
             {
                 Token = GenerateToken(user)
@@ -138,14 +142,6 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return Result.Success();
         }
-
-
-        [HttpPost("logout")]
-        public Task<IActionResult> Logout()
-        {
-            Response.Cookies.Delete("access_token");
-            return Task.FromResult<IActionResult>(Ok());
-        }
         private string GenerateToken(UserEntity user)
         {
             var claims = new List<Claim>
@@ -178,7 +174,6 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
         protected T? GetService<T>() => _serviceProvider.GetService<T>();
         protected virtual async Task<Result> ValidateModelAsync<T>(T model)
         {
@@ -191,26 +186,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
                     return Result.Invalid(validationResult.Errors.Select(x => new ValidationError(x.ErrorMessage)));
                 }
             }
-
             return Result.Success();
-        }
-        [HttpGet("UserList")]
-        public async Task<IActionResult> UserList()
-        {
-            var users = await _repo.GetAll<UserEntity>().Include(u => u.Role).ToListAsync();
-
-            var userDtos = users.Select(u => new UserDTO
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                UserSurName = u.UserSurName,
-                Email = u.Email,
-                PasswordHash = u.PasswordHash,
-                Role = u.Role.Name,
-                CreatedAt = DateTime.UtcNow
-            }).ToList();
-
-            return Ok(userDtos);
         }
     }
 }

@@ -10,8 +10,6 @@ namespace PortfolyoApp.Admin.Mvc
     {
         public MapperProfile()
         {
-            CreateMap<UserViewModel, UserDTO>()
-                .ReverseMap();
             CreateMap<AboutMeViewModel, AboutMeDTO>()
                 .ReverseMap();
             CreateMap<LoginViewModel, LoginDTO>()
@@ -24,7 +22,6 @@ namespace PortfolyoApp.Admin.Mvc
                 .ReverseMap();
             CreateMap<ContactViewModel, ContactDTO>()
                 .ReverseMap();
-
         }
     }
 }

@@ -8,6 +8,7 @@ using AutoMapper;
 using PortfolyoApp.Business.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using PortfolyoApp.Data.Infrastructure;
+using ServiceStack;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
@@ -15,14 +16,14 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserService _service;
+        private readonly IAuthService _service;
 
-        public HomeController(ILogger<HomeController> logger, IUserService service)
+        public HomeController(ILogger<HomeController> logger, IAuthService service)
         {
             _logger = logger;
             _service = service;
         }
-        [HttpGet]
+       
         public IActionResult Index()
         {
             return View();

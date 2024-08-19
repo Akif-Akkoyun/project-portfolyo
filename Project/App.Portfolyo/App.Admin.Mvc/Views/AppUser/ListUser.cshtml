@@ -1,0 +1,98 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models;
+
+@model List<AppUserViewModel>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">User List</h2>
+            <a id="addbutton" class="btn btn-primary" asp-controller="AppUser" asp-action="add">Add</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Password
+                        </th>
+                        <th>
+                            RoleId
+                        </th>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Created At
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.UserName
+                            </td>
+                            <td>
+                                @item.UserSurName
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <th>
+                                @item.PasswordHash
+                            </th>
+                            <td>
+                                @item.RoleId
+                            </td>
+                            @if (item.RoleId == 1)
+                            {
+                                <td>
+                                    Admin
+                                </td>
+                            }
+                            @if (item.RoleId == 2)
+                            {
+                                <td>
+                                    Commenter
+                                </td>
+                            }
+                            <td>
+                                @item.CreatedAt
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="AppUser" asp-action="EditUser" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-danger" asp-controller="AppUser" asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #addbutton {
+        position: relative;
+        bottom: 10px;
+        left: 990px;
+    }
+</style>

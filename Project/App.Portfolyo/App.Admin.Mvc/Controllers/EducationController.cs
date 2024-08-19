@@ -83,7 +83,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
 
             var result = await service.EditAsyncEducation(dto, id);
 
-            if (result != null) // Assuming 'result' is null if the update fails
+            if (result != null)
             {
                 ViewBag.Success = "Başarı ile güncellendi";
             }
@@ -91,7 +91,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
             {
                 ViewBag.Error = "Güncelleme başarısız oldu";
             }
-            return View();
+            return View(educationViewModel);
         }
         [HttpGet]
         public async Task<IActionResult> DeleteEducation([FromRoute] long id)
