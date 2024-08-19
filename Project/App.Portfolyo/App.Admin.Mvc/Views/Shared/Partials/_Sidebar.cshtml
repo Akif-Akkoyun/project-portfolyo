@@ -34,7 +34,12 @@
             Yönetim
         </div>
     </li>
-
+    <li class="nav-item">
+        <a asp-controller="AppUser" asp-action="ListUser" class="nav-link">
+            <i class="fas fa-fw fa-user"></i>
+            <span>User List</span>
+        </a>
+    </li>
     <li class="nav-item">
         <a asp-controller="Operations" asp-action="AboutMeEdit" class="nav-link">
             <i class="fas fa-fw fa-parachute-box"></i>
@@ -76,6 +81,7 @@
             <span>Message</span>
         </a>
     </li>
+    
 
     <li>
         <hr class="sidebar-divider d-none d-md-block">

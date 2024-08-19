@@ -25,36 +25,29 @@ namespace PortfolyoApp.Business.Services
 
         public async Task<Result<AuhtTokenDTO>> LoginAsync(LoginDTO loginDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new InvalidOperationException("Login request was not successful");
-            }
+                var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
 
-            var tokenDto = await response.Content.ReadFromJsonAsync<AuhtTokenDTO>();
-            if (tokenDto is null)
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Result<AuhtTokenDTO>.Error("Login request was not successful");
+                }
+
+                var tokenDto = await response.Content.ReadFromJsonAsync<AuhtTokenDTO>();
+                if (tokenDto is null)
+                {
+                    return Result<AuhtTokenDTO>.Unavailable();
+                }
+
+                return Result.Success(tokenDto);
+            }
+            catch (Exception ex)
             {
-                return Result<AuhtTokenDTO>.Unavailable();
+                return Result<AuhtTokenDTO>.Error("An error occurred during login: " + ex.Message);
             }
-
-            return Result.Success(tokenDto);
         }
-        public async Task<Result<AuhtTokenDTO>> Login(LoginDTO loginDTO)
-        {
-            var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new InvalidOperationException("Login request was not successful");
-            }
 
-            var tokenDto = await response.Content.ReadFromJsonAsync<AuhtTokenDTO>();
-            if (tokenDto is null)
-            {
-                return Result<AuhtTokenDTO>.Unavailable();
-            }
-
-            return Result.Success(tokenDto);
-        }
         public async Task<Result> RegistersAsync(RegisterDTO registerDTO)
         {
             var response = await Client.PostAsJsonAsync("api/v1/auth/register", registerDTO);
@@ -100,30 +93,53 @@ namespace PortfolyoApp.Business.Services
 
             return Result<ResetPasswordDTO>.Success(repass);
         }
-        public async Task<Result> LogoutAsync()
+        public async Task<List<AppUserDTO>> UserListAsync()
         {
-            var response = await Client.PostAsync("api/v1/auth/logout", null);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new InvalidOperationException("Logout request was not successful");
-            }
-
-            return Result.Success();
-        }
-        public async Task<List<UserDTO>> UserListAsync()
-        {
-            var response = await Client.GetAsync("api/v1/auth/UserList");
+            var response = await Client.GetAsync("api/AppUser/list");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
             }
-            var responsObj = await response.Content.ReadFromJsonAsync<List<UserDTO>>() ?? throw new InvalidOperationException();
+            var responsObj = await response.Content.ReadFromJsonAsync<List<AppUserDTO>>() ?? throw new InvalidOperationException();
 
             return Result.Success(responsObj);
         }
-        public Task<Result> Logut()
+        public async Task<Result<AppUserDTO>> AddUserAsync(AppUserDTO userDTO)
         {
-            throw new NotImplementedException();
+            var response = await Client.PostAsJsonAsync("api/AppUser/add", userDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var users = await response
+                    .Content
+                    .ReadFromJsonAsync<Result<AppUserDTO>>()
+                    ?? throw new InvalidOperationException("Fail ");
+            return Result.Success(users);
         }
+        public async Task<Result<AppUserDTO>> EditUserAsync(AppUserDTO userDTO, long id)
+        {
+            var response = await Client.PostAsJsonAsync($"api/AppUser/edit/{id}", userDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var users = await response
+                    .Content
+                    .ReadFromJsonAsync<Result<AppUserDTO>>()
+                    ?? throw new InvalidOperationException("User request was not successful");
+            return Result.Success();
+        }
+        public async Task<Result> UserDeleteAsync(long id)
+        {
+            var response = await Client.DeleteAsync($"api/u1/User/delete/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            return Result.Success();
+        }
+
     }
 }

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewData["Title"] - Admin</title>
+    <title>@(ViewData["Title"] is null ? string.Empty : ViewData["Title"] + " - ")Admin Page</title>
 
     <partial name="Partials/_PageStyles" />
 </head>
