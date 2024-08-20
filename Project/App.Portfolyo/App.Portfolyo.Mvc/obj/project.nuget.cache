@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "p1U1ROpD338=",
+=======
+  "dgSpecHash": "oP9Ur24Z0S0=",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "C:\\Users\\akifa\\OneDrive\\Masaüstü\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\PortfolyoApp.Mvc.csproj",
   "expectedPackageFiles": [
