@@ -7,7 +7,7 @@
     <br />
     <h2 class="text-center">Experience List</h2>
     <a id="addbutton" class="btn btn-info" asp-action="AddExp" asp-controller="Operations">Add</a>
-    <table class="table table-hover">
+    <table class="table  table-hover">
         <thead>
             <tr>
                 <th>
@@ -46,7 +46,7 @@
                     <td>@user.Title</td>
                     <td>@user.Company</td>
                     <td>@user.Description</td>
-                    <td>@user.CreatedAt</td>
+                    <td>@user.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss")</td>
                     <td>
                         <a class="btn btn-primary" asp-controller="Operations" asp-action="EditExp" asp-route-id="@user.Id">Edit</a>
                         <a class="btn btn-danger" asp-controller="Operations" asp-action="DeleteExp" asp-route-id="@user.Id">Delete</a>

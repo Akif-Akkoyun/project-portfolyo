@@ -34,6 +34,11 @@ namespace PortfolyoApp.Business.Services
         Task<List<ContactDTO>> ListAsyncContact();
         Task<Result<ContactDTO>> AddAsyncContact(ContactDTO contactDTO);
         Task<Result> DeleteContact(long id);
+        Task<List<BlogPostDTO>> ListAsyncBlog();
+        Task<Result<BlogPostDTO>> AddAsyncBlog(BlogPostDTO blogtDto);
+        Task<BlogPostDTO> DetailAsyncBlog(long id);
+        Task<Result<BlogPostDTO>> EditAsyncBlog(BlogPostDTO blogtDto, long id);
+        Task<Result> DeleteAsyncBlog(long id);
     }
     public class UserService(IHttpClientFactory httpClientFactory) : IUserService
     {
@@ -262,6 +267,62 @@ namespace PortfolyoApp.Business.Services
         public async Task<Result> DeleteContact(long id)
         {
             var response = await Client.DeleteAsync($"api/Contact/delete/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            return Result.Success();
+        }
+        public async Task<List<BlogPostDTO>> ListAsyncBlog()
+        {
+            var response = await Client.GetAsync("api/blogpost/list");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<List<BlogPostDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success(responsObj);
+        }
+        public async Task<Result<BlogPostDTO>> AddAsyncBlog(BlogPostDTO blogtDto)
+        {
+            var response = await Client.PostAsJsonAsync("api/BlogPost/add", blogtDto);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<BlogPostDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<BlogPostDTO> DetailAsyncBlog(long id)
+        {
+            var response = await Client.GetAsync($"api/BlogPost/detail/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<BlogPostDTO>() ?? throw new InvalidOperationException();
+
+            return responsObj ?? throw new InvalidOperationException("No blog post data found");
+        }
+        public async Task<Result<BlogPostDTO>> EditAsyncBlog(BlogPostDTO blogtDto, long id)
+        {
+            var response = await Client.PostAsJsonAsync($"api/BlogPost/edit/{id}", blogtDto);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<BlogPostDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<Result> DeleteAsyncBlog(long id)
+        {
+            var response = await Client.DeleteAsync($"api/BlogPost/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {

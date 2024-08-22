@@ -1,0 +1,22 @@
+﻿@model List<BlogPostViewModel>
+
+@foreach (var post in Model)
+{
+    <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry justify-content-end">
+            <a asp-controller="BlogPost" asp-action="DetailBlog" asp-route-id="@post.Id" class="block-20" style="background-image: url('theme/images/image_1.jpg');">
+            </a>
+            <div class="text mt-3 float-right d-block">
+                <div class="d-flex align-items-center mb-3 meta">
+                    <p class="mb-0">
+                        <span class="mr-2">@post.CreatedAt.ToString("dd-MM-yyyy")</span>
+                        <a href="#" class="mr-2">Admin</a>
+                        <a href="#" class="meta-chat"><span class="icon-chat"></span></a>
+                    </p>
+                </div>
+                <h3 class="heading"><a href="single.html">@post.Title</a></h3>
+                <p>@(post.Content.Length > 90 ? post.Content.Substring(0, 90) + "..." : post.Content)</p>
+            </div>
+        </div>
+    </div>
+}
