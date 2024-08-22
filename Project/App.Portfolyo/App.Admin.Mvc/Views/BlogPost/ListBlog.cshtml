@@ -1,12 +1,15 @@
 ﻿@using PortfolyoApp.Admin.Mvc.Models
-@model List<ProjectViewModel>
+
+@model List<BlogPostViewModel>
+
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center">Projects</h2>
-            <a id="addbutton" class="btn btn-info" asp-action="AddProject" asp-controller="Project">Add</a>
-            <table class="table  table-hover">
+            <h2 class="text-center">Blog List</h2>
+            <a id="addbutton" class="btn btn-primary" asp-controller="BlogPost" asp-action="AddBlogPost">Add</a>
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -16,19 +19,13 @@
                             Title
                         </th>
                         <th>
-                            Description
+                            Content
                         </th>
                         <th>
                             ImageUrl
                         </th>
                         <th>
-                            Url
-                        </th>
-                        <th>
-                            GithubUrl
-                        </th>
-                        <th>
-                            Tags
+                            PublishDate
                         </th>
                         <th>
                             CreatedAt
@@ -49,30 +46,20 @@
                                 @item.Title
                             </td>
                             <td>
-                                @(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)
+                                @(item.Content.Length > 50 ? item.Content.Substring(0,50)+"...": item.Content)
                             </td>
-
                             <td>
                                 @item.ImageUrl
                             </td>
-
                             <td>
-                                @item.Url
-                            </td>
-
-                            <td>
-                                @item.GithubUrl
-                            </td>
-
-                            <td>
-                                @item.Tags
+                                @item.PublishDate.ToString("dd-MM-yyyy HH:mm:ss")
                             </td>
                             <td>
                                 @item.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss")
                             </td>
                             <td>
-                                <a class="btn btn-primary" asp-controller="Project" asp-action="EditProject" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-danger" asp-controller="Project" asp-action="DeleteProject" asp-route-id="@item.Id">Delete</a>
+                                <a class="btn btn-primary" asp-controller="BlogPost" asp-action="EditBlogPost" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-danger" asp-controller="BlogPost" asp-action="DeleteBlogPost" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
                     }

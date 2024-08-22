@@ -5,11 +5,11 @@ using ServiceStack;
 
 namespace PortfolyoApp.Mvc.ViewComponents
 {
-    public class AboutMeViewComponent(IUserService service) : ViewComponent
+    public class BlogPostViewComponent(IUserService service) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var listAbout = await service.GetList();
+            var listAbout = await service.ListAsyncBlog();
 
             if (listAbout is null)
             {
@@ -17,22 +17,17 @@ namespace PortfolyoApp.Mvc.ViewComponents
                 return View(ViewBag.Message);
             }
             var result = listAbout
-                .Take(3).OrderByDescending(u => u.CreatedAt)
-                .Select(u => new AboutMeViewModel
+                .Take(3)
+                .OrderByDescending(u => u.CreatedAt)
+                .Select(u => new BlogPostViewModel
             {
                 Id = u.Id,
-                ImageUrl1 = u.ImageUrl1,
-                Introduction = u.Introduction,
-                Name = u.Name,
-                PhoneNumber = u.PhoneNumber,
-                Email = u.Email,
-                Address = u.Address,
-                Day = u.Day,
-                Month = u.Month,
-                Year = u.Year,
+                ImageUrl = u.ImageUrl,
+                Title = u.Title,
+                Content = u.Content,
                 CreatedAt = u.CreatedAt,
-                ZipCode = u.ZipCode
             }).ToList();
+
             return View(result);
         }
     }

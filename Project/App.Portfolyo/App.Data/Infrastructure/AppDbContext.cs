@@ -19,13 +19,15 @@ namespace PortfolyoApp.Data.Infrastructure
         public DbSet<ProjectsEntity> Projects { get; set; } = null!;
         public DbSet<ContactMessagesEntity> ContactMassages { get; set; } = null!;
         public DbSet<EducationsEntity> Educations { get; set; } = null!;
-        public DbSet<ServiceEntity> PersonalInfos { get; set; } = null!;
+        public DbSet<ServiceEntity> Skılls { get; set; } = null!;
+        public DbSet<BlogPostEntity> BlogPosts { get; set; } = null!;
 
 
         //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
+            modelBuilder.ApplyConfiguration(new BlogPostConfiguration());
             modelBuilder.ApplyConfiguration(new ExperiencesConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectsConfiguration());
             modelBuilder.ApplyConfiguration(new ContactMessagesConfiguration());

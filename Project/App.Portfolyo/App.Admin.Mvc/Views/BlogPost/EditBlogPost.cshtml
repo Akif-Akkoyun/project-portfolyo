@@ -1,0 +1,57 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model BlogPostViewModel
+
+
+
+
+
+<div class="container">
+    <h2>Update Post</h2>
+    <br />
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Success
+        </div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+    <br />
+    <form asp-action="EditBlogPost" asp-controller="BlogPost" method="post">
+        <div class="mb-3">
+            <input type="file" asp-for="ImageUrl" accept=".png, .jpg, .jpeg" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Content</label>
+            <textarea asp-for="Content" id="Content" class="form-control" rows="10">@Model.Content</textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            height: 300,
+            menubar: false,
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            content_css: 'https://www.tiny.cloud/css/codepen.min.css'
+        });
+    </script>
+}
+
