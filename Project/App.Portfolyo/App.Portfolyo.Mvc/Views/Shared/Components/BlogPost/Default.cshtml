@@ -4,7 +4,7 @@
 {
     <div class="col-md-4 d-flex ftco-animate">
         <div class="blog-entry justify-content-end">
-            <a asp-controller="BlogPost" asp-action="DetailBlog" asp-route-id="@post.Id" class="block-20" style="background-image: url('theme/images/image_1.jpg');">
+            <a asp-controller="BlogPost" asp-action="DetailBlog" asp-route-id="@post.Id" class="block-20" style="background-image: url(@post.ImageUrl);">
             </a>
             <div class="text mt-3 float-right d-block">
                 <div class="d-flex align-items-center mb-3 meta">

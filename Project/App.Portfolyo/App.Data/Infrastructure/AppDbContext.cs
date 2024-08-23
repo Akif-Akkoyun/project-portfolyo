@@ -21,12 +21,14 @@ namespace PortfolyoApp.Data.Infrastructure
         public DbSet<EducationsEntity> Educations { get; set; } = null!;
         public DbSet<ServiceEntity> Skılls { get; set; } = null!;
         public DbSet<BlogPostEntity> BlogPosts { get; set; } = null!;
+        public DbSet<FileEntity> Files { get; set; } = null!;
 
 
         //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
+            modelBuilder.ApplyConfiguration(new FileConfiguration());
             modelBuilder.ApplyConfiguration(new BlogPostConfiguration());
             modelBuilder.ApplyConfiguration(new ExperiencesConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectsConfiguration());

@@ -22,6 +22,8 @@ namespace PortfolyoApp.Admin.Mvc
                 .ReverseMap();
             CreateMap<ContactViewModel, ContactDTO>()
                 .ReverseMap();
+            CreateMap<ProjectViewModel, ProjectDTO>()
+                .ReverseMap();
         }
     }
 }

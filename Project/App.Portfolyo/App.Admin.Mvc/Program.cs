@@ -25,6 +25,10 @@ builder.Services.AddHttpClient("data-api", c =>
 {
     c.BaseAddress = new Uri("https://localhost:7215");
 });
+builder.Services.AddHttpClient("file-api", c =>
+{
+    c.BaseAddress = new Uri("https://localhost:7222");
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -36,6 +40,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<FileService>();
+
 
 // add jwt bearer authentication
 builder.Services.AddAuthentication(options =>

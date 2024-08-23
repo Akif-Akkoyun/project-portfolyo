@@ -18,7 +18,7 @@ namespace PortfolyoApp.Mvc.ViewComponents
             }
             var result = listAbout
                 .Take(3)
-                .OrderByDescending(u => u.CreatedAt)
+                .OrderByDescending(u => u.Id)
                 .Select(u => new BlogPostViewModel
             {
                 Id = u.Id,
