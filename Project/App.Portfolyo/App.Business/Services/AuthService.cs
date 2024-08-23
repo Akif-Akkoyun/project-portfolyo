@@ -2,14 +2,8 @@
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.DTOs.Auth;
 using PortfolyoApp.Business.Services.Abstract;
-using PortfolyoApp.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PortfolyoApp.Business.Services
 {

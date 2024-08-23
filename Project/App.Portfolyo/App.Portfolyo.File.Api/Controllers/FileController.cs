@@ -25,7 +25,7 @@ namespace PortfolyoApp.File.Api.Controllers
             }
 
             var rootPath = _webHostEnvironment.WebRootPath;
-            var filePath = Path.Combine(rootPath, file.FileName);
+            var filePath = Path.Combine(rootPath,"img",file.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);

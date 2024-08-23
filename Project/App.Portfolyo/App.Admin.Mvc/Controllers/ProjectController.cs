@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PortfolyoApp.Admin.Mvc.Models;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
+using PortfolyoApp.Business.Services.Abstract;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
     [Authorize]
-    public class ProjectController(IUserService service) : Controller
+    public class ProjectController(IUserService service,FileService fileService,IMapper mapper) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> ListProject()
@@ -36,36 +39,46 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> AddProject([FromForm] ProjectViewModel projectViewModel)
+        public async Task<IActionResult> AddProject(ProjectViewModel projectViewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(projectViewModel);
+                if (projectViewModel.ImageFile != null && projectViewModel.ImageFile.Length > 0)
+                {
+                    var result = await fileService.UploadFileAsync(projectViewModel.ImageFile);
+
+                    if (result.IsSuccess)
+                    {
+                        var filePath = result.Value;
+
+                        // Continue processing the project with the file path
+                        var projectDto = mapper.Map<ProjectDTO>(projectViewModel);
+                        projectDto.ImageUrl = filePath;
+
+                        try
+                        {
+                            await service.AddAsyncProject(projectDto);
+                            return View();
+                        }
+                        catch (Exception ex)
+                        {
+                            ModelState.AddModelError(string.Empty, "Failed to add project: " + ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty , "Failed to add project" );
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Please select a file to upload.");
+                }
             }
 
-            var dto = new ProjectDTO
-            {
-                Title = projectViewModel.Title,
-                Tags = projectViewModel.Tags,
-                GithubUrl = projectViewModel.GithubUrl,
-                Url = projectViewModel.Url,
-                ImageUrl = projectViewModel.ImageUrl,
-                Description = projectViewModel.Description,
-                CreatedAt = DateTime.Now,
-            };
-            var result = await service.AddAsyncProject(dto);
-
-            if (result != null) 
-            {
-                ViewBag.Success = "Başarı ile eklendi";
-            }
-            else
-            {
-                ViewBag.Error = "Ekleme işlemi başarısız oldu";
-            }
-            return View();
+            return View(projectViewModel);
         }
+
         [HttpGet]
         public IActionResult EditProject()
         {

@@ -53,7 +53,7 @@
                             </td>
 
                             <td>
-                                @item.ImageUrl
+                                @(item.ImageUrl.Length > 108 ? item.ImageUrl.Substring(108)  : item.ImageUrl)
                             </td>
 
                             <td>

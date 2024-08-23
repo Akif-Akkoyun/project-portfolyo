@@ -6,7 +6,7 @@
     @foreach (var item in Model)
     {
         <div class="col-md-4">
-            <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(theme/images/@item.ImageUrl.ToString());">
+            <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(theme/images/@item.ImageUrl);">
                 <div class="overlay"></div>
                 <div class="text text-center p-4">
                     <h3><a href="@item.GithubUrl">@item.Title</a></h3>

@@ -11,7 +11,8 @@ namespace PortfolyoApp.Admin.Mvc.Models
         public string Title { get; set; } = string.Empty!;
         [Required]
         public string Description { get; set; } = string.Empty!;
-        [Required]
+        [Required]  
+        public IFormFile ImageFile { get; set; } = null!;
         public string ImageUrl { get; set; } = string.Empty!;
         [Required]
         public string Url { get; set; } = string.Empty!;
