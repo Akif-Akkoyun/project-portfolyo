@@ -21,7 +21,7 @@ namespace PortfolyoApp.Business.Services
         {
             try
             {
-                var response = await Client.PostAsJsonAsync("api/v1/auth/UserLogin", loginDTO);
+                var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
 
                 if (!response.IsSuccessStatusCode)
                 {
