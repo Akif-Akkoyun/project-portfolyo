@@ -35,7 +35,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
         }
         //Admin Login
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        public async Task<IActionResult> LoginAsync(LoginDTO loginDTO)
         {
             var user = await _repo.GetAll<UserEntity>()
                     .Include(u => u.Role)
