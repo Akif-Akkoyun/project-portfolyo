@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
 using PortfolyoApp.Mvc.Models;
 
 namespace PortfolyoApp.Mvc.Controllers
 {
+    [Authorize]
     public class ContactMeController(IUserService service) : Controller
     {
         [HttpGet]

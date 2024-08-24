@@ -211,14 +211,24 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ProjectDTO>> AddAsyncProject(ProjectDTO projectDto)
         {
-            var response = await Client.PostAsJsonAsync("api/Project/add", projectDto);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new InvalidOperationException("User request was not successful");
-            }
-            var responsObj = await response.Content.ReadFromJsonAsync<Result<ProjectDTO>>() ?? throw new InvalidOperationException();
+                var response = await Client.PostAsJsonAsync("api/Project/add", projectDto);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new InvalidOperationException($"Request was not successful: {errorMessage}");
+                }
 
-            return Result.Success();
+                var responsObj = await response.Content.ReadFromJsonAsync<Result<ProjectDTO>>() ?? throw new InvalidOperationException("Failed to deserialize response");
+                return Result.Success(responsObj);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // logger.LogError(ex, "An error occurred while adding the project.");
+                throw new InvalidOperationException("An error occurred in AddAsyncProject", ex);
+            }
         }
         public async Task<Result<ProjectDTO>> EditAsyncProject(ProjectDTO projectDto, long id)
         {
