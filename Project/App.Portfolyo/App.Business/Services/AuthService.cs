@@ -21,7 +21,7 @@ namespace PortfolyoApp.Business.Services
         {
             try
             {
-                var response = await Client.PostAsJsonAsync("api/v1/auth/login", loginDTO);
+                var response = await Client.PostAsJsonAsync("api/v1/auth/UserLogin", loginDTO);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -41,7 +41,30 @@ namespace PortfolyoApp.Business.Services
                 return Result<AuhtTokenDTO>.Error("An error occurred during login: " + ex.Message);
             }
         }
+        public async Task<Result<AuhtTokenDTO>> UserLoginAsync(LoginDTO loginDTO)
+        {
+            try
+            {
+                var response = await Client.PostAsJsonAsync("api/v1/auth/user-login", loginDTO);
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Result<AuhtTokenDTO>.Error("Login request was not successful");
+                }
+
+                var tokenDto = await response.Content.ReadFromJsonAsync<AuhtTokenDTO>();
+                if (tokenDto is null)
+                {
+                    return Result<AuhtTokenDTO>.Unavailable();
+                }
+
+                return Result.Success(tokenDto);
+            }
+            catch (Exception ex)
+            {
+                return Result<AuhtTokenDTO>.Error("An error occurred during login: " + ex.Message);
+            }
+        }
         public async Task<Result> RegistersAsync(RegisterDTO registerDTO)
         {
             var response = await Client.PostAsJsonAsync("api/v1/auth/register", registerDTO);

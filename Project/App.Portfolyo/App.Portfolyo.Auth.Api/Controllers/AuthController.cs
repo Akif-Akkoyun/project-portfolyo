@@ -61,6 +61,26 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return Ok(tokenDto);
         }
+        //Main Login
+        [HttpPost("user-login")]
+        public async Task<IActionResult> UserLogin(LoginDTO loginDTO)
+        {
+            var user = await _repo.GetAll<UserEntity>()
+                    .Include(u => u.Role)
+                    .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.PasswordHash == loginDTO.PasswordHash);
+
+            if (user is null)
+            {
+                ModelState.AddModelError("Email", "Email or password is incorrect");
+                return BadRequest(ModelState);
+            }
+            var tokenDto = new AuhtTokenDTO
+            {
+                Token = GenerateToken(user)
+            };
+
+            return Ok(tokenDto);
+        }
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
@@ -73,7 +93,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 UserName = registerDTO.UserName,
                 UserSurName = registerDTO.UserSurName,
                 Email = registerDTO.Email,
-                PasswordHash = Hasher.HashPassword(registerDTO.PasswordHash),
+                PasswordHash = registerDTO.PasswordHash,
                 CreatedAt = registerDTO.CreatedAt,
                 RoleId = 2
             };
@@ -100,7 +120,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
             {
                 To = [user.Email],
                 Subject = "Şifre Sıfırlama",
-                Body = $"Merhaba {user.UserName.ToUpper()},<br>Your reset password code: <strong>{user.RefreshPasswordToken}</strong>.</br>",
+                Body = $"Merhaba {user.UserName.ToUpper()},<br>Şifrenizi sıfırlamak için <a href='https://localhost:7002/renew-password/{user.RefreshPasswordToken}'>tıklayınız</a></br>",
                 IsHtml = true
             };
 
@@ -135,7 +155,7 @@ namespace PortfolyoApp.Auth.Api.Controllers
                 return Result.NotFound();
             }
 
-            user.PasswordHash = Hasher.HashPassword(resetPasswordDto.PasswordHash);
+            user.PasswordHash = resetPasswordDto.PasswordHash;
             user.RefreshPasswordToken = null;
 
             await _repo.Update(user);

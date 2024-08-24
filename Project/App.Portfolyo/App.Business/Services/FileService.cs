@@ -10,9 +10,15 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace PortfolyoApp.Business.Services
 {
-    public class FileService
+    public interface IFileService
+    {
+        Task<Result<string>> UploadFileAsync(IFormFile file);
+        Task<Result<byte[]>> DownloadFileAsync(string filePath); // Yeni metod
+    }
+    public class FileService : IFileService
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -56,6 +62,22 @@ namespace PortfolyoApp.Business.Services
                 Console.WriteLine("Response Content: " + errorContent);
                 return Result.Error("File upload failed: " + errorContent);
             }
+        }
+
+        public async Task<Result<byte[]>> DownloadFileAsync(string filePath)
+        {
+            var encodedFilePath = Uri.EscapeDataString(filePath);
+
+            // Encoded dosya yolunu API isteğinde kullanıyoruz
+            var response = await Client.GetAsync($"api/file/download/{encodedFilePath}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var fileBytes = await response.Content.ReadAsByteArrayAsync();
+                return Result<byte[]>.Success(fileBytes);
+            }
+
+            return Result<byte[]>.Unavailable($"File download failed: {response.ReasonPhrase}");
         }
 
     }

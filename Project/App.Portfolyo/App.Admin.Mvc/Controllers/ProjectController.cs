@@ -10,7 +10,7 @@ using PortfolyoApp.Business.Services.Abstract;
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
     [Authorize]
-    public class ProjectController(IUserService service,FileService fileService,IMapper mapper) : Controller
+    public class ProjectController(IUserService service,IFileService fileService,IMapper mapper) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> ListProject()
@@ -39,25 +39,39 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> AddProject(ProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
                 if (projectViewModel.ImageFile != null && projectViewModel.ImageFile.Length > 0)
                 {
-                    var result = await fileService.UploadFileAsync(projectViewModel.ImageFile);
+                    var uploadResult = await fileService.UploadFileAsync(projectViewModel.ImageFile);
 
-                    if (result.IsSuccess)
+                    if (uploadResult.IsSuccess)
                     {
-                        var filePath = result.Value;
+                        var filePath = uploadResult.Value;
 
-                        // Continue processing the project with the file path
                         var projectDto = mapper.Map<ProjectDTO>(projectViewModel);
-                        projectDto.ImageUrl = filePath;
 
                         try
                         {
-                            await service.AddAsyncProject(projectDto);
+                            var fileBytes = await fileService.DownloadFileAsync(filePath);
+
+                           
+                            projectDto.ImageUrl = filePath;
+
+                            var result =await service.AddAsyncProject(projectDto);
+
+                            if (result != null)
+                            {
+                                ViewBag.Success = "Başarı ile eklendi";
+                            }
+                            else
+                            {
+                                ViewBag.Error = "Ekleme başarısız oldu";
+                            }
+
                             return View();
                         }
                         catch (Exception ex)
@@ -67,7 +81,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty , "Failed to add project" );
+                        ModelState.AddModelError(string.Empty, "Failed to upload file");
                     }
                 }
                 else
@@ -78,6 +92,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
 
             return View(projectViewModel);
         }
+
 
         [HttpGet]
         public IActionResult EditProject()
