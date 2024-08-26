@@ -32,7 +32,29 @@ namespace PortfolyoApp.Data.Api.Controllers
                 CreatedAt = DateTime.Now
             }).ToList();
 
-            return Ok(projects);
+            return Ok(dto);
+        }
+        [Route("get/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetProject(long id)
+        {
+            var project = await repo.GetById<ProjectsEntity>(id);
+            if (project is null)
+            {
+                return NotFound();
+            }
+            var dto = new ProjectDTO
+            {
+                Id = project.Id,
+                Title = project.Title,
+                Description = project.Description,
+                ImageUrl = project.ImageUrl,
+                Url = project.Url,
+                GithubUrl = project.GithubUrl,
+                Tags = project.Tags,
+                CreatedAt = DateTime.Now
+            };
+            return Ok(dto);
         }
         [Route("add")]
         [HttpPost]

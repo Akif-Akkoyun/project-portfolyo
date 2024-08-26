@@ -56,7 +56,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
 
                         try
                         {
-                            var fileBytes = await fileService.DownloadFileAsync(filePath);
+                            await fileService.DownloadFileAsync(filePath);
 
                            
                             projectDto.ImageUrl = filePath;
@@ -100,35 +100,62 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> EditProject([FromForm] ProjectViewModel projectViewModel,[FromRoute] long id)
+        public async Task<IActionResult> EditProject(ProjectViewModel projectViewModel,long id)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(projectViewModel);
+                try
+                {
+                    var existingProject = await service.GetProjectAsync(id);
+                    if (existingProject == null)
+                    {
+                        ViewBag.Error = "Proje bulunamadı";
+                        return View(projectViewModel);
+                    }
+                                     
+                    if (projectViewModel.ImageFile != null && projectViewModel.ImageFile.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(existingProject.ImageUrl))
+                        {
+                            await fileService.DeleteFileAsync(existingProject.ImageUrl);
+                        }
+
+                        var uploadResult = await fileService.UploadFileAsync(projectViewModel.ImageFile);
+                        if (uploadResult.IsSuccess)
+                        {
+                            projectViewModel.ImageUrl = uploadResult.Value;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Failed to upload file");
+                            return View(projectViewModel);
+                        }
+                    }
+
+                    var dto = mapper.Map<ProjectDTO>(projectViewModel);
+
+                    var updateResult = await service.EditAsyncProject(dto, id);
+
+                    if (updateResult != null)
+                    {
+                        ViewBag.Success = "Başarı ile güncellendi";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Güncelleme başarısız oldu";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to update project: " + ex.Message);
+                }
             }
 
-            var dto = new ProjectDTO
-            {
-                Title = projectViewModel.Title,
-                Tags = projectViewModel.Tags,
-                GithubUrl = projectViewModel.GithubUrl,
-                Url = projectViewModel.Url,
-                ImageUrl = projectViewModel.ImageUrl,
-                Description = projectViewModel.Description,
-                CreatedAt = DateTime.Now,
-            };
-            var result = await service.EditAsyncProject(dto,id);
-
-            if (result != null)
-            {
-                ViewBag.Success = "Başarı ile güncellendi";
-            }
-            else
-            {
-                ViewBag.Error = "Güncelleme işlemi başarısız oldu";
-            }
-            return View();
+            return View(projectViewModel);
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> DeleteProject([FromRoute] long id)
         {

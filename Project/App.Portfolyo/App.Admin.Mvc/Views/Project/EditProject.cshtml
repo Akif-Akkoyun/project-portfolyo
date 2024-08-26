@@ -1,23 +1,11 @@
 ﻿@using PortfolyoApp.Admin.Mvc.Models
 @model ProjectViewModel
 
-@if (ViewBag.Success != null)
-{
-    <div class="alert alert-success">
-        @ViewBag.Success
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger">
-        @ViewBag.Error
-    </div>
-}
 
 <div id="size">
     <div class="container">
         <div>
-            <h2 class="text-center">Add Experience</h2>
+            <h2 class="text-center">Update Project</h2>
             @if (ViewBag.Success != null)
             {
                 <div class="alert alert-success">
@@ -30,7 +18,7 @@
                     @ViewBag.Error
                 </div>
             }
-            <form asp-action="EditProject" asp-controller="Project" method="post">
+            <form asp-action="EditProject" asp-controller="Project" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label asp-for="Title">Title</label>
                     <input asp-for="Title" class="form-control" />
@@ -42,9 +30,9 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageUrl">ImageUrl</label>
-                    <input asp-for="ImageUrl" class="form-control" />
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <input type="file" asp-for="ImageFile" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    
                 </div>
                 <div class="form-group">
                     <label asp-for="Url">Url</label>

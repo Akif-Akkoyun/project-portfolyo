@@ -16,7 +16,8 @@ namespace PortfolyoApp.Business.Services
     public interface IFileService
     {
         Task<Result<string>> UploadFileAsync(IFormFile file);
-        Task<Result<byte[]>> DownloadFileAsync(string filePath); // Yeni metod
+        Task<Result<byte[]>> DownloadFileAsync(string filePath);
+        Task<Result> DeleteFileAsync(string fileName);
     }
     public class FileService : IFileService
     {
@@ -68,7 +69,6 @@ namespace PortfolyoApp.Business.Services
         {
             var encodedFilePath = Uri.EscapeDataString(filePath);
 
-            // Encoded dosya yolunu API isteğinde kullanıyoruz
             var response = await Client.GetAsync($"api/file/download/{encodedFilePath}");
 
             if (response.IsSuccessStatusCode)
@@ -78,6 +78,19 @@ namespace PortfolyoApp.Business.Services
             }
 
             return Result<byte[]>.Unavailable($"File download failed: {response.ReasonPhrase}");
+        }
+        public async Task<Result> DeleteFileAsync(string filePath)
+        {
+            var encodedFilePath = Uri.EscapeDataString(filePath);
+
+            var response = await Client.DeleteAsync($"api/file/delete/{encodedFilePath}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Result.Success();
+            }
+
+            return Result.Unavailable($"File delete failed: {response.ReasonPhrase}");
         }
 
     }
