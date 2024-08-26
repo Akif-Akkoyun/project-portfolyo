@@ -22,7 +22,7 @@ namespace PortfolyoApp.Data.Entities
            
             builder.Property(x => x.Title).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Content).IsRequired().HasMaxLength(5000);
-            builder.Property(x => x.ImageUrl).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ImageUrl).HasMaxLength(255);
             builder.Property(x => x.PublishDate).IsRequired();
         }
     }

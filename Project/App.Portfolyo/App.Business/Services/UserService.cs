@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using static ServiceStack.Diagnostics.Events;
 
 namespace PortfolyoApp.Business.Services
 {
@@ -28,6 +27,7 @@ namespace PortfolyoApp.Business.Services
         Task<Result<EducationsDTO>> EditAsyncEducation(EducationsDTO educationsDTO, long id);
         Task<Result> DeleteAsyncEducation(long id);
         Task<List<ProjectDTO>> ListAsyncProject();
+        Task<ProjectDTO> GetProjectAsync(long id);
         Task<Result<ProjectDTO>> AddAsyncProject(ProjectDTO projectDto);
         Task<Result<ProjectDTO>> EditAsyncProject(ProjectDTO projectDto, long id);
         Task<Result> DeleteAsyncProject(long id);
@@ -42,10 +42,11 @@ namespace PortfolyoApp.Business.Services
     }
     public class UserService(IHttpClientFactory httpClientFactory) : IUserService
     {
-        private System.Net.Http.HttpClient Client => httpClientFactory.CreateClient("data-api");
+        private System.Net.Http.HttpClient DataApiClient => httpClientFactory.CreateClient("data-api");
+        private System.Net.Http.HttpClient FileApiClient => httpClientFactory.CreateClient("file-api");
         public async Task<List<AboutMeDTO>> UpdateAsync(AboutMeDTO aboutMeDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/v2/aboutme/editaboutme", aboutMeDTO);
+            var response = await DataApiClient.PostAsJsonAsync("api/v2/aboutme/editaboutme", aboutMeDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -56,7 +57,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<AboutMeDTO>> GetList()
         {
-            var response = await Client.GetAsync("api/v2/aboutme/list");
+            var response = await DataApiClient.GetAsync("api/v2/aboutme/list");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -67,7 +68,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<ExperienceDTO>> ListAsyncExp()
         {
-            var response = await Client.GetAsync("api/Experience/list");
+            var response = await DataApiClient.GetAsync("api/Experience/list");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -78,7 +79,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ExperienceDTO>> AddExpAsync(ExperienceDTO experienceDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/experience/add", experienceDTO);
+            var response = await DataApiClient.PostAsJsonAsync("api/experience/add", experienceDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -89,7 +90,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ExperienceDTO>> EditExpAsync(ExperienceDTO experienceDTO, long id)
         {
-            var response = await Client.PostAsJsonAsync($"api/experience/edit/{id}", experienceDTO);
+            var response = await DataApiClient.PostAsJsonAsync($"api/experience/edit/{id}", experienceDTO);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -101,7 +102,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteExpAsync(long id)
         {
-            var response = await Client.DeleteAsync($"api/experience/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/experience/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -111,7 +112,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<ServiceDTO>> ListAsyncService()
         {
-            var response = await Client.GetAsync("api/Services/List");
+            var response = await DataApiClient.GetAsync("api/Services/List");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -122,7 +123,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ServiceDTO>> AddServiceAsync(ServiceDTO serviceDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/Services/add", serviceDTO);
+            var response = await DataApiClient.PostAsJsonAsync("api/Services/add", serviceDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -133,7 +134,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ServiceDTO>> EditServiceAsync(ServiceDTO serviceDTO, long id)
         {
-            var response = await Client.PostAsJsonAsync($"api/Services/edit/{id}", serviceDTO);
+            var response = await DataApiClient.PostAsJsonAsync($"api/Services/edit/{id}", serviceDTO);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -145,7 +146,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteServiceAsync(long id)
         {
-            var response = await Client.DeleteAsync($"api/Services/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/Services/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -156,7 +157,7 @@ namespace PortfolyoApp.Business.Services
 
         public async Task<List<EducationsDTO>> ListAsyncEducation()
         {
-            var response = await Client.GetAsync("api/Educations/List");
+            var response = await DataApiClient.GetAsync("api/Educations/List");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -167,7 +168,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<EducationsDTO>> AddAsyncEducation(EducationsDTO educationsDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/Educations/add", educationsDTO);
+            var response = await DataApiClient.PostAsJsonAsync("api/Educations/add", educationsDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -178,7 +179,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<EducationsDTO>> EditAsyncEducation(EducationsDTO educationsDTO, long id)
         {
-            var response = await Client.PostAsJsonAsync($"api/Educations/edit/{id}", educationsDTO);
+            var response = await DataApiClient.PostAsJsonAsync($"api/Educations/edit/{id}", educationsDTO);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -190,7 +191,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteAsyncEducation(long id)
         {
-            var response = await Client.DeleteAsync($"api/Educations/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/Educations/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -200,7 +201,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<ProjectDTO>> ListAsyncProject()
         {
-            var response = await Client.GetAsync("api/project/List");
+            var response = await DataApiClient.GetAsync("api/project/List");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -209,11 +210,24 @@ namespace PortfolyoApp.Business.Services
 
             return Result.Success(responsObj);
         }
+        public async Task<ProjectDTO> GetProjectAsync(long id)
+        {
+            var response = await DataApiClient.GetAsync($"api/Project/get/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<ProjectDTO>() ?? throw new InvalidOperationException();
+
+            return Result.Success(responsObj);
+        }
         public async Task<Result<ProjectDTO>> AddAsyncProject(ProjectDTO projectDto)
         {
             try
             {
-                var response = await Client.PostAsJsonAsync("api/Project/add", projectDto);
+                projectDto.ImageUrl = $"{FileApiClient.BaseAddress}{projectDto.ImageUrl}";
+                var response = await DataApiClient.PostAsJsonAsync("api/Project/add", projectDto);
                 if (!response.IsSuccessStatusCode)
                 {
                     var errorMessage = await response.Content.ReadAsStringAsync();
@@ -225,18 +239,17 @@ namespace PortfolyoApp.Business.Services
             }
             catch (Exception ex)
             {
-                // Log the exception
-                // logger.LogError(ex, "An error occurred while adding the project.");
                 throw new InvalidOperationException("An error occurred in AddAsyncProject", ex);
             }
         }
         public async Task<Result<ProjectDTO>> EditAsyncProject(ProjectDTO projectDto, long id)
         {
-            var response = await Client.PostAsJsonAsync($"api/Project/edit/{id}", projectDto);
-
+            projectDto.ImageUrl = $"{FileApiClient.BaseAddress}{projectDto.ImageUrl}";
+            var response = await DataApiClient.PutAsJsonAsync($"api/Project/edit/{id}", projectDto);
             if (!response.IsSuccessStatusCode)
             {
-                throw new InvalidOperationException("User request was not successful");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"User request was not successful: {response.StatusCode} - {errorContent}");
             }
             var responsObj = await response.Content.ReadFromJsonAsync<Result<ProjectDTO>>() ?? throw new InvalidOperationException();
 
@@ -244,7 +257,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteAsyncProject(long id)
         {
-            var response = await Client.DeleteAsync($"api/Project/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/Project/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -254,7 +267,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<ContactDTO>> ListAsyncContact()
         {
-            var response = await Client.GetAsync("api/Contact/List");
+            var response = await DataApiClient.GetAsync("api/Contact/List");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -265,7 +278,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<ContactDTO>> AddAsyncContact(ContactDTO contactDTO)
         {
-            var response = await Client.PostAsJsonAsync("api/Contact/add", contactDTO);
+            var response = await DataApiClient.PostAsJsonAsync("api/Contact/add", contactDTO);
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -276,7 +289,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteContact(long id)
         {
-            var response = await Client.DeleteAsync($"api/Contact/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/Contact/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -286,7 +299,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<List<BlogPostDTO>> ListAsyncBlog()
         {
-            var response = await Client.GetAsync("api/blogpost/list");
+            var response = await DataApiClient.GetAsync("api/blogpost/list");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("User request was not successful");
@@ -295,20 +308,29 @@ namespace PortfolyoApp.Business.Services
 
             return Result.Success(responsObj);
         }
-        public async Task<Result<BlogPostDTO>> AddAsyncBlog(BlogPostDTO blogtDto)
+        public async Task<Result<BlogPostDTO>> AddAsyncBlog(BlogPostDTO blogDto)
         {
-            var response = await Client.PostAsJsonAsync("api/BlogPost/add", blogtDto);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new InvalidOperationException("User request was not successful");
-            }
-            var responsObj = await response.Content.ReadFromJsonAsync<Result<BlogPostDTO>>() ?? throw new InvalidOperationException();
+                blogDto.ImageUrl = $"{FileApiClient.BaseAddress}{blogDto.ImageUrl}";
+                var response = await DataApiClient.PostAsJsonAsync("api/BlogPost/add", blogDto);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new InvalidOperationException($"Request was not successful: {errorMessage}");
+                }
 
-            return Result.Success();
+                var responsObj = await response.Content.ReadFromJsonAsync<Result<BlogPostDTO>>() ?? throw new InvalidOperationException("Failed to deserialize response");
+                return Result.Success(responsObj);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("An error occurred in AddAsyncProject", ex);
+            }
         }
         public async Task<BlogPostDTO> DetailAsyncBlog(long id)
         {
-            var response = await Client.GetAsync($"api/BlogPost/detail/{id}");
+            var response = await DataApiClient.GetAsync($"api/BlogPost/detail/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -320,7 +342,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result<BlogPostDTO>> EditAsyncBlog(BlogPostDTO blogtDto, long id)
         {
-            var response = await Client.PostAsJsonAsync($"api/BlogPost/edit/{id}", blogtDto);
+            var response = await DataApiClient.PostAsJsonAsync($"api/BlogPost/edit/{id}", blogtDto);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -332,7 +354,7 @@ namespace PortfolyoApp.Business.Services
         }
         public async Task<Result> DeleteAsyncBlog(long id)
         {
-            var response = await Client.DeleteAsync($"api/BlogPost/delete/{id}");
+            var response = await DataApiClient.DeleteAsync($"api/BlogPost/delete/{id}");
 
             if (!response.IsSuccessStatusCode)
             {

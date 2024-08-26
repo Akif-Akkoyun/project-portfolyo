@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Admin.Mvc.Models;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
-    public class BlogPostController(IUserService service) : Controller
+    public class BlogPostController(IUserService service,IFileService fileService,IMapper mapper) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> ListBlog()
@@ -35,22 +36,55 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBlogPost([FromForm] BlogPostViewModel blogPostViewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(blogPostViewModel);
+
+                if (blogPostViewModel.ImageFile != null && blogPostViewModel.ImageFile.Length > 0)
+                {
+                    var uploadResult = await fileService.UploadFileAsync(blogPostViewModel.ImageFile);
+
+                    if (uploadResult.IsSuccess)
+                    {
+                        var filePath = uploadResult.Value;
+
+                        var blogDto = mapper.Map<BlogPostDTO>(blogPostViewModel);
+
+                        try
+                        {
+                            await fileService.DownloadFileAsync(filePath);
+
+
+                            blogDto.ImageUrl = filePath;
+
+                            var result = await service.AddAsyncBlog(blogDto);
+
+                            if (result != null)
+                            {
+                                ViewBag.Success = "Başarı ile eklendi";
+                            }
+                            else
+                            {
+                                ViewBag.Error = "Ekleme başarısız oldu";
+                            }
+
+                            return View();
+                        }
+                        catch (Exception ex)
+                        {
+                            ModelState.AddModelError(string.Empty, "Failed to add project: " + ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Failed to upload file");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Please select a file to upload.");
+                }
             }
-            var dto = new BlogPostDTO
-            {
-                Title = blogPostViewModel.Title,
-                Content = blogPostViewModel.Content,
-                ImageUrl = blogPostViewModel.ImageUrl,
-                CreatedAt = DateTime.UtcNow,
-            };
-            var result = await service.AddAsyncBlog(dto);
-            if (result != null)
-            {
-                return RedirectToAction("ListBlog");
-            }
+
             return View(blogPostViewModel);
         }
         [HttpGet]

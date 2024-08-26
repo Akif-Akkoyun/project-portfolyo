@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PortfolyoApp.Business.Services;
+using ServiceStack;
+using System.Text.Encodings.Web;
 
 namespace PortfolyoApp.File.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
     public class FileController : ControllerBase
     {
@@ -25,28 +27,50 @@ namespace PortfolyoApp.File.Api.Controllers
             }
 
             var rootPath = _webHostEnvironment.WebRootPath;
-            var filePath = Path.Combine(rootPath,"img",file.FileName);
+            
+            var fileName = file.FileName.Replace(" ", "-").Replace(")", "").Replace("(", "").ToLower();
+            var filePath = Path.Combine(rootPath, "img", fileName);
+            if (System.IO.File.Exists(filePath))
+            {
+               return BadRequest("Dosya zaten var");
+            }
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            return Ok(new { filePath });
+            return Ok(new { filePath = $"api/file/download/{fileName}" });
         }
 
         [HttpDelete("delete/{fileName}")]
         public IActionResult DeleteFile(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return BadRequest("Dosya adı belirtilmemiş");
+            }
+            var decodeName = Uri.UnescapeDataString(fileName);
+
+            var name = Path.GetFileName(decodeName);
             var rootPath = _webHostEnvironment.WebRootPath;
-            var filePath = Path.Combine(rootPath, fileName);
+            var filePath = Path.Combine(rootPath, "img", name);
+
 
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound("Dosya bulunamadı");
             }
 
-            System.IO.File.Delete(filePath);
-            return Ok("Dosya silindi");
+            try
+            {
+                System.IO.File.Delete(filePath);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Dosya silinirken bir hata oluştu: {ex.Message}");
+            }
+
+            return Ok("Dosya başarıyla silindi");
         }
 
         [HttpGet("download/{filePath}")]
@@ -56,6 +80,9 @@ namespace PortfolyoApp.File.Api.Controllers
             {
                 return BadRequest("Dosya yolu sağlanmadı.");
             }
+
+            var rootPath = _webHostEnvironment.WebRootPath;
+            filePath = Path.Combine(rootPath, "img", filePath);
 
             if (!System.IO.File.Exists(filePath))
             {
@@ -70,6 +97,7 @@ namespace PortfolyoApp.File.Api.Controllers
             memory.Position = 0;
             return File(memory, GetContentType(filePath), Path.GetFileName(filePath));
         }
+        
 
         private string GetContentType(string path)
         {
