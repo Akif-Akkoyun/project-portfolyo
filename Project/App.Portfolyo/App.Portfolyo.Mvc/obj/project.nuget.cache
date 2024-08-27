@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DtKs/pimA5g=",
+  "dgSpecHash": "xcQwJ4n1Nks=",
   "success": true,
-  "projectFilePath": "C:\\Users\\akifa\\OneDrive\\Masaüstü\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\PortfolyoApp.Mvc.csproj",
+  "projectFilePath": "C:\\Users\\akifa\\Desktop\\Project\\project-portfolyo\\Project\\App.Portfolyo\\App.Portfolyo.Mvc\\PortfolyoApp.Mvc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\akifa\\.nuget\\packages\\ardalis.result\\9.1.0\\ardalis.result.9.1.0.nupkg.sha512",
     "C:\\Users\\akifa\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",

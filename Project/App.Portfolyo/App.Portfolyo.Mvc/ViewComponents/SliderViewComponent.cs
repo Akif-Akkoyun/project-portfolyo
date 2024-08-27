@@ -5,30 +5,26 @@ using ServiceStack;
 
 namespace PortfolyoApp.Mvc.ViewComponents
 {
-    public class BlogPostViewComponent(IUserService service) : ViewComponent
+    public class SliderViewComponent(IUserService service) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var listAbout = await service.ListAsyncBlog();
+            var listAbout = await service.GetSliderListAsync();
 
             if (listAbout is null)
             {
                 ViewBag.Message = "There is no data";
                 return View(ViewBag.Message);
             }
-            var result = listAbout
-                .OrderByDescending(u => u.Id)
-                .Take(3)
-                .Select(u => new BlogPostViewModel
+            var result = listAbout.Select(u => new SliderViewModel
             {
                 Id = u.Id,
-                ImageUrl = u.ImageUrl,
-                Title = u.Title,
-                Content = u.Content,
-                CreatedAt = u.CreatedAt,
+                ImgUrl1 = u.ImgUrl1,
+                ImgUrl2 = u.ImgUrl2,
             }).ToList();
 
             return View(result);
         }
+
     }
 }

@@ -31,6 +31,16 @@ namespace PortfolyoApp.Data
             };
             db.Set<AboutMeEntity>().AddRange(aboutMeEntities);
             await db.SaveChangesAsync();
+            List<SliderEntity> sliderEntity = new()
+            {
+                new SliderEntity
+                {
+                    ImgUrl1 = "slider1.jpg",
+                    ImgUrl2 = "slider2.jpg",
+                }
+            };
+            db.Set<SliderEntity>().AddRange(sliderEntity);
+            await db.SaveChangesAsync();
             List<ExperiencesEntity> experiencesEntities = new()
             {
                 new ExperiencesEntity

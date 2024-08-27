@@ -26,6 +26,8 @@ namespace PortfolyoApp.Admin.Mvc
                 .ReverseMap();
             CreateMap<BlogPostViewModel, BlogPostDTO>()
                 .ReverseMap();
+            CreateMap<SliderViewModel, SlidersDTO>()
+                .ReverseMap();
         }
     }
 }

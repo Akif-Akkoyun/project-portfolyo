@@ -1,0 +1,36 @@
+﻿@using PortfolyoApp.Admin.Mvc.Models
+
+@model SliderViewModel
+
+
+
+<div class="container">
+    <h2>Update Slider Image</h2>
+    <br />
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Success
+        </div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+    <br />
+    <form asp-action="EditSlider" asp-controller="Sliders" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input type="file" asp-for="ImgFile1" />
+            <span asp-validation-for="ImgFile1" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <input type="file" asp-for="ImgFile2" />
+            <span asp-validation-for="ImgFile2" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
