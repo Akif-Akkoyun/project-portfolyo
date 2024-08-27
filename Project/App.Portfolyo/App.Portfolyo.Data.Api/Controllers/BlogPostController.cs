@@ -26,8 +26,7 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = u.Title,
                 Content = u.Content,
                 ImageUrl = u.ImageUrl,
-                CreatedAt = u.CreatedAt.Value,
-                PublishDate = u.PublishDate.Value 
+                CreatedAt = DateTime.UtcNow,
 
             }).ToList();
 
@@ -42,8 +41,7 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = blogPostDTO.Title,
                 Content = blogPostDTO.Content,
                 ImageUrl = blogPostDTO.ImageUrl,
-                PublishDate = DateTime.Now,
-                CreatedAt = DateTime.Now
+                PublishDate = DateTime.UtcNow
             };
 
             await repo.Add(blogPost);
@@ -65,13 +63,12 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = post.Title,
                 Content = post.Content,
                 ImageUrl = post.ImageUrl,
-                CreatedAt = DateTime.Now,
-                PublishDate = DateTime.Now
+                CreatedAt = DateTime.Now
             };
             return Ok(dto);
         }
         [Route("edit/{id}")]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> EditBlogPost(BlogPostDTO blogPostDTO, long id)
         {
             var blogPost = await repo.GetById<BlogPostEntity>(id);

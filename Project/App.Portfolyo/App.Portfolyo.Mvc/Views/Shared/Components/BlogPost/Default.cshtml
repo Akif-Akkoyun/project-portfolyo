@@ -15,13 +15,7 @@
                     </p>
                 </div>
                 <h3 class="heading"><a href="single.html">@post.Title</a></h3>
-                <p>
-                    @Html.Raw(
-                             post.Content.Replace("<p>", "").Replace("</p>", "").Length > 90
-                             ? post.Content.Replace("<p>", "").Replace("</p>", "").Substring(0, 90) + "..."
-                             : post.Content.Replace("<p>", "").Replace("</p>", "")
-                             )
-                </p>
+                <p>@(post.Content.Length > 90 ? post.Content.Substring(0, 90) + "..." : post.Content)</p>
             </div>
         </div>
     </div>

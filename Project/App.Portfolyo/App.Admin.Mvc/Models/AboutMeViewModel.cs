@@ -10,7 +10,6 @@ namespace PortfolyoApp.Admin.Mvc.Models
         [Required]
         public string Introduction { get; set; } = default!;
         [Required]
-        public IFormFile ImgFile1 { get; set; } = null!;
         public string ImageUrl1 { get; set; } = default!;
         [Required]
         public string Name { get; set; } = default!;

@@ -15,8 +15,9 @@ namespace PortfolyoApp.Admin.Mvc.Models
         public IFormFile ImageFile { get; set; } = null!;
         [MaxLength(255)]
         public string ImageUrl { get; set; } = default!;
-        public DateTime PublishDate { get; set; } = default!;
-        public DateTime CreatedAt { get; set; } =default!;
+        [Required]
+        public DateTime PublishDate { get; set; }
+        [Required]
+        public DateTime CreatedAt { get; set; }
     }
 }
- 

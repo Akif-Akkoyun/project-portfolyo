@@ -12,60 +12,29 @@ namespace PortfolyoApp.Data.Api.Controllers
     [ApiController]
     public class AboutMeController(IDataRepository repo) : ControllerBase
     {
-        [Route("edit/{id}")]
-        [HttpPut]
-        public async Task<IActionResult> EditAboutMe(AboutMeDTO aboutMeDTO,long id)
+        [Route("editaboutme")]
+        [HttpPost]
+        public async Task<IActionResult> EditAboutMe(AboutMeDTO aboutMeDTO)
         {
-            var abouts = await repo.GetById<AboutMeEntity>(id);
+            var abouts = await repo.GetAll<AboutMeEntity>().ToListAsync();
 
-            if (abouts is null)
+            foreach (var about in abouts)
             {
-                return NotFound();
+                about.ImageUrl1 = aboutMeDTO.ImageUrl1;
+                about.Introduction = aboutMeDTO.Introduction;
+                about.Name = aboutMeDTO.Name;
+                about.PhoneNumber = aboutMeDTO.PhoneNumber;
+                about.Email = aboutMeDTO.Email;
+                about.Address = aboutMeDTO.Address;
+                about.Year = aboutMeDTO.Year;
+                about.Month = aboutMeDTO.Month;
+                about.Day = aboutMeDTO.Day;
+                about.ZipCode = aboutMeDTO.ZipCode;
+
+                await repo.Update(about);
             }
-            abouts.ImageUrl1 = aboutMeDTO.ImageUrl1;
-            abouts.Introduction = aboutMeDTO.Introduction;
-            abouts.Name = aboutMeDTO.Name;
-            abouts.PhoneNumber = aboutMeDTO.PhoneNumber;
-            abouts.Email = aboutMeDTO.Email;
-            abouts.Address = aboutMeDTO.Address;
-            abouts.Day = aboutMeDTO.Day;
-            abouts.Month = aboutMeDTO.Month;
-            abouts.Year = aboutMeDTO.Year;
-            abouts.ZipCode = aboutMeDTO.ZipCode;
-
-
-            await repo.Update(abouts);
 
             return Ok(abouts);
-        }
-        [Route("detail/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAbout(long id)
-        {
-            var about = await repo.GetById<AboutMeEntity>(id);
-
-            if (about is null)
-            {
-                return NotFound();
-            }
-
-            var dto = new AboutMeDTO
-            {
-                Id = about.Id,
-                ImageUrl1 = about.ImageUrl1,
-                Introduction = about.Introduction,
-                Name = about.Name,
-                PhoneNumber = about.PhoneNumber,
-                Email = about.Email,
-                Address = about.Address,
-                Day = about.Day,
-                Month = about.Month,
-                Year = about.Year,
-                CreatedAt = DateTime.Now,
-                ZipCode = about.ZipCode
-            };
-
-            return Ok(dto);
         }
         [HttpGet("list")]
         public async Task<IActionResult> GetAbout()

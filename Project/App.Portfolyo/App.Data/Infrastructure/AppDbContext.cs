@@ -22,8 +22,9 @@ namespace PortfolyoApp.Data.Infrastructure
         public DbSet<ServiceEntity> Skılls { get; set; } = null!;
         public DbSet<BlogPostEntity> BlogPosts { get; set; } = null!;
         public DbSet<FileEntity> Files { get; set; } = null!;
-        public DbSet<SliderEntity> Sliders { get; set; } = null!;
 
+
+        //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
@@ -34,7 +35,6 @@ namespace PortfolyoApp.Data.Infrastructure
             modelBuilder.ApplyConfiguration(new ContactMessagesConfiguration());
             modelBuilder.ApplyConfiguration(new EducationsConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new SliderConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
         }
     }

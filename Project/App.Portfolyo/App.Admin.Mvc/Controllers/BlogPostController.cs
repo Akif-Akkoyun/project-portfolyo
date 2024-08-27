@@ -23,7 +23,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
                 Content = u.Content,
                 ImageUrl = u.ImageUrl,
                 PublishDate = DateTime.Now,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
             }).ToList();
 
             return View(model);
@@ -36,7 +36,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBlogPost([FromForm] BlogPostViewModel blogPostViewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 if (blogPostViewModel.ImageFile != null && blogPostViewModel.ImageFile.Length > 0)
@@ -97,53 +97,24 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                try
-                {
-                    var existingProject = await service.DetailAsyncBlog(id);
-                    if (existingProject == null)
-                    {
-                        ViewBag.Error = "Proje bulunamadı";
-                        return View(blogPostViewModel);
-                    }
-
-                    if (blogPostViewModel.ImageFile != null && blogPostViewModel.ImageFile.Length > 0)
-                    {
-                        if (!string.IsNullOrEmpty(existingProject.ImageUrl))
-                        {
-                            await fileService.DeleteFileAsync(existingProject.ImageUrl);
-                        }
-
-                        var uploadResult = await fileService.UploadFileAsync(blogPostViewModel.ImageFile);
-                        if (uploadResult.IsSuccess)
-                        {
-                            blogPostViewModel.ImageUrl = uploadResult.Value;
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Failed to upload file");
-                            return View(blogPostViewModel);
-                        }
-                    }
-
-                    var dto = mapper.Map<BlogPostDTO>(blogPostViewModel);
-
-                    var updateResult = await service.EditAsyncBlog(dto, id);
-
-                    if (updateResult != null)
-                    {
-                        ViewBag.Success = "Başarı ile güncellendi";
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Güncelleme başarısız oldu";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "Failed to update project: " + ex.Message);
-                }
+                return View(blogPostViewModel);
             }
-
+            var dto = new BlogPostDTO
+            {
+                Title = blogPostViewModel.Title,
+                Content = blogPostViewModel.Content,
+                ImageUrl = blogPostViewModel.ImageUrl,
+                CreatedAt = DateTime.UtcNow,
+            };
+            var result = await service.EditAsyncBlog(dto, id);
+            if (result != null)
+            {
+                ViewBag.Success = "Başarı ile güncellendi";
+            }
+            else
+            {
+                ViewBag.Error = "Güncelleme başarısız oldu";
+            }
             return View(blogPostViewModel);
         }
         [HttpGet]
@@ -159,7 +130,7 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
             {
                 ViewBag.Error = "Silme başarısız oldu";
             }
-
+            
             return RedirectToAction("ListBlog");
         }
     }
