@@ -3,14 +3,12 @@ using PortfolyoApp.Admin.Mvc.Models;
 using AutoMapper;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
-using System.Linq;
-using ServiceStack;
 using Microsoft.AspNetCore.Authorization;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
     [Authorize]
-    public class OperationsController(IMapper mapper, IUserService service) : Controller
+    public class OperationsController(IMapper mapper, IUserService service,IFileService fileService) : Controller
     {
         [HttpGet]
         public IActionResult AboutMeEdit()
@@ -22,20 +20,54 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(aboutMeViewModel);
+                try
+                {
+                    long id = 1;
+                    var existingProject = await service.AboutDetailAsync(id);
+                    if (existingProject == null)
+                    {
+                        ViewBag.Error = "Blog bulunamadı";
+                        return View(aboutMeViewModel);
+                    }
+                    if (aboutMeViewModel.ImgFile1 != null && aboutMeViewModel.ImgFile1.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(aboutMeViewModel.ImageUrl1))
+                        {
+                            await fileService.DeleteFileAsync(aboutMeViewModel.ImageUrl1);
+                        }
+
+                        var uploadResult1 = await fileService.UploadFileAsync(aboutMeViewModel.ImgFile1);
+                        if (uploadResult1.IsSuccess)
+                        {
+                            aboutMeViewModel.ImageUrl1 = uploadResult1.Value;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Failed to upload file");
+                            return View(aboutMeViewModel);
+                        }
+                    }
+
+                    var dto = mapper.Map<AboutMeDTO>(aboutMeViewModel);
+
+                    var updateResult = await service.EditAboutMeAsync(dto,id);
+
+                    if (updateResult != null)
+                    {
+                        ViewBag.Success = "Başarı ile güncellendi";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Güncelleme başarısız oldu";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to update project: " + ex.Message);
+                }
             }
 
-            var result = await service.UpdateAsync(mapper.Map<AboutMeDTO>(aboutMeViewModel));
-
-            if (result != null) // Assuming 'result' is null if the update fails
-            {
-                ViewBag.Success = "Başarı ile güncellenmiştir";
-            }
-            else
-            {
-                ViewBag.Error = "Güncelleme başarısız oldu";
-            }
-            return View();
+            return View(aboutMeViewModel);
         }
         [HttpGet]
         public async Task<IActionResult> ListExp()

@@ -22,10 +22,10 @@
         </div>
     }
     <br />
-    <form asp-action="EditBlogPost" asp-controller="BlogPost" method="post">
+    <form asp-action="EditBlogPost" asp-controller="BlogPost" method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <input type="file" asp-for="ImageUrl" accept=".png, .jpg, .jpeg" />
-            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <input type="file" asp-for="ImageFile" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Title" class="form-label">Title</label>

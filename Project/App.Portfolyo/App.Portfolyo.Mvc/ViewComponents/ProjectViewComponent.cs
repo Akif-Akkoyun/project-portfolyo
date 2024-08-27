@@ -15,7 +15,10 @@ namespace PortfolyoApp.Mvc.ViewComponents
                 ViewBag.Message = "There is no data";
                 return View(ViewBag.Message);
             }
-            var result = projects.Select(u => new ProjectViewModel
+            var result = projects
+                .OrderByDescending(u => u.Id)
+                .Take(6)
+                .Select(u => new ProjectViewModel
             {
                 Id = u.Id,
                 Title = u.Title,
