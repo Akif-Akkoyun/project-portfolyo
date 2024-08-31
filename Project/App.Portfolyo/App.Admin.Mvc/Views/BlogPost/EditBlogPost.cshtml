@@ -24,8 +24,15 @@
     <br />
     <form asp-action="EditBlogPost" asp-controller="BlogPost" method="post">
         <div class="mb-3">
+<<<<<<< Updated upstream
             <input type="file" asp-for="ImageUrl" accept=".png, .jpg, .jpeg" />
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
+=======
+            <label asp-for="ImageFile">Add Image</label>
+            <br />
+            <input type="file" asp-for="ImageFile" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+>>>>>>> Stashed changes
         </div>
         <div class="mb-3">
             <label asp-for="Title" class="form-label">Title</label>

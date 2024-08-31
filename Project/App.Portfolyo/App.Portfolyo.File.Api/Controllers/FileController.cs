@@ -27,12 +27,20 @@ namespace PortfolyoApp.File.Api.Controllers
             }
 
             var rootPath = _webHostEnvironment.WebRootPath;
+<<<<<<< Updated upstream
             
+=======
+
+>>>>>>> Stashed changes
             var fileName = file.FileName.Replace(" ", "-").Replace(")", "").Replace("(", "").ToLower();
             var filePath = Path.Combine(rootPath, "img", fileName);
             if (System.IO.File.Exists(filePath))
             {
+<<<<<<< Updated upstream
                return BadRequest("Dosya zaten var");
+=======
+                return BadRequest("Dosya zaten var");
+>>>>>>> Stashed changes
             }
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -42,6 +50,11 @@ namespace PortfolyoApp.File.Api.Controllers
             return Ok(new { filePath = $"api/file/download/{fileName}" });
         }
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
         [HttpDelete("delete/{fileName}")]
         public IActionResult DeleteFile(string fileName)
         {

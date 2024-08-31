@@ -6,6 +6,7 @@ using PortfolyoApp.Business.Services;
 using System.Linq;
 using ServiceStack;
 using Microsoft.AspNetCore.Authorization;
+using ServiceStack;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
@@ -22,7 +23,60 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             if (!ModelState.IsValid)
             {
+<<<<<<< Updated upstream
                 return View(aboutMeViewModel);
+=======
+                try
+                {
+                    long id = 1;
+                    var existingAbout = await service.AboutDetailAsync(id);
+                    if (existingAbout == null)
+                    {
+                        ViewBag.Error = "Blog bulunamadı";
+                        return View(aboutMeViewModel);
+                    }
+                    if (aboutMeViewModel.ImgFile1 != null && aboutMeViewModel.ImgFile1.Length > 0 && aboutMeViewModel.FileCvUrl != null && aboutMeViewModel.FileCvUrl.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(existingAbout.ImageUrl1) && !string.IsNullOrEmpty(existingAbout.CvUrl))
+                        {
+                            await fileService.DeleteFileAsync(existingAbout.ImageUrl1);
+                            await fileService.DeleteFileAsync(existingAbout.CvUrl);
+                        }
+
+                        var uploadResult1 = await fileService.UploadFileAsync(aboutMeViewModel.ImgFile1);
+
+                        var uploadResultCv = await fileService.UploadFileAsync(aboutMeViewModel.FileCvUrl);
+
+                        if (uploadResult1.IsSuccess)
+                        {
+                            aboutMeViewModel.ImageUrl1 = uploadResult1.Value;
+                            aboutMeViewModel.CvUrl = uploadResultCv.Value;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Failed to upload file");
+                            return View(aboutMeViewModel);
+                        }
+                    }
+
+                    var dto = mapper.Map<AboutMeDTO>(aboutMeViewModel);
+
+                    var updateResult = await service.EditAboutMeAsync(dto,id);
+
+                    if (updateResult != null)
+                    {
+                        ViewBag.Success = "Başarı ile güncellendi";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Güncelleme başarısız oldu";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to update project: " + ex.Message);
+                }
+>>>>>>> Stashed changes
             }
 
             var result = await service.UpdateAsync(mapper.Map<AboutMeDTO>(aboutMeViewModel));

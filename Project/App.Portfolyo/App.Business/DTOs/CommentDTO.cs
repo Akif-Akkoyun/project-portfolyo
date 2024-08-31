@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace PortfolyoApp.Business.DTOs
 {
-    public class BlogPostDTO
+    public class CommentDTO
     {
         public long Id { get; set; }
-        public string Title { get; set; } = default!;
+        public long BlogPostId { get; set; }
+        public long UserId { get; set; } = default!;
         public string Content { get; set; } = default!;
-        public string ImageUrl { get; set; } = default!;
-        public DateTime PublishDate { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string UserName { get; set; } = default!;
     }
 }

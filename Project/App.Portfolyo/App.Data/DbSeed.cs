@@ -26,7 +26,8 @@ namespace PortfolyoApp.Data
                     Email = "akifakkoyun09@gmail.com",
                     PhoneNumber = "0532 123 45 67",
                     CreatedAt = DateTime.Now,
-                    ZipCode = 34722
+                    ZipCode = 34722,
+                    CvUrl ="akifakkoyun_cv.pdf"
                 }
             };
             db.Set<AboutMeEntity>().AddRange(aboutMeEntities);

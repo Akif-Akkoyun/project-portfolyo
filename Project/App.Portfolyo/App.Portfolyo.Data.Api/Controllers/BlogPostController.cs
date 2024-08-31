@@ -26,7 +26,12 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = u.Title,
                 Content = u.Content,
                 ImageUrl = u.ImageUrl,
+<<<<<<< Updated upstream
                 CreatedAt = DateTime.UtcNow,
+=======
+                CreatedAt = DateTime.Now,
+                PublishDate = DateTime.Now
+>>>>>>> Stashed changes
 
             }).ToList();
 
@@ -97,6 +102,23 @@ namespace PortfolyoApp.Data.Api.Controllers
             await repo.Delete(blogPost);
 
             return Ok();
+        }
+        [Route("add-comment/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> AddComment(CommentDTO commentDTO,long id)
+        {
+            var comment = new CommentsEntity
+            {
+                BlogPostId = id,
+                UserId = commentDTO.UserId,
+                Content = commentDTO.Content,
+                UserName = commentDTO.UserName,
+                CreatedAt = DateTime.Now
+            };
+
+            await repo.Add(comment);
+
+            return Ok(comment);
         }
     }
 }

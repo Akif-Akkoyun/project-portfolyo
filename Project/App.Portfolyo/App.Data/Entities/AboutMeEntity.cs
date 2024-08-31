@@ -7,6 +7,7 @@ namespace PortfolyoApp.Data.Entities
     {
         public string Introduction { get; set; } = default!;
         public string ImageUrl1 { get; set; } = default!;
+        public string CvUrl { get; set; } = default!;
         public string Name { get; set; } = default!;
         public int Year { get; set; }
         public int Day { get; set; }
@@ -23,6 +24,7 @@ namespace PortfolyoApp.Data.Entities
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Introduction).IsRequired().HasMaxLength(255);
             builder.Property(x => x.ImageUrl1).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.CvUrl).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Year).IsRequired();
             builder.Property(x => x.Month).IsRequired().HasMaxLength(255);

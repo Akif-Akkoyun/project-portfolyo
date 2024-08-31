@@ -39,12 +39,20 @@ namespace PortfolyoApp.Business.Services
         Task<BlogPostDTO> DetailAsyncBlog(long id);
         Task<Result<BlogPostDTO>> EditAsyncBlog(BlogPostDTO blogtDto, long id);
         Task<Result> DeleteAsyncBlog(long id);
+        Task<Result<CommentDTO>> AddCommentAsync(CommentDTO comment, long id);
     }
     public class UserService(IHttpClientFactory httpClientFactory) : IUserService
     {
+<<<<<<< Updated upstream
         private System.Net.Http.HttpClient DataApiClient => httpClientFactory.CreateClient("data-api");
         private System.Net.Http.HttpClient FileApiClient => httpClientFactory.CreateClient("file-api");
         public async Task<List<AboutMeDTO>> UpdateAsync(AboutMeDTO aboutMeDTO)
+=======
+        private HttpClient DataApiClient => httpClientFactory.CreateClient("data-api");
+        private HttpClient FileApiClient => httpClientFactory.CreateClient("file-api");
+        
+        public async Task<List<SlidersDTO>> GetSliderListAsync()
+>>>>>>> Stashed changes
         {
             var response = await DataApiClient.PostAsJsonAsync("api/v2/aboutme/editaboutme", aboutMeDTO);
             if (!response.IsSuccessStatusCode)
@@ -55,6 +63,49 @@ namespace PortfolyoApp.Business.Services
 
             return Result.Success(responsObj);
         }
+<<<<<<< Updated upstream
+=======
+        public async Task<SlidersDTO> SliderGetIdAsync(long id)
+        {
+            var response = await DataApiClient.GetAsync($"api/slider/Get/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("User request was not successful");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<SlidersDTO>() ?? throw new InvalidOperationException();
+
+            return responsObj ?? throw new InvalidOperationException("No blog post data found");
+        }
+        public async Task<Result<SlidersDTO>> EditSliderAsync(SlidersDTO slidersDTO, long id)
+        {
+            slidersDTO.ImgUrl1 = $"{FileApiClient.BaseAddress}{slidersDTO.ImgUrl1}";
+            slidersDTO.ImgUrl2 = $"{FileApiClient.BaseAddress}{slidersDTO.ImgUrl2}";
+            var response = await DataApiClient.PutAsJsonAsync($"api/slider/edit/{id}", slidersDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"User request was not successful: {response.StatusCode} - {errorContent}");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<SlidersDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+        public async Task<Result<AboutMeDTO>> EditAboutMeAsync(AboutMeDTO aboutMeDTO, long id)
+        {
+            aboutMeDTO.ImageUrl1 = $"{FileApiClient.BaseAddress}{aboutMeDTO.ImageUrl1}";
+            aboutMeDTO.CvUrl = $"{FileApiClient.BaseAddress}{aboutMeDTO.CvUrl}";
+            var response = await DataApiClient.PutAsJsonAsync($"api/v2/aboutme/edit/{id}", aboutMeDTO);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"User request was not successful: {response.StatusCode} - {errorContent}");
+            }
+            var responsObj = await response.Content.ReadFromJsonAsync<Result<AboutMeDTO>>() ?? throw new InvalidOperationException();
+
+            return Result.Success();
+        }
+>>>>>>> Stashed changes
         public async Task<List<AboutMeDTO>> GetList()
         {
             var response = await DataApiClient.GetAsync("api/v2/aboutme/list");
@@ -361,6 +412,25 @@ namespace PortfolyoApp.Business.Services
                 throw new InvalidOperationException("User request was not successful");
             }
             return Result.Success();
+        }
+        public async Task<Result<CommentDTO>> AddCommentAsync(CommentDTO comment,long id)
+        {
+            try
+            {
+                var response = await DataApiClient.PostAsJsonAsync($"api/BlogPost/add-comment{id}", comment);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new InvalidOperationException($"Request was not successful: {errorMessage}");
+                }
+
+                var responsObj = await response.Content.ReadFromJsonAsync<Result<CommentDTO>>() ?? throw new InvalidOperationException("Failed");
+                return Result.Success(responsObj);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error", ex);
+            }
         }
     }
 }

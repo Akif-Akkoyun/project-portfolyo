@@ -16,5 +16,6 @@ namespace PortfolyoApp.Business.Services.Abstract
         Task<Result<AppUserDTO>> AddUserAsync(AppUserDTO userDTO);
         Task<Result<AppUserDTO>> EditUserAsync(AppUserDTO userDTO,long id);
         Task<Result> UserDeleteAsync(long id);
+        Task<AppUserDTO> GetUserByIdAsync(long id);
     }
 }

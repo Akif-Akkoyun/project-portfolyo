@@ -12,7 +12,7 @@ namespace PortfolyoApp.Data.Entities
         public string PasswordHash { get; set; } = default!;
         public string? RefreshPasswordToken { get; set; }
         public int RoleId { get; set; }
-
+        public ICollection<CommentsEntity> Comments { get; set; } = default!;
         //nav prop
         public RoleEntity Role { get; set; } = default!;
     }

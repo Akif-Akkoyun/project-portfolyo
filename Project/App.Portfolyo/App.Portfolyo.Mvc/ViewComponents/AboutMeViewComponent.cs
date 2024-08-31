@@ -22,6 +22,7 @@ namespace PortfolyoApp.Mvc.ViewComponents
             {
                 Id = u.Id,
                 ImageUrl1 = u.ImageUrl1,
+                CvUrl = u.CvUrl,
                 Introduction = u.Introduction,
                 Name = u.Name,
                 PhoneNumber = u.PhoneNumber,
