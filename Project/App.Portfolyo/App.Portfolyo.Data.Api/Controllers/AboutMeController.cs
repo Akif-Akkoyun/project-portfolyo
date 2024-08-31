@@ -12,34 +12,17 @@ namespace PortfolyoApp.Data.Api.Controllers
     [ApiController]
     public class AboutMeController(IDataRepository repo) : ControllerBase
     {
-        [Route("editaboutme")]
-        [HttpPost]
-        public async Task<IActionResult> EditAboutMe(AboutMeDTO aboutMeDTO)
+        [Route("edit/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> EditAboutMe(AboutMeDTO aboutMeDTO,long id)
         {
-            var abouts = await repo.GetAll<AboutMeEntity>().ToListAsync();
+            var abouts = await repo.GetById<AboutMeEntity>(id);
 
-            foreach (var about in abouts)
+            if (abouts is null)
             {
-                about.ImageUrl1 = aboutMeDTO.ImageUrl1;
-                about.Introduction = aboutMeDTO.Introduction;
-                about.Name = aboutMeDTO.Name;
-                about.PhoneNumber = aboutMeDTO.PhoneNumber;
-                about.Email = aboutMeDTO.Email;
-                about.Address = aboutMeDTO.Address;
-                about.Year = aboutMeDTO.Year;
-                about.Month = aboutMeDTO.Month;
-                about.Day = aboutMeDTO.Day;
-                about.ZipCode = aboutMeDTO.ZipCode;
-
-                await repo.Update(about);
+                return NotFound();
             }
-<<<<<<< Updated upstream
-
-            return Ok(abouts);
-        }
-=======
             abouts.ImageUrl1 = aboutMeDTO.ImageUrl1;
-            abouts.CvUrl = aboutMeDTO.CvUrl;
             abouts.Introduction = aboutMeDTO.Introduction;
             abouts.Name = aboutMeDTO.Name;
             abouts.PhoneNumber = aboutMeDTO.PhoneNumber;
@@ -70,7 +53,6 @@ namespace PortfolyoApp.Data.Api.Controllers
             {
                 Id = about.Id,
                 ImageUrl1 = about.ImageUrl1,
-                CvUrl = about.CvUrl,
                 Introduction = about.Introduction,
                 Name = about.Name,
                 PhoneNumber = about.PhoneNumber,
@@ -85,7 +67,6 @@ namespace PortfolyoApp.Data.Api.Controllers
 
             return Ok(dto);
         }
->>>>>>> Stashed changes
         [HttpGet("list")]
         public async Task<IActionResult> GetAbout()
         {
@@ -100,7 +81,6 @@ namespace PortfolyoApp.Data.Api.Controllers
             {
                 Id = u.Id,
                 ImageUrl1 = u.ImageUrl1,
-                CvUrl = u.CvUrl,
                 Introduction = u.Introduction,
                 Name = u.Name,
                 PhoneNumber = u.PhoneNumber,

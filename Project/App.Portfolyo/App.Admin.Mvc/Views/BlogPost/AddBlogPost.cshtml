@@ -22,8 +22,6 @@
     }
     <form asp-action="AddBlogPost" asp-controller="BlogPost" method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <label asp-for="ImageFile">Add Image</label>
-            <br />
             <input type="file" asp-for="ImageFile"/>
             <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>

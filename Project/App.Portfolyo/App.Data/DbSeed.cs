@@ -26,11 +26,20 @@ namespace PortfolyoApp.Data
                     Email = "akifakkoyun09@gmail.com",
                     PhoneNumber = "0532 123 45 67",
                     CreatedAt = DateTime.Now,
-                    ZipCode = 34722,
-                    CvUrl ="akifakkoyun_cv.pdf"
+                    ZipCode = 34722
                 }
             };
             db.Set<AboutMeEntity>().AddRange(aboutMeEntities);
+            await db.SaveChangesAsync();
+            List<SliderEntity> sliderEntity = new()
+            {
+                new SliderEntity
+                {
+                    ImgUrl1 = "slider1.jpg",
+                    ImgUrl2 = "slider2.jpg",
+                }
+            };
+            db.Set<SliderEntity>().AddRange(sliderEntity);
             await db.SaveChangesAsync();
             List<ExperiencesEntity> experiencesEntities = new()
             {

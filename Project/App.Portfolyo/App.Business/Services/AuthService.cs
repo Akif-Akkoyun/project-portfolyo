@@ -121,17 +121,6 @@ namespace PortfolyoApp.Business.Services
 
             return Result.Success(responsObj);
         }
-        public async Task<AppUserDTO> GetUserByIdAsync(long id)
-        {
-            var response = await Client.GetAsync($"api/AppUser/get/{id}");
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new InvalidOperationException("User request was not successful");
-            }
-            var responsObj = await response.Content.ReadFromJsonAsync<AppUserDTO>() ?? throw new InvalidOperationException();
-
-            return Result.Success(responsObj);
-        }
         public async Task<Result<AppUserDTO>> AddUserAsync(AppUserDTO userDTO)
         {
             var response = await Client.PostAsJsonAsync("api/AppUser/add", userDTO);

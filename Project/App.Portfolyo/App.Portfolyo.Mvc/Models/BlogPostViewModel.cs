@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using PortfolyoApp.Business.DTOs;
 
 namespace PortfolyoApp.Mvc.Models
 {

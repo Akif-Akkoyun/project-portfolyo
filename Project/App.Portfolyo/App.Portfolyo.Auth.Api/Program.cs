@@ -36,6 +36,10 @@ var connectionString = builder
 builder.Services.AddDataLayer(connectionString);
 builder.Services.AddScoped<IDataRepository, DataRepository>();
 builder.Services.AddScoped<IMailService, MailService>();
+
+
+
+//buraya gerek yok.
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -68,6 +72,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
 
 // Use the CORS policy

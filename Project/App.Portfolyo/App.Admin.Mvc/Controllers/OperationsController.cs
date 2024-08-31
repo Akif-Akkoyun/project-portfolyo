@@ -3,15 +3,12 @@ using PortfolyoApp.Admin.Mvc.Models;
 using AutoMapper;
 using PortfolyoApp.Business.DTOs;
 using PortfolyoApp.Business.Services;
-using System.Linq;
-using ServiceStack;
 using Microsoft.AspNetCore.Authorization;
-using ServiceStack;
 
 namespace PortfolyoApp.Admin.Mvc.Controllers
 {
     [Authorize]
-    public class OperationsController(IMapper mapper, IUserService service) : Controller
+    public class OperationsController(IMapper mapper, IUserService service,IFileService fileService) : Controller
     {
         [HttpGet]
         public IActionResult AboutMeEdit()
@@ -23,34 +20,26 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-<<<<<<< Updated upstream
-                return View(aboutMeViewModel);
-=======
                 try
                 {
                     long id = 1;
-                    var existingAbout = await service.AboutDetailAsync(id);
-                    if (existingAbout == null)
+                    var existingProject = await service.AboutDetailAsync(id);
+                    if (existingProject == null)
                     {
                         ViewBag.Error = "Blog bulunamadı";
                         return View(aboutMeViewModel);
                     }
-                    if (aboutMeViewModel.ImgFile1 != null && aboutMeViewModel.ImgFile1.Length > 0 && aboutMeViewModel.FileCvUrl != null && aboutMeViewModel.FileCvUrl.Length > 0)
+                    if (aboutMeViewModel.ImgFile1 != null && aboutMeViewModel.ImgFile1.Length > 0)
                     {
-                        if (!string.IsNullOrEmpty(existingAbout.ImageUrl1) && !string.IsNullOrEmpty(existingAbout.CvUrl))
+                        if (!string.IsNullOrEmpty(aboutMeViewModel.ImageUrl1))
                         {
-                            await fileService.DeleteFileAsync(existingAbout.ImageUrl1);
-                            await fileService.DeleteFileAsync(existingAbout.CvUrl);
+                            await fileService.DeleteFileAsync(aboutMeViewModel.ImageUrl1);
                         }
 
                         var uploadResult1 = await fileService.UploadFileAsync(aboutMeViewModel.ImgFile1);
-
-                        var uploadResultCv = await fileService.UploadFileAsync(aboutMeViewModel.FileCvUrl);
-
                         if (uploadResult1.IsSuccess)
                         {
                             aboutMeViewModel.ImageUrl1 = uploadResult1.Value;
-                            aboutMeViewModel.CvUrl = uploadResultCv.Value;
                         }
                         else
                         {
@@ -76,20 +65,9 @@ namespace PortfolyoApp.Admin.Mvc.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Failed to update project: " + ex.Message);
                 }
->>>>>>> Stashed changes
             }
 
-            var result = await service.UpdateAsync(mapper.Map<AboutMeDTO>(aboutMeViewModel));
-
-            if (result != null) // Assuming 'result' is null if the update fails
-            {
-                ViewBag.Success = "Başarı ile güncellenmiştir";
-            }
-            else
-            {
-                ViewBag.Error = "Güncelleme başarısız oldu";
-            }
-            return View();
+            return View(aboutMeViewModel);
         }
         [HttpGet]
         public async Task<IActionResult> ListExp()

@@ -26,12 +26,8 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = u.Title,
                 Content = u.Content,
                 ImageUrl = u.ImageUrl,
-<<<<<<< Updated upstream
                 CreatedAt = DateTime.UtcNow,
-=======
-                CreatedAt = DateTime.Now,
-                PublishDate = DateTime.Now
->>>>>>> Stashed changes
+                PublishDate = DateTime.UtcNow,
 
             }).ToList();
 
@@ -46,7 +42,8 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = blogPostDTO.Title,
                 Content = blogPostDTO.Content,
                 ImageUrl = blogPostDTO.ImageUrl,
-                PublishDate = DateTime.UtcNow
+                PublishDate = DateTime.Now,
+                CreatedAt = DateTime.Now
             };
 
             await repo.Add(blogPost);
@@ -68,12 +65,13 @@ namespace PortfolyoApp.Data.Api.Controllers
                 Title = post.Title,
                 Content = post.Content,
                 ImageUrl = post.ImageUrl,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                PublishDate = DateTime.Now
             };
             return Ok(dto);
         }
         [Route("edit/{id}")]
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> EditBlogPost(BlogPostDTO blogPostDTO, long id)
         {
             var blogPost = await repo.GetById<BlogPostEntity>(id);
@@ -102,23 +100,6 @@ namespace PortfolyoApp.Data.Api.Controllers
             await repo.Delete(blogPost);
 
             return Ok();
-        }
-        [Route("add-comment/{id}")]
-        [HttpPost]
-        public async Task<IActionResult> AddComment(CommentDTO commentDTO,long id)
-        {
-            var comment = new CommentsEntity
-            {
-                BlogPostId = id,
-                UserId = commentDTO.UserId,
-                Content = commentDTO.Content,
-                UserName = commentDTO.UserName,
-                CreatedAt = DateTime.Now
-            };
-
-            await repo.Add(comment);
-
-            return Ok(comment);
         }
     }
 }

@@ -27,8 +27,6 @@ namespace PortfolyoApp.Data.Entities
             builder.Property(x => x.UserId).IsRequired();
             builder.Property(x => x.Content).IsRequired();
             builder.Property(x => x.UserName).IsRequired();
-            builder.HasOne(x => x.BlogPost).WithMany(x => x.Comments).HasForeignKey(x => x.BlogPostId);
-            builder.HasOne(x => x.User).WithMany(x => x.Comments).HasForeignKey(x => x.UserId);
         }
     }
 }

@@ -49,13 +49,13 @@
                                 @(item.Content.Length > 50 ? item.Content.Substring(0,50)+"...": item.Content)
                             </td>
                             <td>
-                                @(item.ImageUrl.Length > 41 ? item.ImageUrl.Substring(41) : item.ImageUrl)
+                                @item.ImageUrl
                             </td>
                             <td>
-                                @item.PublishDate.ToString("dd-MM-yyyy HH:mm:ss")
+                                @item.PublishDate
                             </td>
                             <td>
-                                @item.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss")
+                                @item.CreatedAt
                             </td>
                             <td>
                                 <a class="btn btn-primary" asp-controller="BlogPost" asp-action="EditBlogPost" asp-route-id="@item.Id">Edit</a>

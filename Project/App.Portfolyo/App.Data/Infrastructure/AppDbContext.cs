@@ -22,18 +22,11 @@ namespace PortfolyoApp.Data.Infrastructure
         public DbSet<ServiceEntity> Skılls { get; set; } = null!;
         public DbSet<BlogPostEntity> BlogPosts { get; set; } = null!;
         public DbSet<FileEntity> Files { get; set; } = null!;
-<<<<<<< Updated upstream
-=======
         public DbSet<SliderEntity> Sliders { get; set; } = null!;
-        public DbSet<CommentsEntity> Commenst { get; set; }
->>>>>>> Stashed changes
 
-
-        //public DbSet<UserEntity> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AboutMeConfiguration());
-            modelBuilder.ApplyConfiguration(new CommentsEntityConfiguration());
             modelBuilder.ApplyConfiguration(new FileConfiguration());
             modelBuilder.ApplyConfiguration(new BlogPostConfiguration());
             modelBuilder.ApplyConfiguration(new ExperiencesConfiguration());
@@ -41,6 +34,7 @@ namespace PortfolyoApp.Data.Infrastructure
             modelBuilder.ApplyConfiguration(new ContactMessagesConfiguration());
             modelBuilder.ApplyConfiguration(new EducationsConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SliderConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
         }
     }

@@ -5,7 +5,7 @@
 
 
 <div class="container">
-    <h2 class="text-center">Update Slider Image</h2>
+    <h2>Update Slider Image</h2>
     <br />
     @if (ViewBag.Success != null)
     {
@@ -22,14 +22,10 @@
     <br />
     <form asp-action="EditSlider" asp-controller="Sliders" method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <label asp-for="ImgFile1">Add Image</label>
-            <br/>
             <input type="file" asp-for="ImgFile1" />
             <span asp-validation-for="ImgFile1" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="ImgFile2">Add Image</label>
-            <br />
             <input type="file" asp-for="ImgFile2" />
             <span asp-validation-for="ImgFile2" class="text-danger"></span>
         </div>
