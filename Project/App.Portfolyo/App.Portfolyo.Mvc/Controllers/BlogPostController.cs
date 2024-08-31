@@ -12,7 +12,7 @@ namespace PortfolyoApp.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailBlog([FromRoute] long id)
         {
-            if (id <= 0) // Simple validation for the id
+            if (id <= 0)
             {
                 return BadRequest("Invalid blog post ID.");
             }
