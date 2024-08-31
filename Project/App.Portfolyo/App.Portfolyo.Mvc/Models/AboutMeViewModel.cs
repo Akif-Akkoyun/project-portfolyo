@@ -5,6 +5,7 @@
         public long Id { get; set; }
         public string Introduction { get; set; } = default!;
         public string ImageUrl1 { get; set; } = default!;
+        public string CvUrl { get; set; } = default!;
         public string Name { get; set; } = default!;
         public int Year { get; set; }
         public int Day { get; set; }

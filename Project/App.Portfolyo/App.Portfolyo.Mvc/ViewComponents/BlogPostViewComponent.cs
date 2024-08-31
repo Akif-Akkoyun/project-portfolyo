@@ -20,13 +20,13 @@ namespace PortfolyoApp.Mvc.ViewComponents
                 .Take(3)
                 .OrderByDescending(u => u.Id)
                 .Select(u => new BlogPostViewModel
-            {
-                Id = u.Id,
-                ImageUrl = u.ImageUrl,
-                Title = u.Title,
-                Content = u.Content,
-                CreatedAt = u.CreatedAt,
-            }).ToList();
+                {
+                    Id = u.Id,
+                    ImageUrl = u.ImageUrl,
+                    Title = u.Title,
+                    Content = u.Content,
+                    CreatedAt = u.CreatedAt,
+                }).ToList();
 
             return View(result);
         }

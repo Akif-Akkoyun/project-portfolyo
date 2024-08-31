@@ -49,7 +49,7 @@
                                 @(item.Content.Length > 50 ? item.Content.Substring(0,50)+"...": item.Content)
                             </td>
                             <td>
-                                @item.ImageUrl
+                                @(item.ImageUrl.Length > 41 ? item.ImageUrl.Substring(41) : item.ImageUrl)
                             </td>
                             <td>
                                 @item.PublishDate.ToString("dd-MM-yyyy HH:mm:ss")

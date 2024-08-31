@@ -33,9 +33,59 @@ namespace PortfolyoApp.Data.Api.Controllers
 
                 await repo.Update(about);
             }
+<<<<<<< Updated upstream
 
             return Ok(abouts);
         }
+=======
+            abouts.ImageUrl1 = aboutMeDTO.ImageUrl1;
+            abouts.CvUrl = aboutMeDTO.CvUrl;
+            abouts.Introduction = aboutMeDTO.Introduction;
+            abouts.Name = aboutMeDTO.Name;
+            abouts.PhoneNumber = aboutMeDTO.PhoneNumber;
+            abouts.Email = aboutMeDTO.Email;
+            abouts.Address = aboutMeDTO.Address;
+            abouts.Day = aboutMeDTO.Day;
+            abouts.Month = aboutMeDTO.Month;
+            abouts.Year = aboutMeDTO.Year;
+            abouts.ZipCode = aboutMeDTO.ZipCode;
+
+
+            await repo.Update(abouts);
+
+            return Ok(abouts);
+        }
+        [Route("detail/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAbout(long id)
+        {
+            var about = await repo.GetById<AboutMeEntity>(id);
+
+            if (about is null)
+            {
+                return NotFound();
+            }
+
+            var dto = new AboutMeDTO
+            {
+                Id = about.Id,
+                ImageUrl1 = about.ImageUrl1,
+                CvUrl = about.CvUrl,
+                Introduction = about.Introduction,
+                Name = about.Name,
+                PhoneNumber = about.PhoneNumber,
+                Email = about.Email,
+                Address = about.Address,
+                Day = about.Day,
+                Month = about.Month,
+                Year = about.Year,
+                CreatedAt = DateTime.Now,
+                ZipCode = about.ZipCode
+            };
+
+            return Ok(dto);
+        }
+>>>>>>> Stashed changes
         [HttpGet("list")]
         public async Task<IActionResult> GetAbout()
         {
@@ -50,6 +100,7 @@ namespace PortfolyoApp.Data.Api.Controllers
             {
                 Id = u.Id,
                 ImageUrl1 = u.ImageUrl1,
+                CvUrl = u.CvUrl,
                 Introduction = u.Introduction,
                 Name = u.Name,
                 PhoneNumber = u.PhoneNumber,

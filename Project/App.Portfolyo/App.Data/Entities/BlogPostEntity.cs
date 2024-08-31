@@ -14,6 +14,8 @@ namespace PortfolyoApp.Data.Entities
         public string Content { get; set; } = default!;
         public string ImageUrl { get; set; } = default!;
         public DateTime? PublishDate { get; set; }
+
+        public ICollection<CommentsEntity> Comments { get; set; } = default!;
     }
     public class BlogPostConfiguration : IEntityTypeConfiguration<BlogPostEntity>
     {

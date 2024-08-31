@@ -31,6 +31,28 @@ namespace PortfolyoApp.Auth.Api.Controllers
 
             return Ok(dto);
         }
+        [Route("get/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetUserById(long id)
+        {
+            var user = await repo.GetById<UserEntity>(id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var dto = new AppUserDTO
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                UserSurName = user.UserSurName,
+                Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                RoleId = user.RoleId,
+            };
+
+            return Ok(dto);
+        }
         [Route("add")]
         [HttpPost]
         public async Task<IActionResult> AddUser(AppUserDTO userDTO)
