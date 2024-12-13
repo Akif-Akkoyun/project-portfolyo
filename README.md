@@ -10,4 +10,5 @@ The project has an Admin panel. Here I can do basic CRUD operations and have the
 
 With this project, I aimed to create a strong structure by applying the most up-to-date technologies used in modern web applications.
 
-<img src="[images/logo.png](https://hizliresim.com/i4uylrk)" alt="Proje Logosu" width="200" />
+
+![Proje Görseli](https://github.com/user-attachments/assets/2d0f1e18-3468-4d45-b919-8a3f7a3a7c68)
