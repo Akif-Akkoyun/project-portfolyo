@@ -1,5 +1,5 @@
-# project-portfolyo
-
+# My Portfolio Site
+ 
 Technologies: .NET 8, EF Core, Onion Architecture, FluentValidation, HttpClient, JWT Authentication/Authorization
 
 I designed this project, which I developed using .NET 8 and Entity Framework Core, as my personal portfolio site. I chose Onion Architecture in the project and moved the data in the entities with DTOs. I performed data validation with FluentValidation.
