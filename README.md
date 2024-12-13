@@ -1,6 +1,7 @@
 # My Portfolio Site
  
 Technologies: `.Net Core 8`, `EF Core`, `Onion Architecture`, `FluentValidation`, `HttpClient`, `JWT Authentication/Authorization`
+![Proje Görseli](https://github.com/user-attachments/assets/2d0f1e18-3468-4d45-b919-8a3f7a3a7c68)
 
 I designed this project, which I developed using `.NET 8` and `Entity Framework Core`, as my personal portfolio site. I chose Onion Architecture in the project and moved the data in the entities with DTOs. I performed data validation with FluentValidation.
 
@@ -11,4 +12,3 @@ The project has an Admin panel. Here I can do basic CRUD operations and have the
 With this project, I aimed to create a strong structure by applying the most up-to-date technologies used in modern web applications.
 
 
-![Proje Görseli](https://github.com/user-attachments/assets/2d0f1e18-3468-4d45-b919-8a3f7a3a7c68)
