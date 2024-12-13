@@ -9,3 +9,5 @@ I created services to manage requests to APIs, and these services can process an
 The project has an Admin panel. Here I can do basic CRUD operations and have the authority to change user roles. I also developed a blog sharing system. Only logged in users can access blog posts, and users without admin privileges cannot log in to the admin panel.
 
 With this project, I aimed to create a strong structure by applying the most up-to-date technologies used in modern web applications.
+
+![Proje Görseli](https://hizliresim.com/i4uylrk)
