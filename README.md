@@ -1,8 +1,8 @@
 # My Portfolio Site
  
-Technologies: `.Net Core 8`, EF Core, Onion Architecture, FluentValidation, HttpClient, JWT Authentication/Authorization
+Technologies: `.Net Core 8`, `EF Core`, `Onion Architecture`, `FluentValidation`, `HttpClient`, `JWT Authentication/Authorization`
 
-I designed this project, which I developed using .NET 8 and Entity Framework Core, as my personal portfolio site. I chose Onion Architecture in the project and moved the data in the entities with DTOs. I performed data validation with FluentValidation.
+I designed this project, which I developed using `.NET 8` and `Entity Framework Core`, as my personal portfolio site. I chose Onion Architecture in the project and moved the data in the entities with DTOs. I performed data validation with FluentValidation.
 
 I created services to manage requests to APIs, and these services can process and route requests coming via HttpClient. Additionally, I successfully integrated Authentication and Authorization processes with JWT in the project. Users can perform operations such as login, register and forgot password. For the password reset process, a link is sent to the user from the e-mail address created by the project, and the password reset can be done via this link.
 
